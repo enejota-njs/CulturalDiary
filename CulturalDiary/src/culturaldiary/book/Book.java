@@ -83,7 +83,7 @@ public class Book {
 
     }
 
-    public void ckeckBookReview() {
+    public void checkBookReview() {
 
         if (!this.evaluatedBook) {
             System.out.print("\nVocê já leu esse livro ? ");
@@ -121,7 +121,7 @@ public class Book {
                 System.out.println("\n+----------+");
                 System.out.println("| Inválido |");
                 System.out.println("+----------+");
-                ckeckBookReview();
+                checkBookReview();
             }
         }
     }

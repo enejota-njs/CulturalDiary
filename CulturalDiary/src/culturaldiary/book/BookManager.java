@@ -465,7 +465,7 @@ public class BookManager {
         boolean chosenBookFound = false;
         for (Book b : listOfBooks) {
             if (b.getBookIndex() == chosenBook) {
-                b.ckeckBookReview();
+                b.checkBookReview();
                 chosenBookFound = true;
             }
         }
