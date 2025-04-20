@@ -54,12 +54,12 @@ public class BookController {
         if (menuOption.equals("1")
                 || menuOption.equalsIgnoreCase("abrir")
                 || menuOption.equalsIgnoreCase("abrir livro")){
-            openBook(1, 1);
+            openBook(1, 2);
         }
         else if (menuOption.equals("2")
                 || menuOption.equalsIgnoreCase("avaliar")
                 || menuOption.equalsIgnoreCase("avaliar livro")) {
-            openBook(1, 0);
+            openBook(1, 1);
         } else if (menuOption.equals("3")
                 || menuOption.equalsIgnoreCase("cadastrar")
                 || menuOption.equalsIgnoreCase("cadastrar livro")) {
@@ -119,24 +119,24 @@ public class BookController {
 
 
                 boolean bookFound = false;
-                for (BookModel b : listOfBooks) {
+                for (BookModel book : listOfBooks) {
                     boolean match = false;
 
                     if ((searchOption.equals("1")
                             || searchOption.equalsIgnoreCase("titulo")
                             || searchOption.equalsIgnoreCase("título"))
-                            && b.getTitle().contains(searchInformation)) {
+                            && book.getTitle().toLowerCase().contains(searchInformation)) {
                         match = true;
                     }
                     else if ((searchOption.equals("2")
                             || searchOption.equalsIgnoreCase("autor"))
-                            && b.getAuthor().contains(searchInformation)) {
+                            && book.getAuthor().toLowerCase().contains(searchInformation)) {
                         match = true;
                     }
                     else if ((searchOption.equals("3")
                             || searchOption.equalsIgnoreCase("genero")
                             || searchOption.equalsIgnoreCase("gênero"))
-                            && b.getGenre().contains(searchInformation)) {
+                            && book.getGenre().toLowerCase().contains(searchInformation)) {
                         match = true;
                     }
                     else if (searchOption.equals("4")
@@ -146,7 +146,7 @@ public class BookController {
                             || searchOption.equalsIgnoreCase("ano de publicacão")
                             || searchOption.equalsIgnoreCase("ano de publicacao")) {
                         try {
-                            if (b.getYearOfPublication() == Integer.parseInt(searchInformation)) {
+                            if (book.getYearOfPublication() == Integer.parseInt(searchInformation)) {
                                 match = true;
                             }
                         } catch (NumberFormatException x) {
@@ -154,7 +154,7 @@ public class BookController {
                     }
                     else if ((searchOption.equals("5")
                             || searchOption.equalsIgnoreCase("isbn"))
-                            && b.getIsbn().equalsIgnoreCase(searchInformation)) {
+                            && book.getIsbn().equalsIgnoreCase(searchInformation)) {
                         match = true;
                     }
 
@@ -163,7 +163,7 @@ public class BookController {
                             bookView.headerForBook();
                             bookFound = true;
                         }
-                        bookView.bookInformation(b);
+                        bookView.bookInformation(book);
                     }
                 }
 
@@ -201,11 +201,11 @@ public class BookController {
         if (optionMenu.equals("1")
                 || optionMenu.equalsIgnoreCase("abrir")
                 || optionMenu.equalsIgnoreCase("abrir livro")) {
-            openBook(2, 1);
+            openBook(2, 2);
         } else if (optionMenu.equals("2")
                 || optionMenu.equalsIgnoreCase("avaliar")
                 || optionMenu.equalsIgnoreCase("avaliar livro")) {
-            openBook(2, 0);
+            openBook(2, 1);
         } else if (optionMenu.equals("3")
                 || optionMenu.equalsIgnoreCase("buscar")
                 || optionMenu.equalsIgnoreCase("buscar livro")) {
@@ -247,11 +247,11 @@ public class BookController {
         if (optionMenu.equals("1")
                 || optionMenu.equalsIgnoreCase("abrir")
                 || optionMenu.equalsIgnoreCase("abrir livro")) {
-            openBook(3, 1);
+            openBook(3, 2);
         } else if (optionMenu.equals("2")
                 || optionMenu.equalsIgnoreCase("avaliar")
                 || optionMenu.equalsIgnoreCase("avaliar livro")) {
-            openBook(3, 0);
+            openBook(3, 1);
         } else if (optionMenu.equals("3")
                 || optionMenu.equalsIgnoreCase("ordenar")
                 || optionMenu.equalsIgnoreCase("ordenar livro")) {
@@ -276,7 +276,7 @@ public class BookController {
     }
 
     public boolean filterList() {
-        bookView.filterMsg(0);
+        bookView.filterMsg(1);
 
         bookView.chooseAnOptionMsg();
         String filterOption = input.nextLine().trim();
@@ -293,7 +293,7 @@ public class BookController {
             String genreOption
                     ;
             do {
-                bookView.filterMsg(1);
+                bookView.filterMsg(2);
                 genreOption = input.nextLine().trim();
 
                 if (genreOption.isEmpty()) {
@@ -304,7 +304,7 @@ public class BookController {
 
             boolean genreFound = false;
             for (BookModel book : listOfBooks) {
-                if (book.getGenre().equalsIgnoreCase(genreOption)) {
+                if (book.getGenre().toLowerCase().contains(genreOption)) {
                     if (!genreFound) {
                         bookView.headerForBook();
                         genreFound = true;
@@ -314,7 +314,7 @@ public class BookController {
             }
 
             if (!genreFound) {
-                bookView.filterMsg(3);
+                bookView.filterMsg(4);
             }
 
             displayAdditionalListOptions();
@@ -327,7 +327,7 @@ public class BookController {
 
             String yearOption;
             do {
-                bookView.filterMsg(2);
+                bookView.filterMsg(3);
                 yearOption = input.nextLine().trim();
 
                 if (yearOption.isEmpty()) {
@@ -352,7 +352,7 @@ public class BookController {
             }
 
             if (!yearFound) {
-                bookView.filterMsg(3);
+                bookView.filterMsg(4);
             }
 
             displayAdditionalListOptions();
@@ -372,11 +372,11 @@ public class BookController {
         ArrayList<BookModel> listOfReviewedBooks = new ArrayList<BookModel>();
         ArrayList<BookModel> listOfUnreviewedBooks = new ArrayList<BookModel>();
 
-        for (BookModel b : listOfBooks) {
-            if (b.getBookReview() != null) {
-                listOfReviewedBooks.add(b);
+        for (BookModel book : listOfBooks) {
+            if (book.getBookReview() != null) {
+                listOfReviewedBooks.add(book);
             } else {
-                listOfUnreviewedBooks.add(b);
+                listOfUnreviewedBooks.add(book);
             }
         }
 
@@ -384,12 +384,12 @@ public class BookController {
         ArrayList<BookModel> poorlyEvaluatedBooks = new ArrayList<BookModel>(listOfReviewedBooks);
 
         if (listOfReviewedBooks.isEmpty()) {
-            bookView.orderingMsg(0);
+            bookView.orderingMsg(1);
             displayAdditionalListOptions();
         } else {
             String sortOption;
             do {
-                bookView.orderingMsg(1);
+                bookView.orderingMsg(2);
                 bookView.chooseAnOptionMsg();
                 sortOption = input.nextLine().trim();
 
@@ -404,11 +404,11 @@ public class BookController {
                 highlyEvaluatedBooks.sort(Comparator.comparing(bookModel -> bookModel.getBookReview().getScore(), Comparator.reverseOrder()));
 
                 bookView.headerForBook();
-                for (BookModel b : highlyEvaluatedBooks) {
-                    bookView.bookInformation(b);
+                for (BookModel book : highlyEvaluatedBooks) {
+                    bookView.bookInformation(book);
                 }
-                for (BookModel b : listOfUnreviewedBooks) {
-                    bookView.bookInformation(b);
+                for (BookModel book : listOfUnreviewedBooks) {
+                    bookView.bookInformation(book);
                 }
 
                 displayAdditionalListOptions();
@@ -419,11 +419,11 @@ public class BookController {
                 poorlyEvaluatedBooks.sort(Comparator.comparing(bookModel -> bookModel.getBookReview().getScore()));
 
                 bookView.headerForBook();
-                for (BookModel b : poorlyEvaluatedBooks) {
-                    bookView.bookInformation(b);
+                for (BookModel book : poorlyEvaluatedBooks) {
+                    bookView.bookInformation(book);
                 }
-                for (BookModel b : listOfUnreviewedBooks) {
-                    bookView.bookInformation(b);
+                for (BookModel book : listOfUnreviewedBooks) {
+                    bookView.bookInformation(book);
                 }
 
                 displayAdditionalListOptions();
@@ -441,9 +441,9 @@ public class BookController {
     }
 
     public void openBook(int a, int b) {
-        if (b == 0) {
+        if (b == 1) {
             additionalOptionsForOpeningBook(1);
-        } else if (b == 1) {
+        } else if (b == 2) {
             additionalOptionsForOpeningBook(2);
         }
 
@@ -461,7 +461,7 @@ public class BookController {
         boolean validInput = false;
 
         while (!validInput) {
-            bookView.evaluationMsg(9);
+            bookView.evaluationMsg(10);
             String bookOptionString = input.nextLine();
 
             if (bookOptionString.isEmpty()) {
@@ -473,7 +473,7 @@ public class BookController {
                 bookOption = Integer.parseInt(bookOptionString);
                 validInput = true;
             } catch (NumberFormatException e) {
-                bookView.evaluationMsg(11);
+                bookView.evaluationMsg(12);
             }
         }
 
@@ -481,18 +481,18 @@ public class BookController {
 
         switch (a) {
             case 1 : {
-                for (BookModel b : listOfBooks) {
-                    if (b.getBookIndex() == bookOption) {
-                        checkBookReview(b);
+                for (BookModel book : listOfBooks) {
+                    if (book.getBookIndex() == bookOption) {
+                        checkBookReview(book);
                         bookFound = true;
                     }
                 }
                 break;
             }
             case 2 : {
-                for (BookModel b : listOfBooks) {
-                    if (b.getBookIndex() == bookOption) {
-                        bookView.additionalBookInformation(b);
+                for (BookModel book : listOfBooks) {
+                    if (book.getBookIndex() == bookOption) {
+                        bookView.additionalBookInformation(book);
                         bookFound = true;
                     }
                 }
@@ -503,7 +503,7 @@ public class BookController {
         }
 
         if (!bookFound) {
-            bookView.evaluationMsg(10);
+            bookView.evaluationMsg(11);
         }
     }
 
@@ -513,7 +513,7 @@ public class BookController {
 
             String reading;
             do {
-                bookView.evaluationMsg(0);
+                bookView.evaluationMsg(1);
                 reading = input.nextLine().trim();
 
                 if (reading.isEmpty()) {
@@ -534,16 +534,16 @@ public class BookController {
                     || reading.equalsIgnoreCase("n li")
                     || reading.equalsIgnoreCase("não li")
                     || reading.equalsIgnoreCase("nao li")){
-                bookView.evaluationMsg(1);
+                bookView.evaluationMsg(2);
                 return true;
             } else {
-                bookView.evaluationMsg(8);
+                bookView.evaluationMsg(9);
                 return checkBookReview(book);
             }
         } else {
             String evaluateAgain;
             do {
-                bookView.evaluationMsg(2);
+                bookView.evaluationMsg(3);
                 evaluateAgain = input.nextLine().trim();
 
                 if (evaluateAgain.isEmpty()) {
@@ -577,7 +577,7 @@ public class BookController {
         float temporaryScore = 0.0f;
 
         while (true) {
-            bookView.evaluationMsg(3);
+            bookView.evaluationMsg(4);
             String scoreString = input.nextLine().trim();
 
             if (scoreString.isEmpty()) {
@@ -588,19 +588,19 @@ public class BookController {
             try {
                 temporaryScore = Float.parseFloat(scoreString);
                 if (temporaryScore < 1 || temporaryScore > 5) {
-                    bookView.evaluationMsg(4);
+                    bookView.evaluationMsg(5);
                     continue;
                 }
                 break;
             } catch (NumberFormatException e) {
-                bookView.evaluationMsg(4);
+                bookView.evaluationMsg(5);
             }
         }
 
         temporaryConsumptionDate = validateNewDate();
 
         do {
-            bookView.evaluationMsg(6);
+            bookView.evaluationMsg(7);
             temporaryComment = input.nextLine().trim();
 
             if (temporaryComment.isEmpty()) {
@@ -608,7 +608,7 @@ public class BookController {
             }
         } while (temporaryComment.isEmpty());
 
-        bookView.evaluationMsg(7);
+        bookView.evaluationMsg(8);
 
         ReviewModel bookReview = new ReviewModel(true, temporaryScore, temporaryConsumptionDate, temporaryComment);
         book.setBookReview(bookReview);
@@ -668,8 +668,8 @@ public class BookController {
             return validateNewIsbn();
         };
 
-        for (BookModel b : listOfBooks) {
-            if (b.getIsbn().equalsIgnoreCase(value)) {
+        for (BookModel book : listOfBooks) {
+            if (book.getIsbn().equalsIgnoreCase(value)) {
                 bookView.invalidIsbnMsg(1);
                 return validateNewIsbn();
             }
@@ -733,7 +733,7 @@ public class BookController {
         String stringValue;
 
         do {
-            bookView.evaluationMsg(5);
+            bookView.evaluationMsg(6);
             stringValue = input.nextLine().trim();
 
             if (stringValue.isEmpty()) {

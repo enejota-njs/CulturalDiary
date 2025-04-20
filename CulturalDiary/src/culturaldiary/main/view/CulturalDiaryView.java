@@ -9,6 +9,7 @@ public class CulturalDiaryView {
         System.out.printf("| %-23s |\n", "[ 1 ] - Cadastrar Mídia");
         System.out.printf("| %-23s |\n", "[ 2 ] - Buscar Mídia");
         System.out.printf("| %-23s |\n", "[ 3 ] - Listar Mídia");
+        System.out.println("+-------------------------+");
         System.out.printf("| %-23s |\n", "[ 4 ] - Fechar");
         System.out.println("+-------------------------+");
     }

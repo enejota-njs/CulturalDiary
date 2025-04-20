@@ -20,10 +20,10 @@ public class MediaController {
                         mediaModel.getBookController().registerBook();
                         break;
                     case 2 :
-
+                        mediaModel.getMovieController().registerMovie();
                         break;
                     case 3 :
-
+                        mediaModel.getSeriesController().registerSeries();
                         break;
                     default :
                         break;
@@ -37,10 +37,10 @@ public class MediaController {
                         mediaModel.getBookController().searchBook();
                         break;
                     case 2:
-
+                        mediaModel.getMovieController().searchMovie();
                         break;
                     case 3:
-
+                        mediaModel.getSeriesController().searchSeries();
                         break;
                     default:
                         break;
@@ -54,10 +54,10 @@ public class MediaController {
                         mediaModel.getBookController().listBook();
                         break;
                     case 2:
-
+                        mediaModel.getMovieController().listMovie();
                         break;
                     case 3:
-
+                        mediaModel.getSeriesController().listSeries();
                         break;
                     default:
                         break;

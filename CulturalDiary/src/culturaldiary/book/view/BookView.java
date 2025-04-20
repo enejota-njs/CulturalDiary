@@ -79,7 +79,7 @@ public class BookView {
                 break;
             }
             case 3 : {
-                System.out.println("\nNenhum livro encontrado");
+                System.out.println("\nNenhum livro encontrado.");
                 break;
             }
             default:
@@ -176,11 +176,9 @@ public class BookView {
         System.out.printf("| %-20s -> %s\n", "Tem um exemplar?", (book.isHasCopy() ? "Sim" : "Não"));
 
         if (book.getBookReview() == null) {
-            System.out.println("+-----------------------+");
             System.out.printf("| %-20s -> %s\n", "Avaliação", "Livro não avaliado");
             System.out.println("+-----------------------+");
         } else {
-            System.out.println("+-----------------------+");
             System.out.printf("| %-20s -> %s\n", "Já foi lido?", book.getBookReview().isConsumed() ? "Sim" : "Não");
             System.out.printf("| %-20s -> %.2f\n", "Nota", book.getBookReview().getScore());
             System.out.printf("| %-20s -> %s\n", "Data de leitura", book.getBookReview().getConsumptionDate());
@@ -191,26 +189,27 @@ public class BookView {
 
     public void filterMsg(int a) {
         switch (a){
-            case 0 : {
+            case 1 : {
                 System.out.println("\n+-------------------------+");
                 System.out.printf("| %-23s |\n", "Filtrar por");
                 System.out.println("+-------------------------+");
                 System.out.printf("| %-23s |\n", "[ 1 ] - Gênero");
                 System.out.printf("| %-23s |\n", "[ 2 ] - Ano");
+                System.out.println("+-------------------------+");
                 System.out.printf("| %-23s |\n", "[ 3 ] - Menu inicial");
                 System.out.println("+-------------------------+");
                 break;
             }
-            case 1 : {
+            case 2 : {
                 System.out.print("\nDigite o gênero: ");
                 break;
             }
-            case 2 : {
+            case 3 : {
                 System.out.print("\nDigite o ano de publicação: ");
                 break;
             }
-            case 3 : {
-                System.out.println("\nNenhum livro encontrado");
+            case 4 : {
+                System.out.println("\nNenhum livro encontrado.");
                 break;
             }
             default:
@@ -220,16 +219,17 @@ public class BookView {
 
     public void orderingMsg(int a) {
         switch (a) {
-            case 0 : {
-                System.out.println("\nNenhum livro avaliado");
+            case 1 : {
+                System.out.println("\nNenhum livro avaliado.");
                 break;
             }
-            case 1 : {
+            case 2 : {
                 System.out.println("\n+-------------------------+");
                 System.out.printf("| %-23s |\n", "Ordenar por");
                 System.out.println("+-------------------------+");
                 System.out.printf("| %-23s |\n", "[ 1 ] - Bem avaliado");
                 System.out.printf("| %-23s |\n", "[ 2 ] - Mal avaliado");
+                System.out.println("+-------------------------+");
                 System.out.printf("| %-23s |\n", "[ 3 ] - Menu inicial");
                 System.out.println("+-------------------------+");
                 break;
@@ -241,54 +241,54 @@ public class BookView {
 
     public void evaluationMsg(int a) {
         switch (a) {
-            case 0 : {
+            case 1 : {
                 System.out.print("\nVocê já leu esse livro ? ");
                 break;
             }
-            case 1 : {
-                System.out.println("\nEsse livro não pode ser avaliado");
-                break;
-            }
             case 2 : {
-                System.out.println("\nEsse livro já foi avaliado");
-                System.out.print("Deseja avaliar novamente ? ");
+                System.out.println("\nEsse livro não pode ser avaliado.");
                 break;
             }
             case 3 : {
-                System.out.print("\nDê uma nota entre 1 e 5: ");
+                System.out.println("\nEsse livro já foi avaliado.");
+                System.out.print("Deseja avaliar novamente ? ");
                 break;
             }
             case 4 : {
-                System.out.println("\nO valor precisa estar entre 1 e 5.");
+                System.out.print("\nDê uma nota entre 1 e 5: ");
                 break;
             }
             case 5 : {
-                System.out.print("\nData de leitura (dd/mm/yyyy): ");
+                System.out.println("\nO valor precisa estar entre 1 e 5.");
                 break;
             }
             case 6 : {
-                System.out.print("\nComentários: ");
+                System.out.print("\nData de leitura (dd/mm/yyyy): ");
                 break;
             }
             case 7 : {
-                System.out.println("\nAvaliação cadastrada");
+                System.out.print("\nComentários: ");
                 break;
             }
             case 8 : {
+                System.out.println("\nAvaliação cadastrada.");
+                break;
+            }
+            case 9 : {
                 System.out.println("\nInválido.");
                 System.out.println("Digite Sim ou Não.");
                 System.out.println("Tente novamente.");
                 break;
             }
-            case 9 : {
+            case 10 : {
                 System.out.print("\nEscreva o n° do livro: ");
                 break;
             }
-            case 10 : {
-                System.out.println("\nLivro não encontrado");
+            case 11 : {
+                System.out.println("\nLivro não encontrado.");
                 break;
             }
-            case 11 : {
+            case 12 : {
                 System.out.println("\nPor favor, digite um número válido.");
                 break;
             }

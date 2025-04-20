@@ -23,10 +23,10 @@ public class MediaView {
             }
         }
 
-        System.out.println("+-------------------------+");
         System.out.printf("| %-23s |\n", "[ 1 ] - Livro");
         System.out.printf("| %-23s |\n", "[ 2 ] - Filme");
         System.out.printf("| %-23s |\n", "[ 3 ] - Série");
+        System.out.println("+-------------------------+");
         System.out.printf("| %-23s |\n", "[ 4 ] - Menu inicial");
         System.out.println("+-------------------------+");
     }
