@@ -2,6 +2,7 @@ package culturaldiary.book;
 
 import culturaldiary.review.ReviewModel;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -34,7 +35,7 @@ public class BookController {
         boolean validYearOfPublication = validateYearOfPublication(yearOfPublicationString);
         boolean validGenre = validateGenre(genre);
         boolean validHasCopy = validateHasCopy(hasCopyString);
-        boolean validRead = validadeNewRead(readString);
+        boolean validRead = validateRead(readString);
 
         if (validTitle == false || validAuthor == false || validPublisher == false || validIsbn == false || validYearOfPublication == false
                 || validGenre == false || validHasCopy == false || validRead == false) {
@@ -55,11 +56,11 @@ public class BookController {
             );
 
             boolean hasCopy = false;
-            if (positiveResponsesHasCopy.contains(hasCopyString)) { hasCopy = true; }
-            else if (negativeResponsesHasCopy.contains(hasCopyString)) { hasCopy = false; }
+            if (positiveResponsesHasCopy.contains(hasCopyString.toLowerCase())) { hasCopy = true; }
+            else if (negativeResponsesHasCopy.contains(hasCopyString.toLowerCase())) { hasCopy = false; }
 
             Set<String> positiveResponsesRead = Set.of(
-                    "sim", "s", "li", "sim li", "li sim", "s li", "li s"
+                    "sim", "s", "li", "sim li", "li sim", "s li", "li s", "já li", "ja li", "já", "ja"
             );
 
             Set<String> negativeResponsesRead = Set.of(
@@ -68,8 +69,8 @@ public class BookController {
             );
 
             boolean read = false;
-            if (positiveResponsesRead.contains(readString)) { read = true; }
-            else if (negativeResponsesRead.contains(readString)) { read = false; }
+            if (positiveResponsesRead.contains(readString.toLowerCase())) { read = true; }
+            else if (negativeResponsesRead.contains(readString.toLowerCase())) { read = false; }
 
             bookModel = new BookModel(title.trim(), author.trim(), publisher.trim(), isbn.trim(), yearOfPublication, genre.trim(), hasCopy, read);
             bookRepository.addBook(bookModel);
@@ -109,6 +110,10 @@ public class BookController {
 
     public boolean validateHasCopy(String hasCopy) {
         return validateNewHasCopy(hasCopy);
+    }
+
+    public boolean validateRead(String read) {
+        return validateNewRead(read);
     }
 
     public boolean validateNewString(String value, String name) {
@@ -179,7 +184,7 @@ public class BookController {
                     "sim tenho", "tenho sim", "s tenho", "tenho s", "tenho"
             );
 
-            if (validAnswers.contains(value)) {
+            if (validAnswers.contains(value.toLowerCase())) {
                 return true;
             } else {
                 bookView.invalidHasCopyMessage();
@@ -189,17 +194,17 @@ public class BookController {
         return false;
     }
 
-    public boolean validadeNewRead(String value) {
+    public boolean validateNewRead(String value) {
         if (validateNewString(value, "Leitura")) {
 
             Set<String> validAnswers = Set.of(
                     "sim", "s",
                     "não", "nao", "n",
                     "não li", "nao li", "n li", "li nao", "li não", "li n",
-                    "sim li", "li sim", "s li", "li s", "li"
+                    "sim li", "li sim", "s li", "li s", "li", "já li", "ja li", "já", "ja"
             );
 
-            if (validAnswers.contains(value)) {
+            if (validAnswers.contains(value.toLowerCase())) {
                 return true;
             } else {
                 bookView.invalidReadMessage();
@@ -529,8 +534,16 @@ public class BookController {
             return false; }
     }
 
-    public boolean openBook(BookModel book) {
+    public boolean openBook(int index) {
         try {
+            BookModel book;
+            try {
+                book = listOfBooks.get(index-1);
+            } catch (Exception e) {
+                bookView.noBookFoundMessage();
+                return false;
+            }
+
             bookView.fullBookInformation(book);
             return true;
         }   catch (Exception e) {
@@ -539,7 +552,16 @@ public class BookController {
         }
     }
 
-    public boolean changeBookReadingStatus(BookModel book , String value) {
+    public boolean changeBookReadingStatus(int index, String value) {
+        BookModel book;
+
+        try {
+            book = listOfBooks.get(index-1);
+        } catch (Exception e) {
+            bookView.noBookFoundMessage();
+            return false;
+        }
+
         value = value.trim();
 
         if (book == null) {
@@ -547,7 +569,7 @@ public class BookController {
             return false;
         }
 
-        boolean validRead = validadeNewRead(value);
+        boolean validRead = validateNewRead(value);
 
         if (!validRead) {
             bookView.tryAgainMessage();
@@ -556,7 +578,7 @@ public class BookController {
 
         try {
             Set<String> positiveResponsesRead = Set.of(
-                    "sim", "s", "li", "sim li", "li sim", "s li", "li s"
+                    "sim", "s", "li", "sim li", "li sim", "s li", "li s", "já li", "ja li", "já", "ja"
             );
 
             Set<String> negativeResponsesRead = Set.of(
@@ -564,11 +586,15 @@ public class BookController {
                     "li não", "li nao", "li n"
             );
 
-            boolean read = false;
-            if (positiveResponsesRead.contains(value)) {
+            boolean read = false ;
+            if (positiveResponsesRead.contains(value.toLowerCase())) {
                 read = true;
-            } else if (negativeResponsesRead.contains(value)) {
+            } else if ((book.isRead() == false) && negativeResponsesRead.contains(value.toLowerCase())){
                 read = false;
+            }
+            else if ((book.isRead() == true) && negativeResponsesRead.contains(value.toLowerCase())) {
+                bookView.wrongReadMessage();
+                return false;
             }
 
             book.setRead(read);
@@ -581,11 +607,19 @@ public class BookController {
         }
     }
 
-    public boolean evaluateBook(BookModel book, String score, String consumptionDate, String comment) {
+    public boolean evaluateBook(int index, String score, String consumptionDate, String comment) {
         try {
             score = score.trim();
             consumptionDate = consumptionDate.trim();
             comment = comment.trim();
+
+            BookModel book;
+            try {
+                book = listOfBooks.get(index-1);
+            } catch (Exception e) {
+                bookView.noBookFoundMessage();
+                return false;
+            }
 
             if (!checkBookReview(book)) {
                 if (book.isRead()) {
@@ -614,11 +648,11 @@ public class BookController {
                     return true;
                 } else {
                     bookView.unreadBookMessage();
-                    return true;
+                    return false;
                 }
             } else {
                 bookView.messageOfBookAlreadyEvaluated();
-                return true;
+                return false;
             }
         } catch (Exception e) {
             bookView.invalidMessage();
@@ -626,18 +660,20 @@ public class BookController {
         }
     }
 
-    public boolean evaluateBookAgain(BookModel book, String score, String consumptionDate, String comment) {
+    public boolean evaluateBookAgain(int index, String score, String consumptionDate, String comment) {
         try {
             score = score.trim();
             consumptionDate = consumptionDate.trim();
             comment = comment.trim();
 
+            BookModel book = listOfBooks.get(index-1);
+
             if (checkBookReview(book)) {
                 book.setEvaluatedBook(false);
-                return evaluateBook(book, score, consumptionDate, comment);
+                return evaluateBook(index, score, consumptionDate, comment);
             } else {
                 bookView.unratedBookMessage();
-                return true;
+                return false;
             }
         } catch (Exception e) {
             bookView.invalidMessage();

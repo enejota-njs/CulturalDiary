@@ -166,6 +166,10 @@ public class BookView {
         System.out.println("\nEsse livro ainda não foi lido.");
     }
 
+    public void wrongReadMessage() {
+        System.out.println("\nNão pode dizer que não leu um livro que já marcou como lido.");
+    }
+
     public void invalidMessage() {
         System.out.println("\nInválido.");
     }

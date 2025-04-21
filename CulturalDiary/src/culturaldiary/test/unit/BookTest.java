@@ -1,4 +1,4 @@
-package culturaldiary.test.unit.book;
+package culturaldiary.test.unit;
 
 import culturaldiary.review.ReviewModel;
 import culturaldiary.book.BookController;
@@ -12,12 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest {
-    BookController bookController = new BookController();
+    ArrayList<BookModel> books =  new ArrayList<BookModel>();;
 
     @BeforeEach
     void list() {
-        ArrayList<BookModel> books = new ArrayList<BookModel>();
-
         books.add(new BookModel("Harry Potter 1", "Marina Costa", "Editora Aurora", "9788598743998", 2001, "Fantasia", true, true));
         books.add(new BookModel("Harry Potter 2", "Lucas Antunes", "Estrela Guia", "8532530988", 1995, "Aventura", false, true));
         books.add(new BookModel("Harry Potter 3", "Paulo Henrique", "Mundo Literário", "9781400034719", 2003, "Juvenil", true, true));
@@ -52,9 +50,9 @@ class BookTest {
 
         for (int i = 0; i < 7; i++) {
             books.get(i).setBookReview(reviews.get(i));
+            books.get(i).setEvaluatedBook(true);
         }
 
-        bookController.setListOfBooks(books);
     }
 
     @Test
@@ -80,6 +78,9 @@ class BookTest {
 
     @Test
     void searchingBookByTitle() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.searchBookByTitle("Harry   "));
         assertTrue(bookController.searchBookByTitle("   1"));
         assertTrue(bookController.searchBookByTitle("Potter"));
@@ -94,6 +95,9 @@ class BookTest {
 
     @Test
     void searchingBookByAuthor() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.searchBookByAuthor("J.K. Rowling"));
         assertFalse(bookController.searchBookByAuthor(""));
         assertTrue(bookController.searchBookByAuthor("Lopes  "));
@@ -108,6 +112,9 @@ class BookTest {
 
     @Test
     void searchingBookByGenre() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.searchBookByGenre("rpg"));
         assertFalse(bookController.searchBookByGenre("     "));
         assertFalse(bookController.searchBookByGenre(" "));
@@ -122,6 +129,9 @@ class BookTest {
 
     @Test
     void searchingBookByYearOfPublication() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertFalse(bookController.searchBookByYearOfPublication("200u0"));
         assertFalse(bookController.searchBookByYearOfPublication("169d9"));
         assertTrue(bookController.searchBookByYearOfPublication("2025"));
@@ -136,6 +146,9 @@ class BookTest {
 
     @Test
     void searchingBookByIsbn() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.searchBookByIsbn("   8532048701   "));
         assertFalse(bookController.searchBookByIsbn("                "));
         assertFalse(bookController.searchBookByIsbn("asdasd2222"));
@@ -150,11 +163,17 @@ class BookTest {
 
     @Test
     void listingBooks() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.listBooks());
     }
 
     @Test
     void filteringByBookGenre() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.filterListOfBooksByGenre("rpg"));
         assertFalse(bookController.filterListOfBooksByGenre("     "));
         assertFalse(bookController.filterListOfBooksByGenre(" "));
@@ -169,6 +188,9 @@ class BookTest {
 
     @Test
     void filteringBookByYearOfPublication() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertFalse(bookController.filterListOfBooksByYearOfPublication("200u0"));
         assertFalse(bookController.filterListOfBooksByYearOfPublication("169d9"));
         assertTrue(bookController.filterListOfBooksByYearOfPublication("2025"));
@@ -183,63 +205,68 @@ class BookTest {
 
     @Test
     void sortingListByTopRated() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.sortListByTopRated());
     }
 
     @Test
     void sortingListByLowRated() {
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
         assertTrue(bookController.sortListByLowRated());
     }
 
     @Test
     void openingBook() {
-        BookModel book = bookController.getListOfBooks().get(0);
-        assertTrue(bookController.openBook(book));
-        assertFalse(bookController.openBook(null));
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
+
+        assertTrue(bookController.openBook(1));
+        assertFalse(bookController.openBook(33));
     }
 
     @Test
     void changingBookReadingStatus() {
-        BookModel book1 = bookController.getListOfBooks().get(0);
-        BookModel book2 = bookController.getListOfBooks().get(7);
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
 
-        assertTrue(bookController.changeBookReadingStatus(book1, "não li"));
-        assertTrue(bookController.changeBookReadingStatus(book2, "não li"));
-        assertTrue(bookController.changeBookReadingStatus(book1, "li"));
-        assertTrue(bookController.changeBookReadingStatus(book2, "li"));
-        assertFalse(bookController.changeBookReadingStatus(book1, "  "));
-        assertFalse(bookController.changeBookReadingStatus(null, "li"));
-        assertFalse(bookController.changeBookReadingStatus(null, "   "));
+        assertFalse(bookController.changeBookReadingStatus(1, "não li"));
+        assertTrue(bookController.changeBookReadingStatus(8, "não li"));
+        assertTrue(bookController.changeBookReadingStatus(1, "li"));
+        assertTrue(bookController.changeBookReadingStatus(8, "li"));
+        assertFalse(bookController.changeBookReadingStatus(1, "  "));
+        assertFalse(bookController.changeBookReadingStatus(99, "li"));
+        assertFalse(bookController.changeBookReadingStatus(-2, "   "));
     }
 
     @Test
     void evaluatingBook() {
-        BookModel book1 = bookController.getListOfBooks().get(17);
-        BookModel book2 = bookController.getListOfBooks().get(13);
-        BookModel book3 = bookController.getListOfBooks().get(20);
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
 
-        assertTrue(bookController.evaluateBook(book1, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
-        assertTrue(bookController.evaluateBook(book1, "4.3gh", "19/05/2002", "Excelente livro, recomendo!"));
-        assertFalse(bookController.evaluateBook(null, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
-        assertFalse(bookController.evaluateBook(book2, "4.3", "19/05/1700", "Excelente livro, recomendo!"));
-        assertTrue(bookController.evaluateBook(book3, "3.7", "14/11/1998", "História interessante."));
-        assertFalse(bookController.evaluateBook(book2, "4.8", "28/02/2005", "Leitura agradável."));
-
+        assertFalse(bookController.evaluateBook(1, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
+        assertFalse(bookController.evaluateBook(19, "4.3gh", "19/05/2002", "Excelente livro, recomendo!"));
+        assertFalse(bookController.evaluateBook(33, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
+        assertTrue(bookController.evaluateBook(19, "4.3", "19/05/1999", "Excelente livro, recomendo!"));
+        assertFalse(bookController.evaluateBook(20, "3.7", "14/11/1998", "História interessante."));
+        assertTrue(bookController.evaluateBook(21, "4.8", "28/02/2006", "Leitura agradável."));
+        assertFalse(bookController.evaluateBook(20, "4.8", "28/02/2006", "Leitura agradável."));
     }
 
     @Test
     void evaluatingBookAgain() {
-        BookModel book1 = bookController.getListOfBooks().get(0);
-        BookModel book2 = bookController.getListOfBooks().get(1);
-        BookModel book3 = bookController.getListOfBooks().get(2);
+        BookController bookController = new BookController();
+        bookController.setListOfBooks(books);
 
-        assertTrue(bookController.evaluateBookAgain(book1, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
-        assertFalse(bookController.evaluateBookAgain(book1, "4.3gh", "19/05/2002", "Excelente livro, recomendo!"));
-        assertFalse(bookController.evaluateBookAgain(null, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
-        assertFalse(bookController.evaluateBookAgain(book2, "4.3", "19/05/1700", "Excelente livro, recomendo!"));
-        assertTrue(bookController.evaluateBookAgain(book3, "3.7", "14/11/1998", "História interessante."));
-        assertFalse(bookController.evaluateBookAgain(book2, "4.8", "28/02/2005", "Leitura agradável."));
+        assertTrue(bookController.evaluateBookAgain(1, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
+        assertFalse(bookController.evaluateBookAgain(1, "4.3gh", "19/05/2002", "Excelente livro, recomendo!"));
+        assertFalse(bookController.evaluateBookAgain(81, "4.3", "19/05/2002", "Excelente livro, recomendo!"));
+        assertTrue(bookController.evaluateBookAgain(2, "4.3", "19/01/2025", "Excelente livro, recomendo!"));
+        assertFalse(bookController.evaluateBookAgain(3, "3.7", "14/11/1998", "História interessante."));
+        assertFalse(bookController.evaluateBookAgain(21, "4.8", "28/02/2005", "Leitura agradável."));
+        assertFalse(bookController.evaluateBookAgain(21, "3.5", "01/12/2006", "Não foi tão bom quanto eu esperava."));
     }
-
-    //esse teste acima dando erro
 }
