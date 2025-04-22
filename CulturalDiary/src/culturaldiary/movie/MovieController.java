@@ -570,9 +570,9 @@ public class MovieController {
             return false;
         }
 
-        boolean validRead = validateNewWatched(value);
+        boolean validWatched = validateNewWatched(value);
 
-        if (!validRead) {
+        if (!validWatched) {
             movieView.tryAgainMessage();
             return false;
         }

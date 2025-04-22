@@ -1,6 +1,6 @@
-package antigo.series.model;
+package culturaldiary.series.series;
 
-import antigo.series.season.model.SeasonModel;
+import culturaldiary.series.season.SeasonModel;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,7 @@ public class SeriesModel {
     private float seriesReview;
     private int seriesIndex;
 
-    public SeriesModel(String title, int yearOfRelease, int yearOfConclusion,
-                       String originalTitle, String whereToWatch, ArrayList<SeasonModel> listOfSeasons) {
+    public SeriesModel(String title, int yearOfRelease, int yearOfConclusion, String originalTitle, String whereToWatch, ArrayList<SeasonModel> listOfSeasons) {
         this.title = title;
         this.yearOfRelease = yearOfRelease;
         this.yearOfConclusion = yearOfConclusion;
@@ -26,14 +25,6 @@ public class SeriesModel {
         this.listOfSeasons = listOfSeasons;
         this.seriesReview = 0;
         this.seriesIndex = seriesCounter++;
-    }
-
-    public static int getSeriesCounter() {
-        return seriesCounter;
-    }
-
-    public static void setSeriesCounter(int seriesCounter) {
-        SeriesModel.seriesCounter = seriesCounter;
     }
 
     public String getTitle() {

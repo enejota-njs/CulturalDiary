@@ -1,6 +1,4 @@
-package antigo.series.model.repository;
-
-import antigo.series.model.SeriesModel;
+package culturaldiary.series.series;
 
 import java.util.ArrayList;
 

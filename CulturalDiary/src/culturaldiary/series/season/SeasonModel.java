@@ -1,6 +1,6 @@
-package antigo.series.season.model;
+package culturaldiary.series.season;
 
-import antigo.review.ReviewModel;
+import culturaldiary.review.ReviewModel;
 
 import java.util.ArrayList;
 
@@ -10,14 +10,16 @@ public class SeasonModel {
     private int yearSeason;
     private ReviewModel seasonReview;
     private boolean evaluatedSeason;
+    private boolean watched;
     private int seasonIndex;
 
-    public SeasonModel(String genre, ArrayList<String> cast, int yearSeason, int seasonIndex) {
+    public SeasonModel(String genre, ArrayList<String> cast, int yearSeason, boolean watched, int seasonIndex) {
         this.genre = genre;
         this.cast = cast;
         this.yearSeason = yearSeason;
         this.seasonReview = null;
         this.evaluatedSeason = false;
+        this.watched = watched;
         this.seasonIndex = seasonIndex;
     }
 
@@ -63,6 +65,14 @@ public class SeasonModel {
 
     public void setEvaluatedSeason(boolean evaluatedSeason) {
         this.evaluatedSeason = evaluatedSeason;
+    }
+
+    public boolean isWatched() {
+        return watched;
+    }
+
+    public void setWatched(boolean watched) {
+        this.watched = watched;
     }
 
     public int getSeasonIndex() {
