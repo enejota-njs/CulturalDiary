@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest {
-    ArrayList<BookModel> books =  new ArrayList<BookModel>();;
+    ArrayList<BookModel> books =  new ArrayList<BookModel>();
 
     @BeforeEach
     void list() {
@@ -52,7 +52,6 @@ class BookTest {
             books.get(i).setBookReview(reviews.get(i));
             books.get(i).setEvaluatedBook(true);
         }
-
     }
 
     @Test

@@ -2,7 +2,6 @@ package culturaldiary.book;
 
 import culturaldiary.review.ReviewModel;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -234,8 +233,6 @@ public class BookController {
                         bookView.bookInformation(book);
                     }
                 }
-
-
 
             }
             if (!bookFound) { bookView.noBookFoundMessage(); }
@@ -707,6 +704,8 @@ public class BookController {
     }
 
     public boolean validateNewScore(String value) {
+        value = value.trim();
+
         if (validateNewInputString(value)) {
             try {
                 float score = Float.parseFloat(value);
@@ -725,6 +724,8 @@ public class BookController {
     }
 
     public boolean validateNewDate(BookModel book, String value) {
+        value = value.trim();
+
         if (validateNewInputString(value)) {
             String[] parts = value.split("/");
             if (parts.length != 3) {
