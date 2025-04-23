@@ -7,14 +7,14 @@ import java.util.ArrayList;
 public class SeriesModel {
     static private int seriesCounter = 1;
 
-    private String title;
-    private int yearOfRelease;
-    private int yearOfConclusion;
-    private String originalTitle;
-    private String whereToWatch;
-    private ArrayList<SeasonModel> listOfSeasons;
-    private float seriesReview;
-    private int seriesIndex;
+    private String title; // Título
+    private int yearOfRelease; // Ano de lançamento
+    private int yearOfConclusion; // Ano de conclusão
+    private String originalTitle; // Título original
+    private String whereToWatch; // Onde assisti
+    private ArrayList<SeasonModel> listOfSeasons; // Lista de temporadas
+    private float seriesReview; // Nota média
+    private int seriesIndex; // Índice da série
 
     public SeriesModel(String title, int yearOfRelease, int yearOfConclusion, String originalTitle, String whereToWatch, ArrayList<SeasonModel> listOfSeasons) {
         this.title = title;
@@ -25,8 +25,9 @@ public class SeriesModel {
         this.listOfSeasons = listOfSeasons;
         this.seriesReview = 0;
         this.seriesIndex = seriesCounter++;
-    }
+    } // Construtor
 
+    // Métodos Getters e Setters
     public String getTitle() {
         return title;
     }

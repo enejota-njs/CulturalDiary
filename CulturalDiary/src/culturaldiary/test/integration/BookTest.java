@@ -12,21 +12,21 @@ public class BookTest {
         bookController.sortListByLowRated();
         bookController.listBooks();
 
-        bookController.registerBook("Harry Potter 1", "Marina Costa", "Editora Aurora", "9788598743998", "2001", "Fantasia", "Sim", "Sim");
-        bookController.registerBook("        ", "Lucas Antunes", "Estrela Guia", "8532530988", "1995", "Aventura", "Não", "Sim");
-        bookController.registerBook("Harry Potter 2", "Lucas Antunes", "Estrela Guia", "8532530988", "1995", "Aventura", "Não", "Sim");
-        bookController.registerBook("Harry Potter 3", "Paulo Henrique", "Mundo Literário", "9781400034719", "2003", "Juvenil", "Sim", "Sim");
-        bookController.registerBook("Harry Potter 4", "Renata Lopes", "Letras & Magia", "9788532530140", "2000", "Mistério", "Não", "Sim");
-        bookController.registerBook("Harry Potter 5", "Amanda Rocha", "Editora Cristal", "9788598743012", "203304", "Fantasia", "Sim", "Sim");
-        bookController.registerBook("Harry Potter 5", "Amanda Rocha", "Editora Cristal", "978859448743012", "2004", "Fantasia", "Sim", "Sim");
-        bookController.registerBook("Harry Potter 5", "Amanda Rocha", "Editora Cristal", "9788598743012", "2004", "Fantasia", "Sim", "Sim");
-        bookController.registerBook("Harry Potter 6", "Thiago Martins", "Nova Essência", "8532530997", "1998", "Ficção", "Não", "Sim");
-        bookController.registerBook("Harry Potter 7", "Fernanda Dias", "Companhia das Letras", "9788598743098", "2007", "Drama", "Sim", "Sim");
-        bookController.registerBook("The Witcher 1", "Igor Nunes", "Espada & Magia", "9788535900014", "2005", "Fantasia", "Sim", "Não");
-        bookController.registerBook("The Witcher 2", "Mariana Soares", "Selo Vermelho", "8532048725", "2007", "Aventura", "Não", "Não");
-        bookController.registerBook("The Witcher 3", " ", "Estúdio Letras", "9788598743104", "2009", "RPG", "Sim", "Não");
-        bookController.registerBook("The Witcher 3", "Bruno Vieira", "Estúdio Letras", "9788598743104", "2009", "RPG", "Sim", "Não");
-        bookController.registerBook("The Witcher 4", "Juliana Lopes", " ", "9788532530122", "2011", "Fantasia Épica", "Não", "Sim");
+        bookController.registerBook("Harry Potter 1", "Marina Costa", "Editora Aurora", "9788598743998", "2001", "Fantasia", "Sim", "Sim"); // Válido
+        bookController.registerBook("        ", "Lucas Antunes", "Estrela Guia", "8532530988", "1995", "Aventura", "Não", "Sim"); // Título vazio
+        bookController.registerBook("Harry Potter 2", "Lucas Antunes", "Estrela Guia", "8532530988", "1995", "Aventura", "Não", "Sim"); // Válido
+        bookController.registerBook("Harry Potter 3", "Paulo Henrique", "Mundo Literário", "9781400034719", "2003", "Juvenil", "Sim", "Sim"); // Válido
+        bookController.registerBook("Harry Potter 4", "Renata Lopes", "Letras & Magia", "9788532530140", "2000", "Mistério", "Não", "Sim"); // Válido
+        bookController.registerBook("Harry Potter 5", "Amanda Rocha", "Editora Cristal", "9788598743012", "203304", "Fantasia", "Sim", "Sim"); // Ano inválido
+        bookController.registerBook("Harry Potter 5", "Amanda Rocha", "Editora Cristal", "978859448743012", "2004", "Fantasia", "Sim", "Sim"); // ISBN inválido
+        bookController.registerBook("Harry Potter 5", "Amanda Rocha", "Editora Cristal", "9788598743012", "2004", "Fantasia", "Sim", "Sim"); // Válido
+        bookController.registerBook("Harry Potter 6", "Thiago Martins", "Nova Essência", "8532530997", "1998", "Ficção", "Não", "Sim"); // Válido
+        bookController.registerBook("Harry Potter 7", "Fernanda Dias", "Companhia das Letras", "9788598743098", "2007", "Drama", "Sim", "Sim"); // Válido
+        bookController.registerBook("The Witcher 1", "Igor Nunes", "Espada & Magia", "9788535900014", "2005", "Fantasia", "Sim", "Não"); // Válido
+        bookController.registerBook("The Witcher 2", "Mariana Soares", "Selo Vermelho", "8532048725", "2007", "Aventura", "Não", "Não"); // Válido
+        bookController.registerBook("The Witcher 3", " ", "Estúdio Letras", "9788598743104", "2009", "RPG", "Sim", "Não"); // Autor vazio
+        bookController.registerBook("The Witcher 3", "Bruno Vieira", "Estúdio Letras", "9788598743104", "2009", "RPG", "Sim", "Não"); // Válido
+        bookController.registerBook("The Witcher 4", "Juliana Lopes", " ", "9788532530122", "2011", "Fantasia Épica", "Não", "Sim"); // Editora vazio
         bookController.registerBook("The Witcher 4", "Juliana Lopes", "Editora Runa", "9788532530122", "2011", "Fantasia Épica", "Não", "Sim");
         bookController.registerBook("The Witcher 5", "Carlos Tavares", "Nova Magia", "8571234599", "2013", "Ação", "Sim", "Sim");
         bookController.registerBook("The Witcher 6", "Luciana Campos", "Editora Golem", "9788598743128", "2015", "Mitologia", "Sim", "Não");

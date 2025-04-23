@@ -5,17 +5,17 @@ import culturaldiary.review.ReviewModel;
 public class BookModel {
     private static int bookCounter = 1;
 
-    private String title;
-    private String author;
-    private String publisher;
-    private String isbn;
-    private int yearOfPublication;
-    private String genre;
-    private boolean hasCopy;
-    private int bookIndex;
-    private ReviewModel bookReview;
-    private boolean evaluatedBook;
-    private boolean read;
+    private String title; // Título do livro
+    private String author; // Autor do livro
+    private String publisher; // Editora do livro
+    private String isbn; // Número ISBN do livro
+    private int yearOfPublication; // Ano de publicação do livro
+    private String genre; // Gênero do livro
+    private boolean hasCopy; // Indica se o livro tem cópia disponível
+    private int bookIndex; // Índice do livro na lista
+    private ReviewModel bookReview; // Avaliação do livro
+    private boolean evaluatedBook; // Indica se o livro foi avaliado
+    private boolean read; // Indica se o livro foi lido
 
     public BookModel(String title, String author, String publisher,
                      String isbn, int yearOfPublication, String genre, boolean hasCopy, boolean read) {
@@ -30,9 +30,9 @@ public class BookModel {
         this.bookReview = null;
         this.evaluatedBook = false;
         this.read = read;
-    }
+    } // Construtor
 
-
+    // Métodos Getters e Setters
     public String getTitle() {
         return title;
     }

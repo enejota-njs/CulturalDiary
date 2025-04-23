@@ -8,12 +8,12 @@ import java.util.Comparator;
 import java.util.Set;
 
 public class BookController {
-    BookView bookView = new BookView();
-    BookModel bookModel;
-    BookRepository bookRepository = new BookRepository();
-    private ArrayList<BookModel> listOfBooks = bookRepository.getListOfBooks();
+    BookView bookView = new BookView(); // Visual da interface
+    BookModel bookModel; // Modelo do livro
+    BookRepository bookRepository = new BookRepository(); // Repositório de dados
+    private ArrayList<BookModel> listOfBooks = bookRepository.getListOfBooks(); // Lista de livros
 
-    Calendar calendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance(); // Calendário atual
 
     public boolean registerBook(String title, String author, String publisher,
                                 String isbn, String yearOfPublicationString, String genre, String hasCopyString, String readString) {
@@ -27,32 +27,32 @@ public class BookController {
         hasCopyString = hasCopyString.trim();
         readString = readString.trim();
 
-        boolean validTitle = validateTitle(title);
-        boolean validAuthor = validateAuthor(author);
-        boolean validPublisher = validatePublisher(publisher);
-        boolean validIsbn = validateIsbn(isbn);
-        boolean validYearOfPublication = validateYearOfPublication(yearOfPublicationString);
-        boolean validGenre = validateGenre(genre);
-        boolean validHasCopy = validateHasCopy(hasCopyString);
-        boolean validRead = validateRead(readString);
+        boolean validTitle = validateTitle(title); // Valida título
+        boolean validAuthor = validateAuthor(author); // Valida autor
+        boolean validPublisher = validatePublisher(publisher); // Valida editora
+        boolean validIsbn = validateIsbn(isbn); // Valida ISBN
+        boolean validYearOfPublication = validateYearOfPublication(yearOfPublicationString); // Valida ano
+        boolean validGenre = validateGenre(genre); // Valida gênero
+        boolean validHasCopy = validateHasCopy(hasCopyString); // Valida se possui cópia
+        boolean validRead = validateRead(readString); // Valida se foi lido
 
         if (validTitle == false || validAuthor == false || validPublisher == false || validIsbn == false || validYearOfPublication == false
                 || validGenre == false || validHasCopy == false || validRead == false) {
-            bookView.tryAgainMessage();
+            bookView.tryAgainMessage(); // Mensagem de erro
             return false;
         }
 
         try {
-            int yearOfPublication = Integer.parseInt(yearOfPublicationString);
+            int yearOfPublication = Integer.parseInt(yearOfPublicationString); // Converte ano
 
             Set<String> positiveResponsesHasCopy = Set.of(
                     "sim", "s", "tenho", "sim tenho", "tenho sim", "s tenho", "tenho s"
-            );
+            ); // Respostas positivas para cópia
 
             Set<String> negativeResponsesHasCopy = Set.of(
                     "não", "nao", "n", "não tenho", "nao tenho", "n tenho",
                     "tenho não", "tenho nao", "tenho n"
-            );
+            ); // Respostas negativas para cópia
 
             boolean hasCopy = false;
             if (positiveResponsesHasCopy.contains(hasCopyString.toLowerCase())) { hasCopy = true; }
@@ -60,60 +60,60 @@ public class BookController {
 
             Set<String> positiveResponsesRead = Set.of(
                     "sim", "s", "li", "sim li", "li sim", "s li", "li s", "já li", "ja li", "já", "ja"
-            );
+            ); // Respostas positivas para leitura
 
             Set<String> negativeResponsesRead = Set.of(
                     "não", "nao", "n", "não li", "nao li", "n li",
                     "li não", "li nao", "li n"
-            );
+            ); // Respostas negativas para leitura
 
             boolean read = false;
             if (positiveResponsesRead.contains(readString.toLowerCase())) { read = true; }
             else if (negativeResponsesRead.contains(readString.toLowerCase())) { read = false; }
 
-            bookModel = new BookModel(title.trim(), author.trim(), publisher.trim(), isbn.trim(), yearOfPublication, genre.trim(), hasCopy, read);
-            bookRepository.addBook(bookModel);
+            bookModel = new BookModel(title.trim(), author.trim(), publisher.trim(), isbn.trim(), yearOfPublication, genre.trim(), hasCopy, read); // Cria livro
+            bookRepository.addBook(bookModel); // Adiciona livro
 
-            bookView.registeredBookMessage(title);
+            bookView.registeredBookMessage(title); // Mensagem de sucesso
 
             return true;
         } catch (Exception e) {
-            bookView.invalidMessage();
+            bookView.invalidMessage(); // Mensagem de erro
             return false;
         }
-    }
+    } // Registra livro
 
     public boolean validateTitle(String title) {
         return validateNewString(title, "Título");
-    }
+    } // Valida título
 
     public boolean validateAuthor(String author) {
         return validateNewString(author, "Autor");
-    }
+    } // Valida autor
 
     public boolean validatePublisher(String publisher) {
         return validateNewString(publisher, "Editora");
-    }
+    } // Valida editora
 
     public boolean validateIsbn(String isbn) {
         return validateNewIsbn(isbn);
-    }
+    } // Valida ISBN
 
     public boolean validateYearOfPublication(String yearOfPublication) {
         return validateNewYear(yearOfPublication);
-    }
+    } // Valida ano de publicação
 
     public boolean validateGenre(String genre) {
         return validateNewString(genre, "Gênero");
-    }
+    } // Valida gênero
 
     public boolean validateHasCopy(String hasCopy) {
         return validateNewHasCopy(hasCopy);
-    }
+    } // Valida se possui cópia
 
     public boolean validateRead(String read) {
         return validateNewRead(read);
-    }
+    } // Valida se foi lido
 
     public boolean validateNewString(String value, String name) {
         if (value.isEmpty()) {
@@ -121,20 +121,24 @@ public class BookController {
             return false;
         }
         return true;
-    }
+    } // Valida string não vazia
 
     public boolean validateNewIsbn(String value) {
+
         if (validateNewString(value, "Isbn")) {
+            // Verifica se o valor é composto apenas por números e tem 10 ou 13 caracteres
             if (value.matches("\\d+") && (value.length() == 10 || value.length() == 13)) {
 
+                // Para ISBN de 13 caracteres, verifica se começa com "978" ou "979"
                 if (value.length() == 13 && !(value.startsWith("978") || value.startsWith("979"))) {
-                    bookView.nonExistentIsbnMessage();
+                    bookView.nonExistentIsbnMessage(); // Exibe mensagem de erro
                     return false;
                 }
 
+                // Verifica se o ISBN já foi registrado
                 for (BookModel book : listOfBooks) {
                     if (book.getIsbn().equalsIgnoreCase(value)) {
-                        bookView.registeredIsbnMessage();
+                        bookView.registeredIsbnMessage(); // Exibe mensagem de ISBN já registrado
                         return false;
                     }
                 }
@@ -142,28 +146,30 @@ public class BookController {
                 return true;
             }
             else {
-                bookView.nonExistentIsbnMessage();
+                bookView.nonExistentIsbnMessage(); // Exibe mensagem de erro se o ISBN for inválido
                 return false;
             }
         }
 
         return false;
-    }
+    } // Valida ISBN
 
     public boolean validateNewYear(String value) {
+
         if (validateNewString(value, "Ano de publicação")) {
             int valueInt = 0;
-            int currentYear = calendar.get(Calendar.YEAR);
+            int currentYear = calendar.get(Calendar.YEAR); // Obtém o ano atual
 
             try {
-                valueInt = Integer.parseInt(value);
+                valueInt = Integer.parseInt(value); // Tenta converter o valor para inteiro
             } catch (Exception e) {
-                bookView.integerMessage();
+                bookView.integerMessage(); // Exibe mensagem de erro se não for um número
                 return false;
             }
 
+            // Verifica se o ano é válido (entre 1700 e o ano atual)
             if (valueInt < 1700 || valueInt > currentYear) {
-                bookView.invalidYearMessage(currentYear);
+                bookView.invalidYearMessage(currentYear); // Exibe mensagem de ano inválido
                 return false;
             }
 
@@ -171,11 +177,13 @@ public class BookController {
         }
 
         return false;
-    }
+    } // Valida ano de publicação
 
     public boolean validateNewHasCopy(String value) {
+
         if (validateNewString(value, "Exemplar")) {
 
+            // Respostas válidas para ter ou não exemplar
             Set<String> validAnswers = Set.of(
                     "sim", "s",
                     "não", "nao", "n",
@@ -183,6 +191,7 @@ public class BookController {
                     "sim tenho", "tenho sim", "s tenho", "tenho s", "tenho"
             );
 
+            // Verifica se a resposta está na lista de respostas válidas
             if (validAnswers.contains(value.toLowerCase())) {
                 return true;
             } else {
@@ -191,11 +200,13 @@ public class BookController {
         }
 
         return false;
-    }
+    } // Valida exemplar
 
     public boolean validateNewRead(String value) {
+
         if (validateNewString(value, "Leitura")) {
 
+            // Respostas válidas para leitura
             Set<String> validAnswers = Set.of(
                     "sim", "s",
                     "não", "nao", "n",
@@ -203,6 +214,7 @@ public class BookController {
                     "sim li", "li sim", "s li", "li s", "li", "já li", "ja li", "já", "ja"
             );
 
+            // Verifica se a resposta está na lista de respostas válidas
             if (validAnswers.contains(value.toLowerCase())) {
                 return true;
             } else {
@@ -211,260 +223,256 @@ public class BookController {
         }
 
         return false;
-    }
+    } // Valida leitura
 
     public boolean searchBookByTitle(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value)) {
+        if (validateNewInputString(value)) { // Valida a entrada do título
 
             boolean bookFound = false;
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
-
+                // Itera sobre os livros procurando pelo título
                 for (BookModel book : listOfBooks) {
                     if (book.getTitle().toLowerCase().contains(value.toLowerCase().trim())) {
 
                         if (!bookFound) {
-                            bookView.headerForBook();
+                            bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                             bookFound = true;
                         }
 
-                        bookView.bookInformation(book);
+                        bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
 
             }
-            if (!bookFound) { bookView.noBookFoundMessage(); }
+            if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;
         }
 
         return false;
-    }
+    } // Busca livro pelo título
 
     public boolean searchBookByAuthor(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value)) {
+        if (validateNewInputString(value)) { // Valida a entrada do autor
 
             boolean bookFound = false;
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
+                // Itera sobre os livros procurando pelo autor
                 for (BookModel book : listOfBooks) {
                     if (book.getAuthor().toLowerCase().contains(value.toLowerCase().trim())) {
 
                         if (!bookFound) {
-                            bookView.headerForBook();
+                            bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                             bookFound = true;
                         }
 
-                        bookView.bookInformation(book);
+                        bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
 
-
-
             }
-            if (!bookFound) { bookView.noBookFoundMessage(); }
+            if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;
         }
 
         return false;
-    }
+    } // Busca livro pelo autor
 
     public boolean searchBookByGenre(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value)) {
+        if (validateNewInputString(value)) { // Valida a entrada do gênero
 
             boolean bookFound = false;
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
-
+                // Itera sobre os livros procurando pelo gênero
                 for (BookModel book : listOfBooks) {
                     if (book.getGenre().toLowerCase().contains(value.toLowerCase().trim())) {
 
                         if (!bookFound) {
-                            bookView.headerForBook();
+                            bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                             bookFound = true;
                         }
 
-                        bookView.bookInformation(book);
+                        bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
 
-
-
             }
-            if (!bookFound) { bookView.noBookFoundMessage(); }
+            if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;
         }
 
         return false;
-
-    }
+    } // Busca livro pelo gênero
 
     public boolean searchBookByYearOfPublication(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value) && validateNewInputInt(value)) {
+        if (validateNewInputString(value) && validateNewInputInt(value)) { // Valida a entrada do ano de publicação
 
             boolean bookFound = false;
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
                 int valueInt = 0;
                 try {
-                    valueInt = Integer.parseInt(value);
+                    valueInt = Integer.parseInt(value); // Tenta converter o valor para inteiro
                 } catch (Exception e) {
-                    bookView.invalidMessage();
+                    bookView.invalidMessage(); // Exibe mensagem de erro se a conversão falhar
                     return false;
                 }
 
-
+                // Itera sobre os livros procurando pelo ano de publicação
                 for (BookModel book : listOfBooks) {
                     if (book.getYearOfPublication() == valueInt) {
 
                         if (!bookFound) {
-                            bookView.headerForBook();
+                            bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                             bookFound = true;
                         }
 
-                        bookView.bookInformation(book);
+                        bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
 
             }
-            if (!bookFound) { bookView.noBookFoundMessage(); }
+            if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;
         }
 
         return false;
-    }
+    } // Busca livro pelo ano de publicação
 
     public boolean searchBookByIsbn(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value)) {
-            boolean validValue = value.matches("\\d+");
+        if (validateNewInputString(value)) { // Valida a entrada do ISBN
+            boolean validValue = value.matches("\\d+"); // Verifica se o ISBN contém apenas números
 
-            if ((validValue) && (value.length() == 13 || value.length() == 10)) {
+            if ((validValue) && (value.length() == 13 || value.length() == 10)) { // Verifica se o comprimento do ISBN é válido
                 boolean bookFound = false;
-                if (!listOfBooks.isEmpty()) {
+                if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
+                    // Itera sobre os livros procurando pelo ISBN
                     for (BookModel book : listOfBooks) {
                         if (book.getIsbn().equalsIgnoreCase(value.trim())) {
 
                             if (!bookFound) {
-                                bookView.headerForBook();
+                                bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                                 bookFound = true;
                             }
 
-                            bookView.bookInformation(book);
+                            bookView.bookInformation(book); // Exibe informações do livro
                         }
                     }
 
                 }
                 if (!bookFound) {
-                    bookView.noBookFoundMessage();
+                    bookView.noBookFoundMessage(); // Exibe mensagem se nenhum livro for encontrado
                 }
                 return true;
             }
-            bookView.nonExistentIsbnMessage();
+            bookView.nonExistentIsbnMessage(); // Exibe mensagem de erro se o ISBN for inválido
             return false;
-
         }
         return false;
-    }
+    } // Busca livro pelo ISBN
 
     public boolean listBooks() {
         try {
             if (listOfBooks.isEmpty()) {
-                bookView.emptyListMessage();
+                bookView.emptyListMessage(); // Exibe mensagem se a lista de livros estiver vazia
             } else {
-                bookView.headerForBook();
+                bookView.headerForBook(); // Exibe cabeçalho da lista de livros
                 for (BookModel book : listOfBooks) {
-                    bookView.bookInformation(book);
+                    bookView.bookInformation(book); // Exibe informações de cada livro
                 }
             }
             return true;
         } catch (Exception e) {
-            bookView.invalidMessage();
+            bookView.invalidMessage(); // Exibe mensagem de erro caso ocorra uma exceção
             return false;
         }
-    }
+    } // Lista todos os livros
 
     public boolean filterListOfBooksByGenre(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value)) {
+        if (validateNewInputString(value)) { // Valida a entrada do gênero
 
             boolean bookFound = false;
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
+                // Itera sobre os livros filtrando pelo gênero
                 for (BookModel book : listOfBooks) {
                     if (book.getGenre().toLowerCase().contains(value.toLowerCase().trim())) {
 
                         if (!bookFound) {
-                            bookView.headerForBook();
+                            bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                             bookFound = true;
                         }
 
-                        bookView.bookInformation(book);
+                        bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
 
-
-
             }
-            if (!bookFound) { bookView.noBookFoundMessage(); }
+            if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;
         }
 
         return false;
-    }
+    } // Filtra livros por gênero
 
     public boolean filterListOfBooksByYearOfPublication(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços no início e no fim da string
 
-        if (validateNewInputString(value) && validateNewInputInt(value)) {
+        if (validateNewInputString(value) && validateNewInputInt(value)) { // Valida a entrada e verifica se é um número válido
 
             boolean bookFound = false;
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
 
                 int valueInt = 0;
                 try {
-                    valueInt = Integer.parseInt(value);
+                    valueInt = Integer.parseInt(value); // Tenta converter o valor para inteiro
                 } catch (Exception e) {
-                    bookView.invalidMessage();
+                    bookView.invalidMessage(); // Exibe mensagem de erro se a conversão falhar
                     return false;
                 }
 
-
+                // Itera sobre os livros filtrando pelo ano de publicação
                 for (BookModel book : listOfBooks) {
                     if (book.getYearOfPublication() == valueInt) {
 
                         if (!bookFound) {
-                            bookView.headerForBook();
+                            bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
                             bookFound = true;
                         }
 
-                        bookView.bookInformation(book);
+                        bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
 
             }
-            if (!bookFound) { bookView.noBookFoundMessage(); }
+            if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;
         }
 
         return false;
-    }
+    } // Filtra livros por ano de publicação
 
     public boolean sortListByTopRated() {
         try {
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
                 ArrayList<BookModel> listOfReviewedBooks = new ArrayList<BookModel>();
 
+                // Adiciona livros com avaliação na lista listOfReviewedBooks
                 for (BookModel book : listOfBooks) {
                     if (book.getBookReview() != null) {
                         listOfReviewedBooks.add(book);
@@ -473,34 +481,36 @@ public class BookController {
 
                 ArrayList<BookModel> highlyRatedBooks = new ArrayList<BookModel>(listOfReviewedBooks);
 
-                if (!highlyRatedBooks.isEmpty()){
+                if (!highlyRatedBooks.isEmpty()) {
+                    // Ordena os livros com avaliações pela pontuação (do maior para o menor)
                     highlyRatedBooks.sort(Comparator.comparing(bookModel -> bookModel.getBookReview().getScore(), Comparator.reverseOrder()));
                 } else {
-                    bookView.emptyEvaluatedListMessage();
+                    bookView.emptyEvaluatedListMessage(); // Exibe mensagem caso não haja livros avaliados
                     return true;
                 }
 
-                bookView.headerForBook();
+                bookView.headerForBook(); // Exibe cabeçalho da lista de livros
                 for (BookModel book : highlyRatedBooks) {
-                    bookView.bookInformation(book);
+                    bookView.bookInformation(book); // Exibe informações do livro
                 }
 
             } else {
-                bookView.emptyListMessage();
+                bookView.emptyListMessage(); // Exibe mensagem caso a lista de livros esteja vazia
             }
 
             return true;
         } catch (Exception e) {
-            bookView.invalidMessage();
+            bookView.invalidMessage(); // Exibe mensagem de erro caso ocorra uma exceção
             return false;
         }
-    }
+    } // Ordena lista de livros pelos mais bem avaliados
 
     public boolean sortListByLowRated() {
         try {
-            if (!listOfBooks.isEmpty()) {
+            if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
                 ArrayList<BookModel> listOfReviewedBooks = new ArrayList<BookModel>();
 
+                // Adiciona livros com avaliação na lista listOfReviewedBooks
                 for (BookModel book : listOfBooks) {
                     if (book.getBookReview() != null) {
                         listOfReviewedBooks.add(book);
@@ -509,227 +519,264 @@ public class BookController {
 
                 ArrayList<BookModel> poorlyRatedBooks = new ArrayList<BookModel>(listOfReviewedBooks);
 
-                if (!poorlyRatedBooks.isEmpty()){
+                if (!poorlyRatedBooks.isEmpty()) {
+                    // Ordena os livros com avaliações pela pontuação (do menor para o maior)
                     poorlyRatedBooks.sort(Comparator.comparing(bookModel -> bookModel.getBookReview().getScore()));
                 } else {
-                    bookView.emptyEvaluatedListMessage();
+                    bookView.emptyEvaluatedListMessage(); // Exibe mensagem caso não haja livros avaliados
                     return true;
                 }
 
-                bookView.headerForBook();
+                bookView.headerForBook(); // Exibe cabeçalho da lista de livros
                 for (BookModel book : poorlyRatedBooks) {
-                    bookView.bookInformation(book);
+                    bookView.bookInformation(book); // Exibe informações do livro
                 }
 
             } else {
-                bookView.emptyListMessage();
+                bookView.emptyListMessage(); // Exibe mensagem caso a lista de livros esteja vazia
             }
 
             return true;
         } catch (Exception e) {
-            bookView.invalidMessage();
-            return false; }
-    }
+            bookView.invalidMessage(); // Exibe mensagem de erro caso ocorra uma exceção
+            return false;
+        }
+    } // Ordena lista de livros pelos piores avaliados
 
     public boolean openBook(int index) {
         try {
             BookModel book;
             try {
-                book = listOfBooks.get(index-1);
+                // Tenta obter o livro com o índice fornecido (index - 1, pois o índice começa do 0)
+                book = listOfBooks.get(index - 1);
             } catch (Exception e) {
+                // Caso o índice seja inválido ou não exista o livro, exibe mensagem
                 bookView.noBookFoundMessage();
                 return false;
             }
 
-            bookView.fullBookInformation(book);
+            bookView.fullBookInformation(book); // Exibe as informações completas do livro
             return true;
-        }   catch (Exception e) {
-            bookView.invalidMessage();
+        } catch (Exception e) {
+            bookView.invalidMessage(); // Exibe mensagem de erro caso ocorra uma exceção
             return false;
         }
-    }
+    } // Abre o livro pela posição fornecida e exibe suas informações completas
 
     public boolean changeBookReadingStatus(int index, String value) {
         BookModel book;
 
         try {
-            book = listOfBooks.get(index-1);
+            // Tenta obter o livro com o índice fornecido (index - 1, pois o índice começa do 0)
+            book = listOfBooks.get(index - 1);
         } catch (Exception e) {
+            // Caso o índice seja inválido ou não exista o livro, exibe mensagem
             bookView.noBookFoundMessage();
             return false;
         }
 
-        value = value.trim();
+        value = value.trim(); // Remove espaços extras
 
         if (book == null) {
+            // Verifica se o livro é nulo (não encontrado)
             bookView.invalidMessage();
             return false;
         }
 
-        boolean validRead = validateNewRead(value);
+        boolean validRead = validateNewRead(value); // Valida o valor de leitura fornecido
 
         if (!validRead) {
+            // Se a validação não for bem-sucedida, solicita ao usuário tentar novamente
             bookView.tryAgainMessage();
             return false;
         }
 
         try {
+            // Conjunto de respostas afirmativas para o status de leitura
             Set<String> positiveResponsesRead = Set.of(
                     "sim", "s", "li", "sim li", "li sim", "s li", "li s", "já li", "ja li", "já", "ja"
             );
 
+            // Conjunto de respostas negativas para o status de leitura
             Set<String> negativeResponsesRead = Set.of(
                     "não", "nao", "n", "não li", "nao li", "n li",
                     "li não", "li nao", "li n"
             );
 
-            boolean read = false ;
+            boolean read = false;
             if (positiveResponsesRead.contains(value.toLowerCase())) {
+                // Se a resposta for afirmativa, define o status como "lido"
                 read = true;
-            } else if ((book.isRead() == false) && negativeResponsesRead.contains(value.toLowerCase())){
+            } else if ((book.isRead() == false) && negativeResponsesRead.contains(value.toLowerCase())) {
+                // Se o livro não foi lido e a resposta for negativa, define como "não lido"
                 read = false;
-            }
-            else if ((book.isRead() == true) && negativeResponsesRead.contains(value.toLowerCase())) {
+            } else if ((book.isRead() == true) && negativeResponsesRead.contains(value.toLowerCase())) {
+                // Se o livro já foi lido e a resposta for negativa, exibe mensagem de erro
                 bookView.wrongReadMessage();
                 return false;
             }
 
-            book.setRead(read);
-            bookView.updatedReadMessage();
+            book.setRead(read); // Atualiza o status de leitura do livro
+            bookView.updatedReadMessage(); // Exibe mensagem de confirmação da atualização
 
             return true;
         } catch (Exception e) {
+            // Exibe mensagem de erro caso ocorra alguma exceção
             bookView.invalidMessage();
             return false;
         }
-    }
+    } // Altera o status de leitura de um livro baseado na resposta do usuário
 
     public boolean evaluateBook(int index, String score, String consumptionDate, String comment) {
         try {
+            // Limpa espaços em branco das entradas
             score = score.trim();
             consumptionDate = consumptionDate.trim();
             comment = comment.trim();
 
             BookModel book;
             try {
-                book = listOfBooks.get(index-1);
+                // Tenta acessar o livro com o índice fornecido (index - 1, pois começa em 0)
+                book = listOfBooks.get(index - 1);
             } catch (Exception e) {
+                // Caso o índice fornecido não seja válido, exibe mensagem e retorna false
                 bookView.noBookFoundMessage();
                 return false;
             }
 
+            // Verifica se o livro já foi avaliado
             if (!checkBookReview(book)) {
+                // Se o livro foi lido, prossegue com a avaliação
                 if (book.isRead()) {
+                    // Valida a pontuação, data de consumo e comentário
                     boolean validScore = validateNewScore(score);
                     boolean validConsumptionDate = validateNewDate(book, consumptionDate);
                     boolean validComment = validateNewString(comment, "Comentários");
 
+                    // Se algum dado for inválido, solicita ao usuário tentar novamente
                     if (validScore == false || validConsumptionDate == false || validComment == false) {
                         bookView.tryAgainMessage();
                         return false;
                     }
 
+                    // Converte a pontuação para float
                     float scoreFloat = 0f;
                     try {
                         scoreFloat = Float.parseFloat(score);
                     } catch (Exception e) {
+                        // Se ocorrer erro na conversão da pontuação, exibe mensagem de erro
                         bookView.invalidMessage();
                         return false;
                     }
 
+                    // Cria um novo objeto de avaliação e atribui ao livro
                     ReviewModel reviewModel = new ReviewModel(scoreFloat, consumptionDate, comment);
                     book.setBookReview(reviewModel);
                     book.setEvaluatedBook(true);
 
+                    // Exibe mensagem confirmando que a avaliação foi registrada
                     bookView.registeredEvaluationMessage();
                     return true;
                 } else {
+                    // Se o livro não foi lido, exibe mensagem
                     bookView.unreadBookMessage();
                     return false;
                 }
             } else {
+                // Se o livro já foi avaliado, exibe mensagem informando que ele já possui avaliação
                 bookView.messageOfBookAlreadyEvaluated();
                 return false;
             }
         } catch (Exception e) {
+            // Exibe mensagem de erro caso alguma exceção seja lançada
             bookView.invalidMessage();
             return false;
         }
-    }
+    } // Avalia o livro
 
     public boolean evaluateBookAgain(int index, String score, String consumptionDate, String comment) {
         try {
+            // Remove espaços extras do score, data de consumo e comentário
             score = score.trim();
             consumptionDate = consumptionDate.trim();
             comment = comment.trim();
 
-            BookModel book = listOfBooks.get(index-1);
+            // Obtém o livro da lista baseado no índice (ajustando para o índice correto)
+            BookModel book = listOfBooks.get(index - 1);
 
+            // Verifica se o livro já foi avaliado
             if (checkBookReview(book)) {
+                // Marca o livro como não avaliado novamente antes de fazer a avaliação
                 book.setEvaluatedBook(false);
+                // Chama o método de avaliação do livro
                 return evaluateBook(index, score, consumptionDate, comment);
             } else {
+                // Exibe uma mensagem caso o livro não tenha avaliação
                 bookView.unratedBookMessage();
                 return false;
             }
         } catch (Exception e) {
+            // Exibe uma mensagem de erro caso ocorra uma exceção
             bookView.invalidMessage();
             return false;
         }
-    }
+
+    } // Avalia o livro novamente
 
     public boolean checkBookReview(BookModel book) {
+        // Verifica se o livro foi avaliado
         if (book.isEvaluatedBook()) {
             return true;
         }
         return false;
-    }
+    } // Verifica se o livro já foi avaliado
 
     public boolean validateNewInputString(String value) {
         if (value.isEmpty()) {
-            bookView.emptyInformationMessage();
+            bookView.emptyInformationMessage(); // Exibe mensagem de informação vazia
             return false;
         }
         return true;
-    }
+    } // Valida se a string de entrada não está vazia
 
     public boolean validateNewInputInt(String value) {
         try {
-            int valueInt = Integer.parseInt(value);
+            int valueInt = Integer.parseInt(value); // Tenta converter a string para inteiro
             return true;
         } catch (Exception e) {
             bookView.integerMessage();
             return false;
         }
-    }
+    } // Valida se a string pode ser convertida para um número inteiro
 
     public boolean validateNewScore(String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços extras do valor
 
-        if (validateNewInputString(value)) {
+        if (validateNewInputString(value)) { // Verifica se a string não está vazia
             try {
-                float score = Float.parseFloat(value);
+                float score = Float.parseFloat(value); // Tenta converter a string para float
                 if (score < 1 || score > 5) {
-                    bookView.invalidScoreMessage();
+                    bookView.invalidScoreMessage(); // Exibe mensagem de pontuação inválida
                     return false;
                 }
                 return true;
             } catch (Exception e) {
-                bookView.invalidNumberMessage();
+                bookView.invalidNumberMessage(); // Exibe mensagem de número inválido
                 return false;
             }
         }
 
         return false;
-    }
+    } // Valida se o valor informado é uma pontuação válida entre 1 e 5
 
     public boolean validateNewDate(BookModel book, String value) {
-        value = value.trim();
+        value = value.trim(); // Remove espaços extras do valor
 
-        if (validateNewInputString(value)) {
-            String[] parts = value.split("/");
+        if (validateNewInputString(value)) { // Verifica se a string não está vazia
+            String[] parts = value.split("/"); // Divide a string da data em partes
+
             if (parts.length != 3) {
-                bookView.invalidDateFormatMessage();
+                bookView.invalidDateFormatMessage(); // Exibe mensagem de formato inválido
                 return false;
             }
 
@@ -738,22 +785,22 @@ public class BookController {
             String year = parts[2];
 
             if (day.length() > 2 || month.length() > 2 || year.length() != 4) {
-                bookView.invalidDateMessage();
+                bookView.invalidDateMessage(); // Exibe mensagem de data inválida
                 return false;
             }
 
-            boolean valid = validateExistingDate(day, month, year);
+            boolean valid = validateExistingDate(day, month, year); // Valida se a data realmente existe
             if (!valid) { return false; }
 
             try {
-                int yearInt = Integer.parseInt(year);
+                int yearInt = Integer.parseInt(year); // Converte o ano para inteiro
 
                 if (yearInt < book.getYearOfPublication()) {
-                    bookView.invalidYearPeriodMessage(book.getYearOfPublication());
+                    bookView.invalidYearPeriodMessage(book.getYearOfPublication()); // Exibe mensagem se o ano for anterior ao de publicação
                     return false;
                 }
             } catch (NumberFormatException e) {
-                bookView.invalidDateMessage();
+                bookView.invalidDateMessage(); // Exibe mensagem de data inválida se o ano não for um número
                 return false;
             }
 
@@ -761,49 +808,49 @@ public class BookController {
         }
 
         return false;
-    }
+    } // Valida se a data informada é válida e compatível com o ano de publicação do livro
 
     public boolean validateExistingDate(String day, String month, String year) {
         try {
-            int d = Integer.parseInt(day);
-            int m = Integer.parseInt(month);
-            int y = Integer.parseInt(year);
+            int d = Integer.parseInt(day); // Converte o dia para inteiro
+            int m = Integer.parseInt(month); // Converte o mês para inteiro
+            int y = Integer.parseInt(year); // Converte o ano para inteiro
 
             if (m < 1 || m > 12) {
-                bookView.nonExistentDateMessage();
+                bookView.nonExistentDateMessage(); // Exibe mensagem se o mês for inválido
                 return false;
             }
 
-            m = m - 1;
+            m = m - 1; // Ajusta o mês para o formato do Calendar (0 a 11)
 
             Calendar cal = Calendar.getInstance();
-            cal.setLenient(false);
-            cal.set(y, m, d);
-            cal.getTime();
+            cal.setLenient(false); // Desativa o modo leniente para validar a data corretamente
+            cal.set(y, m, d); // Define a data no objeto Calendar
+            cal.getTime(); // Verifica se a data é válida
 
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 0); // Zera as horas
+            cal.set(Calendar.MINUTE, 0); // Zera os minutos
+            cal.set(Calendar.SECOND, 0); // Zera os segundos
+            cal.set(Calendar.MILLISECOND, 0); // Zera os milissegundos
 
             Calendar today = Calendar.getInstance();
-            today.set(Calendar.HOUR_OF_DAY, 0);
-            today.set(Calendar.MINUTE, 0);
-            today.set(Calendar.SECOND, 0);
-            today.set(Calendar.MILLISECOND, 0);
+            today.set(Calendar.HOUR_OF_DAY, 0); // Zera as horas de hoje
+            today.set(Calendar.MINUTE, 0); // Zera os minutos de hoje
+            today.set(Calendar.SECOND, 0); // Zera os segundos de hoje
+            today.set(Calendar.MILLISECOND, 0); // Zera os milissegundos de hoje
 
             if (cal.after(today)) {
-                bookView.invalidFutureDatesMessage();
+                bookView.invalidFutureDatesMessage(); // Exibe mensagem se a data for no futuro
                 return false;
             }
 
             return true;
 
         } catch (Exception e) {
-            bookView.invalidDateMessage();
+            bookView.invalidDateMessage(); // Exibe mensagem de data inválida em caso de exceção
             return false;
         }
-    }
+    } // Valida se a data é existente e não é no futuro
 
     public ArrayList<BookModel> getListOfBooks() {
         return listOfBooks;

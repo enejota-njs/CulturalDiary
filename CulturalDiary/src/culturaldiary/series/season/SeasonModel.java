@@ -5,13 +5,13 @@ import culturaldiary.review.ReviewModel;
 import java.util.ArrayList;
 
 public class SeasonModel {
-    private String genre;
-    private ArrayList<String> cast;
-    private int yearSeason;
-    private ReviewModel seasonReview;
-    private boolean evaluatedSeason;
-    private boolean watched;
-    private int seasonIndex;
+    private String genre; // Gênero
+    private ArrayList<String> cast; // Elenco
+    private int yearSeason; // Ano de lançamento
+    private ReviewModel seasonReview; // Avaliação
+    private boolean evaluatedSeason; // Temporada avaliada
+    private boolean watched; // Assistido
+    private int seasonIndex; // Índice da temporada
 
     public SeasonModel(String genre, ArrayList<String> cast, int yearSeason, boolean watched, int seasonIndex) {
         this.genre = genre;
@@ -21,8 +21,9 @@ public class SeasonModel {
         this.evaluatedSeason = false;
         this.watched = watched;
         this.seasonIndex = seasonIndex;
-    }
+    } // Construtor
 
+    // Métodos Getters e Setters
     public String getGenre() {
         return genre;
     }

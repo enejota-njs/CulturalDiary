@@ -7,19 +7,20 @@ import java.util.ArrayList;
 public class MovieModel {
     private static int movieCounter = 1;
 
-    private String title;
-    private String genre;
-    private int yearOfRelease;
-    private String durationTime;
-    private String direction;
-    private String screenplay;
-    private ArrayList<String> cast;
-    private String originalTitle;
-    private String whereToWatch;
-    private int movieIndex;
-    private ReviewModel movieReview;
-    private boolean evaluatedMovie;
-    private boolean watched;
+    private String title; // Título do filme
+    private String genre; // Gênero do filme
+    private int yearOfRelease; // Ano de lançamento
+    private String durationTime; // Duração do filme
+    private String direction; // Diretor do filme
+    private String screenplay; // Roteirista do filme
+    private ArrayList<String> cast; // Elenco do filme
+    private String originalTitle; // Título original
+    private String whereToWatch; // Onde assistir
+    private int movieIndex; // Índice do filme
+    private ReviewModel movieReview; // Avaliação do filme
+    private boolean evaluatedMovie; // Se o filme foi avaliado
+    private boolean watched; // Se o filme foi assistido
+
 
     public MovieModel(String title, String genre, int yearOfRelease, String durationTime,
                       String direction, String screenplay, ArrayList<String> cast,
@@ -37,8 +38,9 @@ public class MovieModel {
         this.movieReview = null;
         this.evaluatedMovie = false;
         this.watched = watched;
-    }
+    } // Constutor
 
+    // Métodos Getters e Setters
     public String getTitle() {
         return title;
     }

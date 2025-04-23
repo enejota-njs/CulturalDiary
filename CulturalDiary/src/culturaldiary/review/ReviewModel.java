@@ -1,16 +1,17 @@
 package culturaldiary.review;
 
 public class ReviewModel {
-    private float score;
-    private String consumptionDate;
-    private String comment;
+    private float score; // Nota
+    private String consumptionDate; // Data de consumo
+    private String comment; // Comentários
 
     public ReviewModel(float score, String consumptionDate, String comment) {
         this.score = score;
         this.consumptionDate = consumptionDate;
         this.comment = comment;
-    }
+    } // Construtor
 
+    // Métodos Getters e Setters
     public float getScore() {
         return score;
     }
