@@ -1,6 +1,5 @@
 package culturaldiary.test.unit;
 
-import culturaldiary.book.BookController;
 import culturaldiary.movie.MovieController;
 import culturaldiary.movie.MovieModel;
 import culturaldiary.review.ReviewModel;
@@ -100,7 +99,6 @@ class MovieTest {
         assertFalse(movieController.registerMovie("A Cidade Adormecida", "Documentário", "2020", "02:22", "Rafael Costa", "Um jovem fazendeiro encontra um mapa que pode levá-lo a um tesouro esquecido há milênios...", "Gustavo Moreira, Vanessa Lima, Jorge Andrade", "                ", "HBO", "assisti"));
         assertFalse(movieController.registerMovie("A Cidade Adormecida", "Documentário", "2020", "02:22", "Rafael Costa", "Um jovem fazendeiro encontra um mapa que pode levá-lo a um tesouro esquecido há milênios...", "Gustavo Moreira, Vanessa Lima, Jorge Andrade", "The Sleeping City", "HBO", "não lembro"));
         assertTrue(movieController.registerMovie("A Cidade Adormecida", "Documentário", "2020", "02:22", "Rafael Costa", "Um jovem fazendeiro encontra um mapa que pode levá-lo a um tesouro esquecido há milênios...", "Gustavo Moreira, Vanessa Lima, Jorge Andrade", "The Sleeping City", "HBO", "assisti"));
-
     }
 
     @Test
@@ -241,7 +239,7 @@ class MovieTest {
     }
 
     @Test
-    void openingBook() {
+    void openingMovie() {
         MovieController movieController = new MovieController();
         movieController.setListOfMovies(movies);
 

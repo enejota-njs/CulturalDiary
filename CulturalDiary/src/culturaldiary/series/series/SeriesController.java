@@ -48,7 +48,7 @@ public class SeriesController {
 
             ArrayList<SeasonModel> listOfSeasons = new ArrayList<SeasonModel>();
 
-            for (int season = 0; season <= listOfSeasonString.length; season++) {
+            for (int season = 0; season <= listOfSeasonString.length-1; season++) {
                 String genreSeason = listOfSeasonString[season][0];
                 String castStringSeason = listOfSeasonString[season][1];
                 String yearStringSeason = listOfSeasonString[season][2];
@@ -95,6 +95,7 @@ public class SeriesController {
                 else if (negativeResponsesWatched.contains(watchedStringSeason.toLowerCase())) { watchedSeason = false; }
 
                 SeasonModel seasonModel = new SeasonModel(genreSeason, castSeason, yearSeason, watchedSeason, season+1);
+                listOfSeasons.add(seasonModel);
             }
 
             seriesModel = new SeriesModel(title, yearOfRelease, yearOfConclusion, originalTitle, whereToWatch, listOfSeasons);
@@ -161,7 +162,7 @@ public class SeriesController {
         return false;
     }
 
-    public boolean searchMovieByTitle(String value) {
+    public boolean searchSeriesByTitle(String value) {
         value = value.trim();
 
         if (validateNewInputString(value)) {
@@ -281,7 +282,7 @@ public class SeriesController {
                 ArrayList<SeriesModel> highlyRatedSeries = new ArrayList<SeriesModel>(listOfReviewedSeries);
 
                 if (!highlyRatedSeries.isEmpty()){
-                    highlyRatedSeries.sort(Comparator.comparing(seriesModel -> seriesModel.getSeriesIndex(), Comparator.reverseOrder()));
+                    highlyRatedSeries.sort(Comparator.comparing(seriesModel -> seriesModel.getSeriesReview(), Comparator.reverseOrder()));
                 } else {
                     seriesView.emptyEvaluatedListMessage();
                     return true;
@@ -470,6 +471,8 @@ public class SeriesController {
                     season.setEvaluatedSeason(true);
 
                     seriesView.registeredEvaluationMessage();
+
+                    updateAverage(series);
                     return true;
                 } else {
                     seriesView.unwatchedSeasonMessage();
@@ -512,6 +515,27 @@ public class SeriesController {
             return true;
         }
         return false;
+    }
+
+    public boolean updateAverage(SeriesModel series) {
+        float sum = 0;
+        int count = 0;
+
+        ReviewModel review;
+        for (SeasonModel season : series.getListOfSeasons()) {
+            review = season.getSeasonReview();
+            if (review != null) {
+                sum += review.getScore();
+                count++;
+            }
+        }
+
+        if (count != 0) {
+            series.setSeriesReview(sum/count);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean validateNewDate(SeasonModel season, String value) {
@@ -652,5 +676,13 @@ public class SeriesController {
         }
 
         return false;
+    }
+
+    public ArrayList<SeriesModel> getListOfSeries() {
+        return listOfSeries;
+    }
+
+    public void setListOfSeries(ArrayList<SeriesModel> listOfSeries) {
+        this.listOfSeries = listOfSeries;
     }
 }
