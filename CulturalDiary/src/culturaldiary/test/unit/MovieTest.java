@@ -74,13 +74,13 @@ class MovieTest {
             movies.get(i).setMovieReview(reviews.get(i));
             movies.get(i).setEvaluatedMovie(true);
         }
-    }
+    } // Criando lista para usar nos testes
 
     @Test
     void creatingMovie() {
         ArrayList<String> hp1 = new ArrayList<>(); hp1.add("Luna Martins"); hp1.add("Caio Vargas"); hp1.add("Isadora Nunes"); hp1.add("Daniela Moura");
         MovieModel movieModel = new MovieModel("Harry Potter 1", "Fantasia", 2001, "02:32", "Marina Costa", "Dragões brilham em um torneio...", hp1, "Harry Potter and the Sorcerer's Stone", "Globoplay", true);
-    }
+    } // Criando filmes
 
     @Test
     void registeringMovies() {
@@ -99,7 +99,7 @@ class MovieTest {
         assertFalse(movieController.registerMovie("A Cidade Adormecida", "Documentário", "2020", "02:22", "Rafael Costa", "Um jovem fazendeiro encontra um mapa que pode levá-lo a um tesouro esquecido há milênios...", "Gustavo Moreira, Vanessa Lima, Jorge Andrade", "                ", "HBO", "assisti"));
         assertFalse(movieController.registerMovie("A Cidade Adormecida", "Documentário", "2020", "02:22", "Rafael Costa", "Um jovem fazendeiro encontra um mapa que pode levá-lo a um tesouro esquecido há milênios...", "Gustavo Moreira, Vanessa Lima, Jorge Andrade", "The Sleeping City", "HBO", "não lembro"));
         assertTrue(movieController.registerMovie("A Cidade Adormecida", "Documentário", "2020", "02:22", "Rafael Costa", "Um jovem fazendeiro encontra um mapa que pode levá-lo a um tesouro esquecido há milênios...", "Gustavo Moreira, Vanessa Lima, Jorge Andrade", "The Sleeping City", "HBO", "assisti"));
-    }
+    } // Registrando filmes
 
     @Test
     void searchingMovieByTitle() {
@@ -116,7 +116,7 @@ class MovieTest {
         assertFalse(movieController.searchMovieByTitle("     "));
         assertTrue(movieController.searchMovieByTitle("nárnia"));
         assertFalse(movieController.searchMovieByTitle("   "));
-    }
+    } // Buscando filmes por título
 
     @Test
     void searchingMovieByDirection() {
@@ -130,7 +130,7 @@ class MovieTest {
         assertFalse(movieController.searchMovieByDirection("  "));
         assertFalse(movieController.searchMovieByDirection("     "));
         assertFalse(movieController.searchMovieByDirection(""));
-    }
+    } // Buscando filmes por diretor(a)
 
     @Test
     void searchingMovieByActorInTheCast() {
@@ -144,7 +144,7 @@ class MovieTest {
         assertTrue(movieController.searchMovieByActorInTheCast("Isa"));
         assertTrue(movieController.searchMovieByActorInTheCast("Bela"));
         assertTrue(movieController.searchMovieByActorInTheCast("FelIPE"));
-    }
+    } // Buscando filmes por ator no elenco
 
     @Test
     void searchingMovieByGenre() {
@@ -161,7 +161,7 @@ class MovieTest {
         assertTrue(movieController.searchMovieByGenre("Fantasia"));
         assertTrue(movieController.searchMovieByGenre("Poesia"));
         assertTrue(movieController.searchMovieByGenre("literatura"));
-    }
+    } // Buscando filmes por gênero
 
     @Test
     void searchingMovieByYearOfRelease() {
@@ -178,7 +178,7 @@ class MovieTest {
         assertFalse(movieController.searchMovieByYearOfRelease("   "));
         assertFalse(movieController.searchMovieByYearOfRelease("ano2020"));
         assertFalse(movieController.searchMovieByYearOfRelease(""));
-    }
+    } // Buscando filmes por ano de lançamento
 
     @Test
     void listingMovies() {
@@ -186,7 +186,7 @@ class MovieTest {
         movieController.setListOfMovies(movies);
 
         assertTrue(movieController.listMovies());
-    }
+    } // Listando filmes
 
     @Test
     void filteringByMovieGenre() {
@@ -203,7 +203,7 @@ class MovieTest {
         assertTrue(movieController.filterListOfMoviesByGenre("Fantasia"));
         assertTrue(movieController.filterListOfMoviesByGenre("Poesia"));
         assertTrue(movieController.filterListOfMoviesByGenre("literatura"));
-    }
+    } // Filtrando filmes por gênero
 
     @Test
     void filteringMovieByYearOfRelease() {
@@ -220,7 +220,7 @@ class MovieTest {
         assertFalse(movieController.filterListOfMoviesByYearOfRelease("   "));
         assertFalse(movieController.filterListOfMoviesByYearOfRelease("ano2020"));
         assertFalse(movieController.filterListOfMoviesByYearOfRelease(""));
-    }
+    } // Filtrando filmes por ano de lançamento
 
     @Test
     void sortingListByTopRated() {
@@ -228,7 +228,7 @@ class MovieTest {
         movieController.setListOfMovies(movies);
 
         assertTrue(movieController.sortListByTopRated());
-    }
+    } // Ordenando filmes do melhor avaliado ao pior
 
     @Test
     void sortingListByLowRated() {
@@ -236,7 +236,7 @@ class MovieTest {
         movieController.setListOfMovies(movies);
 
         assertTrue(movieController.sortListByLowRated());
-    }
+    } // Ordenando filmes do pior avaliado ao melhor
 
     @Test
     void openingMovie() {
@@ -245,7 +245,7 @@ class MovieTest {
 
         assertTrue(movieController.openMovie(1));
         assertFalse(movieController.openMovie(33));
-    }
+    } // Abrindo filmes
 
     @Test
     void changingMovieViewingStatus() {
@@ -259,7 +259,7 @@ class MovieTest {
         assertFalse(movieController.changeMovieViewingStatus(1, "  "));
         assertFalse(movieController.changeMovieViewingStatus(99, "assisti"));
         assertFalse(movieController.changeMovieViewingStatus(-2, "   "));
-    }
+    } // Mundando situação de visualização
 
     @Test
     void evaluatingMovie() {
@@ -273,7 +273,7 @@ class MovieTest {
         assertFalse(movieController.evaluateMovie(20, "3.7", "14/11/1998", "História interessante."));
         assertTrue(movieController.evaluateMovie(21, "4.8", "28/02/2006", "Filme agradável."));
         assertFalse(movieController.evaluateMovie(20, "4.8", "28/02/2006", "Filme agradável."));
-    }
+    } // Avaliando filmes
 
     @Test
     void evaluatingMovieAgain() {
@@ -287,5 +287,5 @@ class MovieTest {
         assertFalse(movieController.evaluateMovieAgain(3, "3.7", "14/11/1998", "História interessante."));
         assertFalse(movieController.evaluateMovieAgain(21, "4.8", "28/02/2005", "Leitura agradável."));
         assertFalse(movieController.evaluateMovieAgain(21, "3.5", "01/12/2006", "Não foi tão bom quanto eu esperava."));
-    }
+    } // Avaliando filmes novamente
 }

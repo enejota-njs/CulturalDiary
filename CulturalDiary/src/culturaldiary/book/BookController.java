@@ -274,7 +274,6 @@ public class BookController {
                         bookView.bookInformation(book); // Exibe informações do livro
                     }
                 }
-
             }
             if (!bookFound) { bookView.noBookFoundMessage(); } // Exibe mensagem se nenhum livro for encontrado
             return true;

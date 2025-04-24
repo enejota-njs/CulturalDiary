@@ -216,7 +216,7 @@ class SeriesTest {
         series.add(new SeriesModel("As Crônicas de Nárnia 5", 1953, 1954,"The Chronicles of Narnia: The Horse and His Boy", "Netflix", cn5));
         series.add(new SeriesModel("As Crônicas de Nárnia 6", 1954, 1955,"The Chronicles of Narnia: The Magician's Nephew", "Disney+", cn6));
         series.add(new SeriesModel("As Crônicas de Nárnia 7", 1700, 1956,"The Chronicles of Narnia: The Last Battle", "Prime Video", cn7));
-    }
+    } // Criando lista para usar nos testes
 
     @Test
     void creatingSeries() {
@@ -233,7 +233,7 @@ class SeriesTest {
         ArrayList<SeasonModel> hp1 = new ArrayList<>(); hp1.add(hp1t1); hp1.add(hp1t2); hp1.add(hp1t3); hp1.add(hp1t4);
 
         SeriesModel seriesModel = new SeriesModel("Harry Potter 1", 1980,2001, "Harry Potter and the Sorcerer's Stone", "Globoplay", hp1);
-    }
+    } // Criando séries
 
     @Test
     void registeringSeries() {
@@ -300,10 +300,10 @@ class SeriesTest {
         assertFalse(seriesController.registerSeries("A casa coberta", "1990", "2025", "The covered house", "MAX", list6));
         assertFalse(seriesController.registerSeries("A casa coberta", "1990", "2025", "The covered house", "MAX", list7));
         assertTrue(seriesController.registerSeries("A casa coberta", "1990", "2025", "The covered house", "MAX", list8));
-    }
+    } // Registrando séries
 
     @Test
-    void searchingMovieByTitle() {
+    void searchingSeriesByTitle() {
         SeriesController seriesController = new SeriesController();
         seriesController.setListOfSeries(series);
 
@@ -317,7 +317,7 @@ class SeriesTest {
         assertFalse(seriesController.searchSeriesByTitle("     "));
         assertTrue(seriesController.searchSeriesByTitle("nárnia"));
         assertFalse(seriesController.searchSeriesByTitle("   "));
-    }
+    } // Buscando séries por título
 
     @Test
     void listingSeries() {
@@ -325,7 +325,7 @@ class SeriesTest {
         seriesController.setListOfSeries(series);
 
         assertTrue(seriesController.listSeries());
-    }
+    } // Listando séries
 
     @Test
     void filteringBySeriesGenre() {
@@ -342,7 +342,7 @@ class SeriesTest {
         assertTrue(seriesController.filterListOfSeriesByGenre("Fantasia"));
         assertTrue(seriesController.filterListOfSeriesByGenre("Poesia"));
         assertTrue(seriesController.filterListOfSeriesByGenre("literatura"));
-    }
+    } // Filtrando séries por gênero
 
     @Test
     void filteringSeriesByYearOfRelease() {
@@ -359,7 +359,7 @@ class SeriesTest {
         assertFalse(seriesController.filterListOfSeriesByYearOfRelease("   "));
         assertFalse(seriesController.filterListOfSeriesByYearOfRelease("ano2020"));
         assertFalse(seriesController.filterListOfSeriesByYearOfRelease(""));
-    }
+    } // Filtrando séries por ano de lançamento
 
     @Test
     void sortingListByTopRated() {
@@ -412,7 +412,7 @@ class SeriesTest {
         seriesController.updateAverage(series.get(10));
 
         assertTrue(seriesController.sortListByTopRated());
-    }
+    } // Ordenando séries do melhor avaliado ao pior
 
     @Test
     void sortingListByLowRated() {
@@ -466,7 +466,7 @@ class SeriesTest {
         seriesController.updateAverage(series.get(10));
 
         assertTrue(seriesController.sortListByLowRated());
-    }
+    } // Ordenando séries do pior avaliado ao melhor
 
     @Test
     void openingSeries() {
@@ -475,7 +475,7 @@ class SeriesTest {
 
         assertTrue(seriesController.openSeries(1));
         assertFalse(seriesController.openSeries(33));
-    }
+    } // Abrindo séries
 
     @Test
     void changingSeriesViewingStatus() {
@@ -489,7 +489,7 @@ class SeriesTest {
         assertFalse(seriesController.changeSeasonViewingStatus(1, 1, "  "));
         assertFalse(seriesController.changeSeasonViewingStatus(99, 1, "assisti"));
         assertFalse(seriesController.changeSeasonViewingStatus(-2, 1, "   "));
-    }
+    } // Mudando situação de visualização
 
     @Test
     void evaluatingSeason() {
@@ -503,7 +503,7 @@ class SeriesTest {
         assertTrue(seriesController.evaluateSeason(20, 1, "3.7", "14/11/1998", "História interessante."));
         assertTrue(seriesController.evaluateSeason(21, 1, "4.8", "28/02/2006", "Temporada agradável."));
         assertFalse(seriesController.evaluateSeason(20, 1, "4.8", "28/02/2006", "Temporada agradável."));
-    }
+    } // Avaliando temporadas
 
     @Test
     void evaluatingSeasonAgain() {
@@ -524,5 +524,5 @@ class SeriesTest {
         assertTrue(seriesController.evaluateSeasonAgain(21, 1, "3.5", "01/12/2006", "Não foi tão bom quanto eu esperava."));
         assertFalse(seriesController.evaluateSeasonAgain(19, 1, "3.5", "01/12/2006", "Não foi tão bom quanto eu esperava."));
         assertTrue(seriesController.evaluateSeasonAgain(20, 1, "3.5", "01/12/2006", "Não foi tão bom quanto eu esperava."));
-    }
+    } // Avaliando temporadas novamente
 }

@@ -128,7 +128,7 @@ class MovieTest {
         movieController.evaluateMovie(14, "7.8", "03/01/2020", "Trama empolgante e reviravoltas ótimas.");
         movieController.evaluateMovie(223, "4.8", "27/12/2004", "Leitura morna, mas com bons momentos.");
         movieController.evaluateMovie(2, "5.0", "09/10/2015", "Razoável, mas esperava mais.");
-        movieController.evaluateMovie(22, "7.8", "25/11/2025", "Muito bem escrito, personagens marcantes."); // data futura
+        movieController.evaluateMovie(22, "7.8", "25/11/2025", "Muito bem escrito, personagens marcantes.");
         movieController.evaluateMovie(23, "0.0", "18/07/2009", "Não me conectei com a história.");
         movieController.evaluateMovie(24, "5.0", "12/03/2006", "Estilo de escrita simples, porém eficaz.");
         movieController.evaluateMovie(25, "7.8", "01/05/2013", "Ambientação maravilhosa.");
@@ -154,5 +154,5 @@ class MovieTest {
         movieController.openMovie(2);
         movieController.openMovie(145);
         movieController.openMovie(17);
-    }
+    } // Teste de integração geral
 }

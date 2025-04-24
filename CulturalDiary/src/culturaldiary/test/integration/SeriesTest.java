@@ -201,5 +201,5 @@ class SeriesTest {
        seriesController.openSeries(21);
        seriesController.openSeries(17);
        seriesController.openSeries(18);
-    }
+    } // Teste de integração geral
 }

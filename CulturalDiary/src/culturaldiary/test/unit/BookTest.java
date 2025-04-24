@@ -52,12 +52,12 @@ class BookTest {
             books.get(i).setBookReview(reviews.get(i));
             books.get(i).setEvaluatedBook(true);
         }
-    }
+    } // Criando lista para usar nos testes
 
     @Test
     void creatingBook() {
         BookModel bookModel = new BookModel("Harry Potter 1", "Marina Costa", "Editora Aurora", "9788598743998", 2001, "Fantasia", true, true);
-    }
+    } // Criando livros
 
     @Test
     void registeringBooks() {
@@ -73,7 +73,7 @@ class BookTest {
         assertFalse(bookController.registerBook("Fragmentos do Amanhã", "Lucas Vieira", "Editora Essência", "9780000000000", "20242", "Filosofia", "n", "li n"));
         assertFalse(bookController.registerBook("Luzes em Saturno", "Ana Cecília", "Estação 9", "9781234567890", "2023", "Sci-Fi", "possivelmente", "s"));
         assertFalse(bookController.registerBook("Caminho das Estações", "Eduardo Leal", "Nova Trajetória", "8532123456", "2015", "Poesia", "sim", "leitura incompleta"));
-    }
+    } // Registrando livros
 
     @Test
     void searchingBookByTitle() {
@@ -90,7 +90,7 @@ class BookTest {
         assertFalse(bookController.searchBookByTitle("     "));
         assertTrue(bookController.searchBookByTitle("nárnia"));
         assertFalse(bookController.searchBookByTitle("   "));
-    }
+    } // Buscando livros por título
 
     @Test
     void searchingBookByAuthor() {
@@ -107,7 +107,7 @@ class BookTest {
         assertTrue(bookController.searchBookByAuthor("Lewis    "));
         assertTrue(bookController.searchBookByAuthor("Aline Torres"));
         assertTrue(bookController.searchBookByAuthor("soares"));
-    }
+    } // Buscando livros por autor
 
     @Test
     void searchingBookByGenre() {
@@ -124,7 +124,7 @@ class BookTest {
         assertTrue(bookController.searchBookByGenre("Fantasia"));
         assertTrue(bookController.searchBookByGenre("Poesia"));
         assertTrue(bookController.searchBookByGenre("literatura"));
-    }
+    } // Buscando livros por gênero
 
     @Test
     void searchingBookByYearOfPublication() {
@@ -141,7 +141,7 @@ class BookTest {
         assertFalse(bookController.searchBookByYearOfPublication("   "));
         assertFalse(bookController.searchBookByYearOfPublication("ano2020"));
         assertFalse(bookController.searchBookByYearOfPublication(""));
-    }
+    } // Buscando livros por ano de publicação
 
     @Test
     void searchingBookByIsbn() {
@@ -158,7 +158,7 @@ class BookTest {
         assertFalse(bookController.searchBookByIsbn(""));
         assertTrue(bookController.searchBookByIsbn("9788535900021"));
         assertTrue(bookController.searchBookByIsbn("9788598711998"));
-    }
+    } // Buscando livros por ISBN
 
     @Test
     void listingBooks() {
@@ -166,7 +166,7 @@ class BookTest {
         bookController.setListOfBooks(books);
 
         assertTrue(bookController.listBooks());
-    }
+    } // Listando livros
 
     @Test
     void filteringByBookGenre() {
@@ -183,7 +183,7 @@ class BookTest {
         assertTrue(bookController.filterListOfBooksByGenre("Fantasia"));
         assertTrue(bookController.filterListOfBooksByGenre("Poesia"));
         assertTrue(bookController.filterListOfBooksByGenre("literatura"));
-    }
+    } // Filtrando livros por gênero
 
     @Test
     void filteringBookByYearOfPublication() {
@@ -200,7 +200,7 @@ class BookTest {
         assertFalse(bookController.filterListOfBooksByYearOfPublication("   "));
         assertFalse(bookController.filterListOfBooksByYearOfPublication("ano2020"));
         assertFalse(bookController.filterListOfBooksByYearOfPublication(""));
-    }
+    } // Filtrando livros por ano de publicação
 
     @Test
     void sortingListByTopRated() {
@@ -208,7 +208,7 @@ class BookTest {
         bookController.setListOfBooks(books);
 
         assertTrue(bookController.sortListByTopRated());
-    }
+    } // Ordenando livros do melhor avaliado ao pior
 
     @Test
     void sortingListByLowRated() {
@@ -216,7 +216,7 @@ class BookTest {
         bookController.setListOfBooks(books);
 
         assertTrue(bookController.sortListByLowRated());
-    }
+    } // Ordenando livros do pior avaliado ao melhor
 
     @Test
     void openingBook() {
@@ -225,7 +225,7 @@ class BookTest {
 
         assertTrue(bookController.openBook(1));
         assertFalse(bookController.openBook(33));
-    }
+    } // Abrindo livros
 
     @Test
     void changingBookReadingStatus() {
@@ -239,7 +239,7 @@ class BookTest {
         assertFalse(bookController.changeBookReadingStatus(1, "  "));
         assertFalse(bookController.changeBookReadingStatus(99, "li"));
         assertFalse(bookController.changeBookReadingStatus(-2, "   "));
-    }
+    } // Mudando situação de leitura
 
     @Test
     void evaluatingBook() {
@@ -253,7 +253,7 @@ class BookTest {
         assertFalse(bookController.evaluateBook(20, "3.7", "14/11/1998", "História interessante."));
         assertTrue(bookController.evaluateBook(21, "4.8", "28/02/2006", "Leitura agradável."));
         assertFalse(bookController.evaluateBook(20, "4.8", "28/02/2006", "Leitura agradável."));
-    }
+    } // Avaliando livros
 
     @Test
     void evaluatingBookAgain() {
@@ -267,5 +267,5 @@ class BookTest {
         assertFalse(bookController.evaluateBookAgain(3, "3.7", "14/11/1998", "História interessante."));
         assertFalse(bookController.evaluateBookAgain(21, "4.8", "28/02/2005", "Leitura agradável."));
         assertFalse(bookController.evaluateBookAgain(21, "3.5", "01/12/2006", "Não foi tão bom quanto eu esperava."));
-    }
+    } // Avaliando livros novamente
 }

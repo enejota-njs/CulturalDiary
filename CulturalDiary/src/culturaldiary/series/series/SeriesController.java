@@ -48,6 +48,7 @@ public class SeriesController {
             // Garante que o ano de conclusão não seja menor que o de lançamento
             if (yearOfConclusion < yearOfRelease) {
                 seriesView.invalidYearsMessage();
+                seriesView.tryAgainMessage();
                 return false;
             }
 
