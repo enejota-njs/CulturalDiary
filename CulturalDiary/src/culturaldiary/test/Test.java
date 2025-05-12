@@ -1,4 +1,4 @@
-package culturaldiary.test.test;
+package culturaldiary.test;
 
 import culturaldiary.book.BookController;
 import culturaldiary.movie.MovieController;
@@ -7,14 +7,10 @@ import culturaldiary.series.series.SeriesController;
 import java.util.Scanner;
 
 public class Test {
-    static BookController bookController = new BookController();
-    static MovieController movieController = new MovieController();
-    static SeriesController seriesController = new SeriesController();
-
     static Scanner input = new Scanner(System.in);
 
     // MÍDIAS =========================================
-    public void controlMedia(int chosenMethod) {
+    public void controlMedia(int chosenMethod, BookController bookController, MovieController movieController, SeriesController seriesController) {
         int chosenMedia;
 
         switch (chosenMethod) {
@@ -27,16 +23,16 @@ public class Test {
 
                 switch (chosenMedia) {
                     case 0 :
-                        controlMedia(1);
+                        controlMedia(1, bookController, movieController, seriesController);
                         break;
                     case 1 :
-                        registerBook();
+                        registerBook(bookController);
                         break;
                     case 2 :
-                        registerMovie();
+                        registerMovie(movieController);
                         break;
                     case 3 :
-                        registerSeries();
+                        registerSeries(seriesController);
                         break;
                     default :
                         break;
@@ -51,16 +47,16 @@ public class Test {
 
                 switch (chosenMedia) {
                     case 0 :
-                        controlMedia(2);
+                        controlMedia(2, bookController, movieController, seriesController);
                         break;
                     case 1 :
-                        searchBook();
+                        searchBook(bookController);
                         break;
                     case 2 :
-                        searchMovie();
+                        searchMovie(movieController);
                         break;
                     case 3 :
-                        searchSeries();
+                        searchSeries(seriesController);
                         break;
                     default :
                         break;
@@ -75,16 +71,16 @@ public class Test {
 
                 switch (chosenMedia) {
                     case 0 :
-                        controlMedia(3);
+                        controlMedia(3, bookController, movieController, seriesController);
                         break;
                     case 1 :
-                        listBook();
+                        listBook(bookController);
                         break;
                     case 2 :
-                        listMovie();
+                        listMovie(movieController);
                         break;
                     case 3 :
-                        listSeries();
+                        listSeries(seriesController);
                         break;
                     default :
                         break;
@@ -121,7 +117,7 @@ public class Test {
     // ================================================
 
     // LIVROS =========================================
-    public void registerBook() {
+    public void registerBook(BookController bookController) {
         System.out.print("\nTítulo: ");
         String title1 = input.nextLine().trim();
 
@@ -148,7 +144,7 @@ public class Test {
 
         bookController.registerBook(title1, author1, publisher1, isbn1, yearOfPublication1, genre1, hasCopy1, read1);
     } // Registra livros
-    public int searchBook() {
+    public int searchBook(BookController bookController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Buscar por");
         System.out.println("+-------------------------+");
@@ -170,42 +166,42 @@ public class Test {
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 bookController.searchBookByTitle(information);
-                additionalBookSearchOptions();
+                additionalBookSearchOptions(bookController);
                 break;
             case "2" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 bookController.searchBookByAuthor(information);
-                additionalBookSearchOptions();
+                additionalBookSearchOptions(bookController);
                 break;
             case "3" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 bookController.searchBookByGenre(information);
-                additionalBookSearchOptions();
+                additionalBookSearchOptions(bookController);
                 break;
             case "4" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 bookController.searchBookByYearOfPublication(information);
-                additionalBookSearchOptions();
+                additionalBookSearchOptions(bookController);
                 break;
             case "5" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 bookController.searchBookByIsbn(information);
-                additionalBookSearchOptions();
+                additionalBookSearchOptions(bookController);
                 break;
             case "6" :
                 return 0;
             default :
                 System.out.println("\nInválido.");
-                return searchBook();
+                return searchBook(bookController);
         }
 
         return 0;
     } // Busca livros
-    public int additionalBookSearchOptions() {
+    public int additionalBookSearchOptions(BookController bookController) {
         System.out.println("\n[ 1 ] - Avaliar");
         System.out.println("[ 2 ] - Abrir");
         System.out.println("[ 3 ] - Voltar");
@@ -214,21 +210,21 @@ public class Test {
         String searchOrReviewOption = input.nextLine().trim();
 
         if (searchOrReviewOption.equals("1")) {
-            evaluateBook(0);
+            evaluateBook(0, bookController);
         }
         else if (searchOrReviewOption.equals("2")) {
-            openBook();
+            openBook(bookController);
         } else if (searchOrReviewOption.equals("3")) {
             return 0;
         }
         else {
             System.out.println("\nInválido.");
-            return additionalBookSearchOptions();
+            return additionalBookSearchOptions(bookController);
         }
 
         return 0;
     } // Exibe menu adicional de busca
-    public int evaluateBook(int a) {
+    public int evaluateBook(int a, BookController bookController) {
         int index;
         System.out.print("\nDigite o índice: ");
         String indexString = input.nextLine();
@@ -237,7 +233,7 @@ public class Test {
             index = Integer.parseInt(indexString);
         } catch (Exception e) {
             System.out.println("\nInválido.");
-            return evaluateBook(a);
+            return evaluateBook(a, bookController);
         }
 
         System.out.print("\nDê uma nota entre 1 e 5: ");
@@ -252,18 +248,18 @@ public class Test {
         bookController.evaluateBook(index, score, consumptionDate, comment);
 
         if (a == 0) {
-            return additionalBookSearchOptions();
+            return additionalBookSearchOptions(bookController);
         } else if (a == 1) {
-            return additionalBookListOptions();
+            return additionalBookListOptions(bookController);
         }
 
         return 0;
     } // Avalia livros
-    public void listBook() {
+    public void listBook(BookController bookController) {
         bookController.listBooks();
-        additionalBookListOptions();
+        additionalBookListOptions(bookController);
     } // Lista livros
-    public int additionalBookListOptions() {
+    public int additionalBookListOptions(BookController bookController) {
         System.out.println("\n[ 1 ] - Avaliar");
         System.out.println("[ 2 ] - Ordenar");
         System.out.println("[ 3 ] - Filtrar");
@@ -273,22 +269,22 @@ public class Test {
         String listTypeOption = input.nextLine().trim();
 
         if (listTypeOption.equals("1")) {
-            evaluateBook(1);
+            evaluateBook(1, bookController);
         } else if (listTypeOption.equals("2")) {
-            sortBooklist();
+            sortBooklist(bookController);
         } else if (listTypeOption.equals("3")) {
-            filterBookList();
+            filterBookList(bookController);
         }
         else if (listTypeOption.equals("4")) {
             return 0;
         } else {
             System.out.println("\nInválido.");
-            return additionalBookListOptions();
+            return additionalBookListOptions(bookController);
         }
 
         return 0;
     } // Exibe menu adicional de lista
-    public int sortBooklist() {
+    public int sortBooklist(BookController bookController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Ordenar por");
         System.out.println("+-------------------------+");
@@ -309,12 +305,12 @@ public class Test {
         }
         else {
             System.out.println("\nInválido.");
-            return sortBooklist();
+            return sortBooklist(bookController);
         }
 
-        return additionalBookListOptions();
+        return additionalBookListOptions(bookController);
     } // Ordena livros
-    public int filterBookList() {
+    public int filterBookList(BookController bookController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Filtrar por");
         System.out.println("+-------------------------+");
@@ -340,12 +336,12 @@ public class Test {
             return 0;
         } else {
             System.out.println("\nInválido.");
-            return filterBookList();
+            return filterBookList(bookController);
         }
 
-        return additionalBookListOptions();
+        return additionalBookListOptions(bookController);
     } // Filtra livros
-    public int openBook() {
+    public int openBook(BookController bookController) {
         int index;
         System.out.print("\nDigite o índice: ");
         String indexString = input.nextLine();
@@ -354,16 +350,16 @@ public class Test {
             index = Integer.parseInt(indexString);
         } catch (Exception e) {
             System.out.println("\nInválido.");
-            return openBook();
+            return openBook(bookController);
         }
 
         bookController.openBook(index);
-        return additionalBookSearchOptions();
+        return additionalBookSearchOptions(bookController);
     } // Abre livros
     // =================================================
 
     // FILMES ==========================================
-    public void registerMovie() {
+    public void registerMovie(MovieController movieController) {
         System.out.print("\nTítulo: ");
         String title = input.nextLine().trim();
 
@@ -396,7 +392,7 @@ public class Test {
 
         movieController.registerMovie(title, genre, yearOfRelease, durationTime, screenplay, direction, cast, originalTitle, whereToWatch, watched);
     } // Registra filmes
-    public int searchMovie() {
+    public int searchMovie(MovieController movieController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Buscar por");
         System.out.println("+-------------------------+");
@@ -418,42 +414,42 @@ public class Test {
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 movieController.searchMovieByTitle(information);
-                additionalMovieSearchOptions();
+                additionalMovieSearchOptions(movieController);
                 break;
             case "2" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 movieController.searchMovieByDirection(information);
-                additionalMovieSearchOptions();
+                additionalMovieSearchOptions(movieController);
                 break;
             case "3" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 movieController.searchMovieByActorInTheCast(information);
-                additionalMovieSearchOptions();
+                additionalMovieSearchOptions(movieController);
                 break;
             case "4" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 movieController.searchMovieByGenre(information);
-                additionalMovieSearchOptions();
+                additionalMovieSearchOptions(movieController);
                 break;
             case "5" :
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 movieController.searchMovieByYearOfRelease(information);
-                        additionalMovieSearchOptions();
+                        additionalMovieSearchOptions(movieController);
                 break;
             case "6" :
                 return 0;
             default :
                 System.out.println("\nInválido.");
-                return searchMovie();
+                return searchMovie(movieController);
         }
 
         return 0;
     } // Busca filmes
-    public int additionalMovieSearchOptions() {
+    public int additionalMovieSearchOptions(MovieController movieController) {
         System.out.println("\n[ 1 ] - Avaliar");
         System.out.println("[ 2 ] - Abrir");
         System.out.println("[ 3 ] - Voltar");
@@ -462,21 +458,21 @@ public class Test {
         String searchOrReviewOption = input.nextLine().trim();
 
         if (searchOrReviewOption.equals("1")) {
-            evaluateMovie(0);
+            evaluateMovie(0, movieController);
         }
         else if (searchOrReviewOption.equals("2")) {
-            openMovie();
+            openMovie(movieController);
         } else if (searchOrReviewOption.equals("3")) {
             return 0;
         }
         else {
             System.out.println("\nInválido.");
-            return additionalMovieSearchOptions();
+            return additionalMovieSearchOptions(movieController);
         }
 
         return 0;
     } // Exibe menu adicional de busca
-    public int evaluateMovie(int a) {
+    public int evaluateMovie(int a, MovieController movieController) {
         int index;
         System.out.print("\nDigite o índice: ");
         String indexString = input.nextLine();
@@ -485,7 +481,7 @@ public class Test {
             index = Integer.parseInt(indexString);
         } catch (Exception e) {
             System.out.println("\nInválido.");
-            return evaluateMovie(a);
+            return evaluateMovie(a, movieController);
         }
 
         System.out.print("\nDê uma nota entre 1 e 5: ");
@@ -500,18 +496,18 @@ public class Test {
         movieController.evaluateMovie(index, score, consumptionDate, comment);
 
         if (a == 0) {
-            return additionalMovieSearchOptions();
+            return additionalMovieSearchOptions(movieController);
         } else if (a == 1) {
-            return additionalMovieListOptions();
+            return additionalMovieListOptions(movieController);
         }
 
         return 0;
     } // Avalia filmes
-    public void listMovie() {
+    public void listMovie(MovieController movieController) {
         movieController.listMovies();
-        additionalMovieListOptions();
+        additionalMovieListOptions(movieController);
     } // Lista filmes
-    public int additionalMovieListOptions() {
+    public int additionalMovieListOptions(MovieController movieController) {
         System.out.println("\n[ 1 ] - Avaliar");
         System.out.println("[ 2 ] - Ordenar");
         System.out.println("[ 3 ] - Filtrar");
@@ -521,22 +517,22 @@ public class Test {
         String listTypeOption = input.nextLine().trim();
 
         if (listTypeOption.equals("1")) {
-            evaluateMovie(1);
+            evaluateMovie(1, movieController);
         } else if (listTypeOption.equals("2")) {
-            sortMovielist();
+            sortMovielist(movieController);
         } else if (listTypeOption.equals("3")) {
-            filterMovieList();
+            filterMovieList(movieController);
         }
         else if (listTypeOption.equals("4")) {
             return 0;
         } else {
             System.out.println("\nInválido.");
-            return additionalMovieListOptions();
+            return additionalMovieListOptions(movieController);
         }
 
         return 0;
     } // Exibe menu adicional de lista
-    public int sortMovielist() {
+    public int sortMovielist(MovieController movieController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Ordenar por");
         System.out.println("+-------------------------+");
@@ -557,12 +553,12 @@ public class Test {
         }
         else {
             System.out.println("\nInválido.");
-            return sortMovielist();
+            return sortMovielist(movieController);
         }
 
-        return additionalMovieListOptions();
+        return additionalMovieListOptions(movieController);
     } // Ordena filmes
-    public int filterMovieList() {
+    public int filterMovieList(MovieController movieController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Filtrar por");
         System.out.println("+-------------------------+");
@@ -588,12 +584,12 @@ public class Test {
             return 0;
         } else {
             System.out.println("\nInválido.");
-            return filterMovieList();
+            return filterMovieList(movieController);
         }
 
-        return additionalMovieListOptions();
+        return additionalMovieListOptions(movieController);
     } // Filtra filmes
-    public int openMovie() {
+    public int openMovie(MovieController movieController) {
         int index;
         System.out.print("\nDigite o índice: ");
         String indexString = input.nextLine();
@@ -602,16 +598,16 @@ public class Test {
             index = Integer.parseInt(indexString);
         } catch (Exception e) {
             System.out.println("\nInválido.");
-            return openMovie();
+            return openMovie(movieController);
         }
 
         movieController.openMovie(index);
-        return additionalMovieSearchOptions();
+        return additionalMovieSearchOptions(movieController);
     } // Abre filmes
     // =================================================
 
     // SÉRIES ==========================================
-    public void registerSeries() {
+    public void registerSeries(SeriesController seriesController) {
         System.out.print("\nTítulo: ");
         String title = input.nextLine().trim();
 
@@ -663,7 +659,7 @@ public class Test {
 
         seriesController.registerSeries(title, yearOfRelease, yearOfConclusion, originalTitle, whereToWatch, listOfSeasons);
     } // Registra séries
-    public int searchSeries() {
+    public int searchSeries(SeriesController seriesController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Buscar por");
         System.out.println("+-------------------------+");
@@ -681,18 +677,18 @@ public class Test {
                 System.out.print("\nEscreva a informação: ");
                 information = input.nextLine();
                 seriesController.searchSeriesByTitle(information);
-                additionalSeriesSearchOptions();
+                additionalSeriesSearchOptions(seriesController);
                 break;
             case "2" :
                 return 0;
             default :
                 System.out.println("\nInválido.");
-                return searchSeries();
+                return searchSeries(seriesController);
         }
 
         return 0;
     } // Busca séries
-    public int additionalSeriesSearchOptions() {
+    public int additionalSeriesSearchOptions(SeriesController seriesController) {
         System.out.println("\n[ 1 ] - Avaliar");
         System.out.println("[ 2 ] - Abrir");
         System.out.println("[ 3 ] - Voltar");
@@ -701,21 +697,21 @@ public class Test {
         String searchOrReviewOption = input.nextLine().trim();
 
         if (searchOrReviewOption.equals("1")) {
-            evaluateSeries(0);
+            evaluateSeries(0, seriesController);
         }
         else if (searchOrReviewOption.equals("2")) {
-            openSeries();
+            openSeries(seriesController);
         } else if (searchOrReviewOption.equals("3")) {
             return 0;
         }
         else {
             System.out.println("\nInválido.");
-            return additionalSeriesSearchOptions();
+            return additionalSeriesSearchOptions(seriesController);
         }
 
         return 0;
     } // Exibe menu adicional de busca
-    public int evaluateSeries(int a) {
+    public int evaluateSeries(int a, SeriesController seriesController) {
         int indexSeries;
         System.out.print("\nDigite o índice da série: ");
         String indexSeriesString = input.nextLine();
@@ -729,7 +725,7 @@ public class Test {
             indexSeason = Integer.parseInt(indexSeasonString);
         } catch (Exception e) {
             System.out.println("\nInválido.");
-            return evaluateSeries(a);
+            return evaluateSeries(a, seriesController);
         }
 
         System.out.print("\nDê uma nota entre 1 e 5: ");
@@ -744,18 +740,18 @@ public class Test {
         seriesController.evaluateSeason(indexSeries, indexSeason, score, consumptionDate, comment);
 
         if (a == 0) {
-            return additionalSeriesSearchOptions();
+            return additionalSeriesSearchOptions(seriesController);
         } else if (a == 1) {
-            return additionalSeriesListOptions();
+            return additionalSeriesListOptions(seriesController);
         }
 
         return 0;
     } // Avalia séries
-    public void listSeries() {
+    public void listSeries(SeriesController seriesController) {
         seriesController.listSeries();
-        additionalSeriesListOptions();
+        additionalSeriesListOptions(seriesController);
     } // Lista séries
-    public int additionalSeriesListOptions() {
+    public int additionalSeriesListOptions(SeriesController seriesController) {
         System.out.println("\n[ 1 ] - Avaliar");
         System.out.println("[ 2 ] - Ordenar");
         System.out.println("[ 3 ] - Filtrar");
@@ -765,22 +761,22 @@ public class Test {
         String listTypeOption = input.nextLine().trim();
 
         if (listTypeOption.equals("1")) {
-            evaluateSeries(1);
+            evaluateSeries(1, seriesController);
         } else if (listTypeOption.equals("2")) {
-            sortSerieslist();
+            sortSerieslist(seriesController);
         } else if (listTypeOption.equals("3")) {
-            filterSeriesList();
+            filterSeriesList(seriesController);
         }
         else if (listTypeOption.equals("4")) {
             return 0;
         } else {
             System.out.println("\nInválido.");
-            return additionalSeriesListOptions();
+            return additionalSeriesListOptions(seriesController);
         }
 
         return 0;
     } // Exibe menu adicional de lista
-    public int sortSerieslist() {
+    public int sortSerieslist(SeriesController seriesController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Ordenar por");
         System.out.println("+-------------------------+");
@@ -801,12 +797,12 @@ public class Test {
         }
         else {
             System.out.println("\nInválido.");
-            return sortSerieslist();
+            return sortSerieslist(seriesController);
         }
 
-        return additionalSeriesListOptions();
+        return additionalSeriesListOptions(seriesController);
     } // Ordena séries
-    public int filterSeriesList() {
+    public int filterSeriesList(SeriesController seriesController) {
         System.out.println("\n+-------------------------+");
         System.out.printf("| %-23s |\n", "Filtrar por");
         System.out.println("+-------------------------+");
@@ -832,12 +828,12 @@ public class Test {
             return 0;
         } else {
             System.out.println("\nInválido.");
-            return filterSeriesList();
+            return filterSeriesList(seriesController);
         }
 
-        return additionalSeriesListOptions();
+        return additionalSeriesListOptions(seriesController);
     } // Filtra séries
-    public int openSeries() {
+    public int openSeries(SeriesController seriesController) {
         int index;
         System.out.print("\nDigite o índice: ");
         String indexString = input.nextLine();
@@ -846,11 +842,11 @@ public class Test {
             index = Integer.parseInt(indexString);
         } catch (Exception e) {
             System.out.println("\nInválido.");
-            return openSeries();
+            return openSeries(seriesController);
         }
 
         seriesController.openSeries(index);
-        return additionalSeriesSearchOptions();
+        return additionalSeriesSearchOptions(seriesController);
     } // Abre séries
     // =================================================
 }

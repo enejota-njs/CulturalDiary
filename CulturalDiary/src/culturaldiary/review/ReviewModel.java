@@ -1,5 +1,12 @@
 package culturaldiary.review;
 
+/**
+ * Model class representing a review.
+ * Contains attributes and methods related to a book or movie review.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class ReviewModel {
     private float score; // Nota
     private String consumptionDate; // Data de consumo

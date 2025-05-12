@@ -2,6 +2,12 @@ package culturaldiary.movie;
 
 import culturaldiary.review.ReviewModel;
 
+/**
+ * View class for displaying movie-related information to the user.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class MovieView {
     static final String BOLD = "\033[1m";
     static final String RESET = "\033[0m";

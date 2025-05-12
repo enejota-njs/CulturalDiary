@@ -4,6 +4,13 @@ import culturaldiary.review.ReviewModel;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing a season.
+ * Contains attributes and methods related to the series season.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class SeasonModel {
     private String genre; // Gênero
     private ArrayList<String> cast; // Elenco

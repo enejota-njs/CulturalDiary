@@ -1,5 +1,11 @@
 package culturaldiary.series.series;
 
+/**
+ * View class for displaying series-related information to the user.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class SeriesView {
     static final String BOLD = "\033[1m";
     static final String RESET = "\033[0m";

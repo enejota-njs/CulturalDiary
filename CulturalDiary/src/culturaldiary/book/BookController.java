@@ -1,20 +1,45 @@
 package culturaldiary.book;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import culturaldiary.review.ReviewModel;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.lang.reflect.Type;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Set;
-
+/**
+ * Class responsible for controlling operations related to books.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class BookController {
+    private ArrayList<BookModel> listOfBooks = new ArrayList<BookModel>(); // Lista de livros
     BookView bookView = new BookView(); // Visual da interface
     BookModel bookModel; // Modelo do livro
-    BookRepository bookRepository = new BookRepository(); // Repositório de dados
-    private ArrayList<BookModel> listOfBooks = bookRepository.getListOfBooks(); // Lista de livros
 
     Calendar calendar = Calendar.getInstance(); // Calendário atual
 
+    Gson gson = new Gson();
+    File repository = new File("src/culturaldiary/book/repository/");
+    File file = new File(repository,"book_file.json");
+
+    /**
+     * Registers a book in the system.
+     *
+     * @param title Book title.
+     * @param author Book author.
+     * @param publisher Book publisher.
+     * @param isbn Book ISBN code.
+     * @param yearOfPublicationString Year of publication (as string).
+     * @param genre Book genre.
+     * @param hasCopyString "yes" if a copy is available, "no" otherwise.
+     * @param readString "yes" if the book was read, "no" otherwise.
+     * @return {@code true} if the book was added; {@code false} if invalid data.
+     */
     public boolean registerBook(String title, String author, String publisher,
                                 String isbn, String yearOfPublicationString, String genre, String hasCopyString, String readString) {
 
@@ -72,7 +97,8 @@ public class BookController {
             else if (negativeResponsesRead.contains(readString.toLowerCase())) { read = false; }
 
             bookModel = new BookModel(title.trim(), author.trim(), publisher.trim(), isbn.trim(), yearOfPublication, genre.trim(), hasCopy, read); // Cria livro
-            bookRepository.addBook(bookModel); // Adiciona livro
+            listOfBooks.add(bookModel); // Adiciona livro
+            saveFile();
 
             bookView.registeredBookMessage(title); // Mensagem de sucesso
 
@@ -83,38 +109,93 @@ public class BookController {
         }
     } // Registra livro
 
+    /**
+     * Checks if a new title is valid.
+     *
+     * @param title New book title.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateTitle(String title) {
         return validateNewString(title, "Título");
     } // Valida título
 
+    /**
+     * Checks if a new author is valid.
+     *
+     * @param author New book author.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateAuthor(String author) {
         return validateNewString(author, "Autor");
     } // Valida autor
 
+    /**
+     * Checks if a new publisher is valid.
+     *
+     * @param publisher New book publisher.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validatePublisher(String publisher) {
         return validateNewString(publisher, "Editora");
     } // Valida editora
 
+    /**
+     * Checks if a new ISBN is valid.
+     *
+     * @param isbn New book ISBN.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateIsbn(String isbn) {
         return validateNewIsbn(isbn);
     } // Valida ISBN
 
+    /**
+     * Checks if a new publication year is valid.
+     *
+     * @param yearOfPublication New book publication year.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateYearOfPublication(String yearOfPublication) {
         return validateNewYear(yearOfPublication);
     } // Valida ano de publicação
 
+    /**
+     * Checks if a new genre is valid.
+     *
+     * @param genre New book genre.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateGenre(String genre) {
         return validateNewString(genre, "Gênero");
     } // Valida gênero
 
+    /**
+     * Checks if the 'has copy' status is valid.
+     *
+     * @param hasCopy 'Has copy' status of the new book.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateHasCopy(String hasCopy) {
         return validateNewHasCopy(hasCopy);
     } // Valida se possui cópia
 
+    /**
+     * Checks if the 'read' status is valid.
+     *
+     * @param read 'Read' status of the new book.
+     * @return {@code true} if valid; {@code false} otherwise.
+     */
     public boolean validateRead(String read) {
         return validateNewRead(read);
     } // Valida se foi lido
 
+    /**
+     * Checks if a new string has any content.
+     *
+     * @param value The new string to check.
+     * @param name The attribute that this string refers to.
+     * @return {@code true} if the string has content; {@code false} otherwise.
+     */
     public boolean validateNewString(String value, String name) {
         if (value.isEmpty()) {
             bookView.emptyValueMessage(name);
@@ -123,8 +204,13 @@ public class BookController {
         return true;
     } // Valida string não vazia
 
+    /**
+     * Checks if the ISBN already exists.
+     *
+     * @param value The ISBN to be checked.
+     * @return {@code true} if the ISBN exists; {@code false} otherwise.
+     */
     public boolean validateNewIsbn(String value) {
-
         if (validateNewString(value, "Isbn")) {
             // Verifica se o valor é composto apenas por números e tem 10 ou 13 caracteres
             if (value.matches("\\d+") && (value.length() == 10 || value.length() == 13)) {
@@ -154,6 +240,12 @@ public class BookController {
         return false;
     } // Valida ISBN
 
+    /**
+     * Checks if the year exists and is not in the future.
+     *
+     * @param value The year to be checked.
+     * @return {@code true} if the year is valid and not in the future; {@code false} otherwise.
+     */
     public boolean validateNewYear(String value) {
 
         if (validateNewString(value, "Ano de publicação")) {
@@ -179,6 +271,12 @@ public class BookController {
         return false;
     } // Valida ano de publicação
 
+    /**
+     * Checks if the 'has copy' status is correct.
+     *
+     * @param value The 'has copy' status to be checked.
+     * @return {@code true} if the status is valid; {@code false} otherwise.
+     */
     public boolean validateNewHasCopy(String value) {
 
         if (validateNewString(value, "Exemplar")) {
@@ -202,6 +300,12 @@ public class BookController {
         return false;
     } // Valida exemplar
 
+    /**
+     * Validates if the 'read' status is correct.
+     *
+     * @param value The 'read' status to be validated ("yes" or "no").
+     * @return {@code true} if the status is valid; {@code false} otherwise.
+     */
     public boolean validateNewRead(String value) {
 
         if (validateNewString(value, "Leitura")) {
@@ -225,6 +329,12 @@ public class BookController {
         return false;
     } // Valida leitura
 
+    /**
+     * Searches for a book by its title.
+     *
+     * @param value The title of the book to search for.
+     * @return {@code true} if the search was successful, {@code false} if an error occurred.
+     */
     public boolean searchBookByTitle(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -254,6 +364,12 @@ public class BookController {
         return false;
     } // Busca livro pelo título
 
+    /**
+     * Searches for a book by its author.
+     *
+     * @param value The author of the book to search for.
+     * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
+     */
     public boolean searchBookByAuthor(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -282,6 +398,12 @@ public class BookController {
         return false;
     } // Busca livro pelo autor
 
+    /**
+     * Searches for a book by its genre.
+     *
+     * @param value The genre of the book to search for.
+     * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
+     */
     public boolean searchBookByGenre(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -311,6 +433,12 @@ public class BookController {
         return false;
     } // Busca livro pelo gênero
 
+    /**
+     * Searches for a book by its year of publication.
+     *
+     * @param value The year of publication of the book to search for.
+     * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
+     */
     public boolean searchBookByYearOfPublication(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -348,6 +476,12 @@ public class BookController {
         return false;
     } // Busca livro pelo ano de publicação
 
+    /**
+     * Searches for a book by its ISBN.
+     *
+     * @param value The ISBN of the book to search for.
+     * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
+     */
     public boolean searchBookByIsbn(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -383,6 +517,11 @@ public class BookController {
         return false;
     } // Busca livro pelo ISBN
 
+    /**
+     * Displays the list of books.
+     *
+     * @return {@code true} if the list is displayed (even if empty); {@code false} if an error occurred.
+     */
     public boolean listBooks() {
         try {
             if (listOfBooks.isEmpty()) {
@@ -400,6 +539,12 @@ public class BookController {
         }
     } // Lista todos os livros
 
+    /**
+     * Filters the list of books by genre.
+     *
+     * @param value The genre to filter the books by.
+     * @return {@code true} if the filter was applied successfully; {@code false} if an error occurred.
+     */
     public boolean filterListOfBooksByGenre(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -429,6 +574,12 @@ public class BookController {
         return false;
     } // Filtra livros por gênero
 
+    /**
+     * Filters the list of books by genre.
+     *
+     * @param value The genre to filter the books by.
+     * @return {@code true} if the filtering was performed successfully; {@code false} if an error occurred.
+     */
     public boolean filterListOfBooksByYearOfPublication(String value) {
         value = value.trim(); // Remove espaços no início e no fim da string
 
@@ -466,6 +617,11 @@ public class BookController {
         return false;
     } // Filtra livros por ano de publicação
 
+    /**
+     * Sorts the list of books by their rating, displaying the highest-rated books first.
+     *
+     * @return {@code true} if the sorting and display were successful; {@code false} if an error occurred.
+     */
     public boolean sortListByTopRated() {
         try {
             if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
@@ -504,6 +660,11 @@ public class BookController {
         }
     } // Ordena lista de livros pelos mais bem avaliados
 
+    /**
+     * Sorts the list of books by their rating, displaying the lowest-rated books first.
+     *
+     * @return {@code true} if the sorting and display were successful; {@code false} if an error occurred.
+     */
     public boolean sortListByLowRated() {
         try {
             if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
@@ -542,6 +703,12 @@ public class BookController {
         }
     } // Ordena lista de livros pelos piores avaliados
 
+    /**
+     * Opens a book from the list by its index.
+     *
+     * @param index The index of the book to be opened.
+     * @return {@code true} if the book was successfully opened; {@code false} if an error occurred.
+     */
     public boolean openBook(int index) {
         try {
             BookModel book;
@@ -562,6 +729,13 @@ public class BookController {
         }
     } // Abre o livro pela posição fornecida e exibe suas informações completas
 
+    /**
+     * Alters the reading status of a book.
+     *
+     * @param index The index of the book in the list.
+     * @param value The new reading status to be set for the book.
+     * @return {@code true} if the operation was successful; {@code false} if an error occurred.
+     */
     public boolean changeBookReadingStatus(int index, String value) {
         BookModel book;
 
@@ -626,6 +800,15 @@ public class BookController {
         }
     } // Altera o status de leitura de um livro baseado na resposta do usuário
 
+    /**
+     * Rates a book.
+     *
+     * @param index The index of the book in the list.
+     * @param score The rating score of the book.
+     * @param consumptionDate The date the book was read.
+     * @param comment Comments about the book.
+     * @return {@code true} if the book was successfully rated; {@code false} if an error occurred.
+     */
     public boolean evaluateBook(int index, String score, String consumptionDate, String comment) {
         try {
             // Limpa espaços em branco das entradas
@@ -693,6 +876,15 @@ public class BookController {
         }
     } // Avalia o livro
 
+    /**
+     * Re-evaluates a book that has already been rated.
+     *
+     * @param index The index of the book in the list.
+     * @param score The new rating score for the book.
+     * @param consumptionDate The new consumption (reading) date of the book.
+     * @param comment New comments about the book.
+     * @return {@code true} if the book was successfully re-evaluated; {@code false} if an error occurred.
+     */
     public boolean evaluateBookAgain(int index, String score, String consumptionDate, String comment) {
         try {
             // Remove espaços extras do score, data de consumo e comentário
@@ -722,6 +914,12 @@ public class BookController {
 
     } // Avalia o livro novamente
 
+    /**
+     * Checks if a book has already been rated.
+     *
+     * @param book The book to be checked.
+     * @return {@code true} if the book has already been rated; {@code false} if it has not.
+     */
     public boolean checkBookReview(BookModel book) {
         // Verifica se o livro foi avaliado
         if (book.isEvaluatedBook()) {
@@ -730,6 +928,12 @@ public class BookController {
         return false;
     } // Verifica se o livro já foi avaliado
 
+    /**
+     * Validates if a string is not empty.
+     *
+     * @param value The string to be validated.
+     * @return {@code true} if the string is not empty; {@code false} if the string is empty.
+     */
     public boolean validateNewInputString(String value) {
         if (value.isEmpty()) {
             bookView.emptyInformationMessage(); // Exibe mensagem de informação vazia
@@ -738,6 +942,12 @@ public class BookController {
         return true;
     } // Valida se a string de entrada não está vazia
 
+    /**
+     * Validates if a number is an integer.
+     *
+     * @param value The number to be validated.
+     * @return {@code true} if the number is an integer; {@code false} if it is not.
+     */
     public boolean validateNewInputInt(String value) {
         try {
             int valueInt = Integer.parseInt(value); // Tenta converter a string para inteiro
@@ -748,6 +958,12 @@ public class BookController {
         }
     } // Valida se a string pode ser convertida para um número inteiro
 
+    /**
+     * Validates if a new score is valid.
+     *
+     * @param value The new score to be validated.
+     * @return {@code true} if the score is valid; {@code false} if it is not.
+     */
     public boolean validateNewScore(String value) {
         value = value.trim(); // Remove espaços extras do valor
 
@@ -768,6 +984,13 @@ public class BookController {
         return false;
     } // Valida se o valor informado é uma pontuação válida entre 1 e 5
 
+    /**
+     * Validates if a new reading date is valid.
+     *
+     * @param book The book associated with the reading date.
+     * @param value The new reading date to be validated.
+     * @return {@code true} if the reading date is valid; {@code false} if it is not.
+     */
     public boolean validateNewDate(BookModel book, String value) {
         value = value.trim(); // Remove espaços extras do valor
 
@@ -809,6 +1032,14 @@ public class BookController {
         return false;
     } // Valida se a data informada é válida e compatível com o ano de publicação do livro
 
+    /**
+     * Validates if a date is valid.
+     *
+     * @param day The day of the date.
+     * @param month The month of the date.
+     * @param year The year of the date.
+     * @return {@code true} if the date is valid; {@code false} if it is not.
+     */
     public boolean validateExistingDate(String day, String month, String year) {
         try {
             int d = Integer.parseInt(day); // Converte o dia para inteiro
@@ -850,6 +1081,41 @@ public class BookController {
             return false;
         }
     } // Valida se a data é existente e não é no futuro
+
+    public void openFile() {
+        if (!repository.exists()) {
+            repository.mkdirs();
+        }
+
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            if (file != null && file.length() > 0) {
+                uploadFile();
+            }
+        }
+    }
+
+    public void uploadFile() {
+        try (FileReader reader = new FileReader(file)) {
+            Type typeList = new TypeToken<ArrayList<BookModel>>() {}.getType();
+            listOfBooks = gson.fromJson(reader, typeList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveFile() {
+        try (FileWriter writer = new FileWriter(file)) {
+            gson.toJson(listOfBooks, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<BookModel> getListOfBooks() {
         return listOfBooks;

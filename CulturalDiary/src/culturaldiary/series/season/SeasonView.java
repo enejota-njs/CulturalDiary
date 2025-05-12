@@ -1,5 +1,11 @@
 package culturaldiary.series.season;
 
+/**
+ * View class for displaying season-related information to the user.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class SeasonView {
     public void emptyValueMessage(String name) {
         System.out.println("\n" + name + " não pode ficar vazio.");

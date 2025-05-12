@@ -2,6 +2,13 @@ package culturaldiary.book;
 
 import culturaldiary.review.ReviewModel;
 
+/**
+ * Model class representing a book.
+ * Contains attributes and methods related to a book entity.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class BookModel {
     private static int bookCounter = 1;
 

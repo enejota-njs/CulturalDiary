@@ -4,6 +4,13 @@ import culturaldiary.review.ReviewModel;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing a movie.
+ * Contains attributes and methods related to a movie entity.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class MovieModel {
     private static int movieCounter = 1;
 

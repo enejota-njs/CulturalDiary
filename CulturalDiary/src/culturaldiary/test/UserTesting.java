@@ -1,11 +1,20 @@
-package culturaldiary.test.test;
+package culturaldiary.test;
+
+import culturaldiary.book.BookController;
+import culturaldiary.movie.MovieController;
+import culturaldiary.series.series.SeriesController;
 
 import java.util.Scanner;
 
 public class UserTesting {
-    public static void main(String[] args) {
-        Test test = new Test();
+    static BookController bookController = new BookController();
+    static MovieController movieController = new MovieController();
+    static SeriesController seriesController = new SeriesController();
 
+    public static void main(String[] args) {
+        bookController.openFile();
+
+        Test test = new Test();
         Scanner input = new Scanner(System.in);
 
         boolean finished = false;
@@ -24,13 +33,13 @@ public class UserTesting {
 
             switch (menuOption.toLowerCase()) {
                 case "1" :
-                    test.controlMedia(1);
+                    test.controlMedia(1, bookController, movieController, seriesController);
                     break;
                 case "2" :
-                    test.controlMedia(2);
+                    test.controlMedia(2, bookController, movieController, seriesController);
                     break;
                 case "3" :
-                    test.controlMedia(3);
+                    test.controlMedia(3, bookController, movieController, seriesController);
                     break;
                 case "4" :
                     finished = true;

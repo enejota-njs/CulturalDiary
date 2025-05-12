@@ -4,6 +4,14 @@ import culturaldiary.series.season.SeasonModel;
 
 import java.util.ArrayList;
 
+/**
+ * Model class representing a series.
+ * Contains attributes and methods related to a series.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
+
 public class SeriesModel {
     static private int seriesCounter = 1;
 

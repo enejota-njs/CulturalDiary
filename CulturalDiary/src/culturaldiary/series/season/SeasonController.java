@@ -3,6 +3,12 @@ package culturaldiary.series.season;
 import java.util.Calendar;
 import java.util.Set;
 
+/**
+ * Controller class for managing season-related operations.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class SeasonController {
     SeasonView seasonView = new SeasonView();
 

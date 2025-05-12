@@ -1,23 +1,40 @@
 package culturaldiary.series.series;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import culturaldiary.book.BookModel;
 import culturaldiary.review.ReviewModel;
 import culturaldiary.series.season.SeasonController;
 import culturaldiary.series.season.SeasonModel;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Set;
 
+/**
+ * Controller class for managing series-related operations.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class SeriesController {
     SeriesModel seriesModel;
     SeriesView seriesView = new SeriesView();
-    SeriesRepository seriesRepository = new SeriesRepository();
-    private ArrayList<SeriesModel> listOfSeries = seriesRepository.getListOfSeries();
+    private ArrayList<SeriesModel> listOfSeries = new ArrayList<SeriesModel>();
 
     SeasonController seasonController = new SeasonController();
 
     Calendar calendar = Calendar.getInstance();
+
+    Gson gson = new Gson();
+    File repository = new File("src/culturaldiary/series/repository/");
+    File file = new File(repository,"series_file.json");
 
     public boolean registerSeries(String title, String yearOfReleaseString, String yearOfConclusionString, String originalTitle, String whereToWatch, String[][] listOfSeasonString) {
         // Remove espaços em branco antes/depois dos valores recebidos
@@ -125,7 +142,7 @@ public class SeriesController {
             seriesModel = new SeriesModel(title, yearOfRelease, yearOfConclusion, originalTitle, whereToWatch, listOfSeasons);
 
             // Adiciona a série no repositório (persistência)
-            seriesRepository.addSeries(seriesModel);
+            listOfSeries.add(seriesModel);
 
             // Exibe mensagem de sucesso
             seriesView.registeredSeriesMessage(title);
@@ -853,6 +870,41 @@ public class SeriesController {
         // Retorna falso se a entrada for inválida ou não estiver no conjunto de respostas válidas
         return false;
     } // Valida nova visualização
+
+    public void openFile() {
+        if (!repository.exists()) {
+            repository.mkdirs();
+        }
+
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            if (file != null && file.length() > 0) {
+                uploadFile();
+            }
+        }
+    }
+
+    public void uploadFile() {
+        try (FileReader reader = new FileReader(file)) {
+            Type typeList = new TypeToken<ArrayList<SeriesModel>>() {}.getType();
+            listOfSeries = gson.fromJson(reader, typeList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveFile() {
+        try (FileWriter writer = new FileWriter(file)) {
+            gson.toJson(listOfSeries, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<SeriesModel> getListOfSeries() {
         return listOfSeries;

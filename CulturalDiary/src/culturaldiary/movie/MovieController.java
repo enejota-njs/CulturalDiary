@@ -1,19 +1,35 @@
 package culturaldiary.movie;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import culturaldiary.review.ReviewModel;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Set;
 
+/**
+ * Controller class for managing movie-related operations.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.0
+ */
 public class MovieController {
     MovieView movieView = new MovieView(); // Instancia a visualização (interface) dos filmes
     MovieModel movieModel; // Declara um modelo de filme (não instanciado ainda)
-    MovieRepository movieRepository = new MovieRepository(); // Instancia o repositório de filmes
-    private ArrayList<MovieModel> listOfMovies = movieRepository.getListOfMovies(); // Recupera a lista de filmes do repositório
+    private ArrayList<MovieModel> listOfMovies = new ArrayList<MovieModel>(); // Recupera a lista de filmes do repositório
 
     Calendar calendar = Calendar.getInstance(); // Obtém uma instância do calendário com a data/hora atual
+
+    Gson gson = new Gson();
+    File repository = new File("src/culturaldiary/movie/repository/");
+    File file = new File(repository,"movie_file.json");
 
     public boolean registerMovie(String title, String genre, String yearOfReleaseString, String durationTime, String direction,
                                  String screenplay, String castString, String originalTitle, String whereToWatch, String watchedString) {
@@ -88,7 +104,7 @@ public class MovieController {
 
             // Cria um modelo de filme e o adiciona ao repositório
             movieModel = new MovieModel(title.trim(), genre.trim(), yearOfRelease, durationTime.trim(), direction.trim(), screenplay.trim(), cast, originalTitle.trim(), whereToWatch.trim(), watched);
-            movieRepository.addMovie(movieModel);
+            listOfMovies.add(movieModel);
 
             // Exibe uma mensagem de sucesso ao registrar o filme
             movieView.registeredMovieMessage(title);
@@ -940,6 +956,41 @@ public class MovieController {
             return false;
         }
     } // Valida uma nova entrada de um número inteiro
+
+    public void openFile() {
+        if (!repository.exists()) {
+            repository.mkdirs();
+        }
+
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            if (file != null && file.length() > 0) {
+                uploadFile();
+            }
+        }
+    }
+
+    public void uploadFile() {
+        try (FileReader reader = new FileReader(file)) {
+            Type typeList = new TypeToken<ArrayList<MovieModel>>() {}.getType();
+            listOfMovies = gson.fromJson(reader, typeList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveFile() {
+        try (FileWriter writer = new FileWriter(file)) {
+            gson.toJson(listOfMovies, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public ArrayList<MovieModel> getListOfMovies() {
         return listOfMovies;
