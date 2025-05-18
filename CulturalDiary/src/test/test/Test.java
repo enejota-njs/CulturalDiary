@@ -1,4 +1,4 @@
-package culturaldiary.test;
+package test.test;
 
 import culturaldiary.book.BookController;
 import culturaldiary.movie.MovieController;
