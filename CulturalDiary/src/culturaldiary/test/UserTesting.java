@@ -13,6 +13,8 @@ public class UserTesting {
 
     public static void main(String[] args) {
         bookController.openFile();
+        movieController.openFile();
+        seriesController.openFile();
 
         Test test = new Test();
         Scanner input = new Scanner(System.in);
@@ -48,7 +50,7 @@ public class UserTesting {
                     System.out.println("\nInválido.");
                     break;
             }
-        } while (finished == false);
+        } while (!finished);
 
         System.out.println("\n+-------------+");
         System.out.println("| Até logo! \uD83D\uDC4B|");

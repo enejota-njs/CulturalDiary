@@ -103,8 +103,9 @@ public class MovieController {
             else if (negativeResponsesWatched.contains(watchedString.toLowerCase())) { watched = false; }
 
             // Cria um modelo de filme e o adiciona ao repositório
-            movieModel = new MovieModel(title.trim(), genre.trim(), yearOfRelease, durationTime.trim(), direction.trim(), screenplay.trim(), cast, originalTitle.trim(), whereToWatch.trim(), watched);
+            movieModel = new MovieModel(title.trim(), genre.trim(), yearOfRelease, durationTime.trim(), direction.trim(), screenplay.trim(), cast, originalTitle.trim(), whereToWatch.trim(), watched, listOfMovies.size() + 1);
             listOfMovies.add(movieModel);
+            saveFile();
 
             // Exibe uma mensagem de sucesso ao registrar o filme
             movieView.registeredMovieMessage(title);
@@ -710,7 +711,7 @@ public class MovieController {
 
             movie.setWatched(watched); // Atualiza o status de visualização do filme
             movieView.updatedWatchedMessage(); // Exibe mensagem indicando que o status foi atualizado
-
+            saveFile();
             return true;
         } catch (Exception e) {
             movieView.invalidMessage(); // Exibe mensagem de erro caso algo de errado aconteça
@@ -762,6 +763,7 @@ public class MovieController {
                     movie.setEvaluatedMovie(true); // Marca o filme como avaliado
 
                     movieView.registeredEvaluationMessage(); // Exibe mensagem informando que a avaliação foi registrada
+                    saveFile();
                     return true;
                 } else {
                     movieView.unwatchedMovieMessage(); // Se o filme não foi assistido, exibe mensagem de erro

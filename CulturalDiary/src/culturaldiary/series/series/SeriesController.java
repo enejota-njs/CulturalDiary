@@ -139,10 +139,11 @@ public class SeriesController {
             }
 
             // Cria o objeto da série com todas as informações e temporadas
-            seriesModel = new SeriesModel(title, yearOfRelease, yearOfConclusion, originalTitle, whereToWatch, listOfSeasons);
+            seriesModel = new SeriesModel(title, yearOfRelease, yearOfConclusion, originalTitle, whereToWatch, listOfSeasons, listOfSeries.size() + 1);
 
             // Adiciona a série no repositório (persistência)
             listOfSeries.add(seriesModel);
+            saveFile();
 
             // Exibe mensagem de sucesso
             seriesView.registeredSeriesMessage(title);
@@ -545,7 +546,7 @@ public class SeriesController {
             // Atualiza o status de visualização da temporada
             season.setWatched(watched);
             seriesView.updatedWatchedMessage(); // Mensagem indicando que o status foi atualizado
-
+            saveFile();
             return true;
         } catch (Exception e) {
             seriesView.invalidMessage(); // Exibe mensagem de erro em caso de exceção
@@ -612,6 +613,7 @@ public class SeriesController {
 
                     // Atualiza a média da série
                     updateAverage(series);
+                    saveFile();
                     return true;
                 } else {
                     // Se a temporada não foi assistida, exibe mensagem de erro

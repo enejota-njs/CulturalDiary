@@ -96,7 +96,7 @@ public class BookController {
             if (positiveResponsesRead.contains(readString.toLowerCase())) { read = true; }
             else if (negativeResponsesRead.contains(readString.toLowerCase())) { read = false; }
 
-            bookModel = new BookModel(title.trim(), author.trim(), publisher.trim(), isbn.trim(), yearOfPublication, genre.trim(), hasCopy, read); // Cria livro
+            bookModel = new BookModel(title.trim(), author.trim(), publisher.trim(), isbn.trim(), yearOfPublication, genre.trim(), hasCopy, read, listOfBooks.size() + 1); // Cria livro
             listOfBooks.add(bookModel); // Adiciona livro
             saveFile();
 
@@ -791,6 +791,7 @@ public class BookController {
 
             book.setRead(read); // Atualiza o status de leitura do livro
             bookView.updatedReadMessage(); // Exibe mensagem de confirmação da atualização
+            saveFile();
 
             return true;
         } catch (Exception e) {
@@ -858,6 +859,7 @@ public class BookController {
 
                     // Exibe mensagem confirmando que a avaliação foi registrada
                     bookView.registeredEvaluationMessage();
+                    saveFile();
                     return true;
                 } else {
                     // Se o livro não foi lido, exibe mensagem

@@ -12,8 +12,6 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class MovieModel {
-    private static int movieCounter = 1;
-
     private String title; // Título do filme
     private String genre; // Gênero do filme
     private int yearOfRelease; // Ano de lançamento
@@ -31,7 +29,7 @@ public class MovieModel {
 
     public MovieModel(String title, String genre, int yearOfRelease, String durationTime,
                       String direction, String screenplay, ArrayList<String> cast,
-                      String originalTitle, String whereToWatch, boolean watched) {
+                      String originalTitle, String whereToWatch, boolean watched, int movieIndex) {
         this.title = title;
         this.genre = genre;
         this.yearOfRelease = yearOfRelease;
@@ -41,7 +39,7 @@ public class MovieModel {
         this.cast = cast;
         this.originalTitle = originalTitle;
         this.whereToWatch = whereToWatch;
-        this.movieIndex = movieCounter++;
+        this.movieIndex = movieIndex;
         this.movieReview = null;
         this.evaluatedMovie = false;
         this.watched = watched;
