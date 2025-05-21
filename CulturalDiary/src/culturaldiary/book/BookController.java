@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  * Class responsible for controlling operations related to books.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class BookController {
     private ArrayList<BookModel> listOfBooks = new ArrayList<BookModel>(); // Lista de livros
@@ -23,9 +23,10 @@ public class BookController {
 
     Calendar calendar = Calendar.getInstance(); // Calendário atual
 
-    Gson gson = new Gson();
-    File repository = new File("src/culturaldiary/book/repository/");
-    File file = new File(repository,"book_file.json");
+    Gson gson = new Gson(); // Instância do Gson para manipulação de JSON
+    File repository = new File("src/culturaldiary/book/repository/");  // Diretório do repositório
+    File file = new File(repository, "book_file.json"); // Arquivo JSON dentro do repositório
+
 
     /**
      * Registers a book in the system.
@@ -1084,40 +1085,60 @@ public class BookController {
         }
     } // Valida se a data é existente e não é no futuro
 
+    /**
+     * Opens the file and uploads it if it exists and is not empty.
+     */
     public void openFile() {
+        // Verifica se o diretório do repositório existe; se não existir, cria o diretório
         if (!repository.exists()) {
             repository.mkdirs();
         }
 
-        if (!file.exists()){
+        // Verifica se o arquivo existe
+        if (!file.exists()) {
             try {
+                // Tenta criar um novo arquivo
                 file.createNewFile();
             } catch (IOException e) {
+                // Imprime a stack trace em caso de erro na criação do arquivo
                 e.printStackTrace();
             }
         } else {
+            // Se o arquivo existir e tiver conteúdo, realiza o upload
             if (file != null && file.length() > 0) {
                 uploadFile();
             }
         }
-    }
+    } // Abri um arquivo do repositório
 
+    /**
+     * Uploads the file and loads its contents into the list of books.
+     */
     public void uploadFile() {
         try (FileReader reader = new FileReader(file)) {
+            // Define o tipo da lista para desserialização do JSON
             Type typeList = new TypeToken<ArrayList<BookModel>>() {}.getType();
+
+            // Carrega a lista de livros a partir do conteúdo JSON do arquivo
             listOfBooks = gson.fromJson(reader, typeList);
         } catch (IOException e) {
+            // Imprime a pilha de erros caso ocorra problema na leitura do arquivo
             e.printStackTrace();
         }
-    }
+    } // Carrega um arquivo do repositório
 
+    /**
+     * Saves the list of books to the file in JSON format.
+     */
     public void saveFile() {
         try (FileWriter writer = new FileWriter(file)) {
+            // Converte a lista de livros para JSON e escreve no arquivo
             gson.toJson(listOfBooks, writer);
         } catch (IOException e) {
+            // Imprime a pilha de erros caso ocorra problema na escrita do arquivo
             e.printStackTrace();
         }
-    }
+    } // Salva um arquivo no repositório
 
     public ArrayList<BookModel> getListOfBooks() {
         return listOfBooks;

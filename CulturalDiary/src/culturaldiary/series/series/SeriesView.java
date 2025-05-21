@@ -4,7 +4,7 @@ package culturaldiary.series.series;
  * View class for displaying series-related information to the user.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class SeriesView {
     static final String BOLD = "\033[1m";
@@ -80,18 +80,17 @@ public class SeriesView {
         float temporaryReview = series.getSeriesReview();
 
         if (temporaryIndex.length() > 8) {
-            temporaryIndex = temporaryIndex.substring(0,  5) + "...";
+            temporaryIndex = temporaryIndex.substring(0, 5) + "...";
         }
 
         if (temporaryTitle.length() > 45) {
-            temporaryTitle = temporaryTitle.substring(0,  42) + "...";
+            temporaryTitle = temporaryTitle.substring(0, 42) + "...";
         }
 
         String temporaryScore;
         if (temporaryReview == 0) {
             temporaryScore = "Vazio";
-        }
-        else {
+        } else {
             temporaryScore = String.valueOf(temporaryReview);
         }
 
@@ -192,11 +191,9 @@ public class SeriesView {
 
         if (series.getSeriesReview() == 0) {
             System.out.printf("| %-23s -> %s\n", "Nota média", "Série não avaliada");
-        }
-        else {
+        } else {
             System.out.printf("| %-23s -> %f\n", "Nota média", series.getSeriesReview());
         }
         System.out.println("+-----------------------+");
     } // Exibe informações detalhadas sobre a série, incluindo título, ano de lançamento, número de temporadas, e nota média
-
 }

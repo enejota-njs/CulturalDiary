@@ -7,7 +7,7 @@ import culturaldiary.review.ReviewModel;
  * Contains attributes and methods related to a book entity.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class BookModel {
     private String title; // Título do livro
@@ -22,6 +22,19 @@ public class BookModel {
     private boolean evaluatedBook; // Indica se o livro foi avaliado
     private boolean read; // Indica se o livro foi lido
 
+    /**
+     * Creates a new BookModel instance with the specified details.
+     *
+     * @param title The title of the book.
+     * @param author The author of the book.
+     * @param publisher The publisher of the book.
+     * @param isbn The ISBN identifier of the book.
+     * @param yearOfPublication The year the book was published.
+     * @param genre The genre of the book.
+     * @param hasCopy Indicates if there is a physical copy available.
+     * @param read Indicates if the book has been read.
+     * @param bookIndex The index or ID of the book.
+     */
     public BookModel(String title, String author, String publisher,
                      String isbn, int yearOfPublication, String genre, boolean hasCopy, boolean read, int bookIndex) {
         this.title = title;

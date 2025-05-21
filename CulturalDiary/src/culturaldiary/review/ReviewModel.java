@@ -5,13 +5,20 @@ package culturaldiary.review;
  * Contains attributes and methods related to a book or movie review.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class ReviewModel {
     private float score; // Nota
     private String consumptionDate; // Data de consumo
     private String comment; // Comentários
 
+    /**
+     * Creates a ReviewModel with score, date, and comment.
+     *
+     * @param score The rating score.
+     * @param consumptionDate The date of consumption.
+     * @param comment The review comment.
+     */
     public ReviewModel(float score, String consumptionDate, String comment) {
         this.score = score;
         this.consumptionDate = consumptionDate;

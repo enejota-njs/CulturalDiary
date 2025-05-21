@@ -7,13 +7,23 @@ import java.util.Set;
  * Controller class for managing season-related operations.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class SeasonController {
     SeasonView seasonView = new SeasonView();
 
     Calendar calendar = Calendar.getInstance();
 
+    /**
+     * Validates the season data including genre, cast, year, watched status, and index.
+     *
+     * @param genre The genre of the season.
+     * @param castString The cast members as a string.
+     * @param yearSeasonString The year of the season as a string.
+     * @param watchedString The watched status as a string.
+     * @param index The index or number of the season.
+     * @return true if all inputs are valid, false otherwise.
+     */
     public boolean validateSeason(String genre, String castString, String yearSeasonString, String watchedString, int index) {
         genre = genre.trim();  // Remove espaços em branco no início e no final da string 'genre'
         castString = castString.trim();  // Remove espaços em branco no início e no final da string 'castString'
@@ -39,14 +49,35 @@ public class SeasonController {
         }
     }
 
+    /**
+     * Validates the genre for a given season.
+     *
+     * @param genre The genre to validate.
+     * @param index The index or number of the season.
+     * @return true if the genre is valid, false otherwise.
+     */
     public boolean validateGenre(String genre, int index) {
         return validateNewString(genre, "Gênero da " + index + "° temporada");
     } // Valida gênero
 
+    /**
+     * Validates the cast string for a given season.
+     *
+     * @param cast The cast members as a single string.
+     * @param index The index or number of the season.
+     * @return true if the cast is valid, false otherwise.
+     */
     public boolean validateCast(String cast, int index) {
         return validateNewCast(cast, index);
     } // Valida elenco
 
+    /**
+     * Validates a new cast member value for a given season.
+     *
+     * @param value The new cast member to validate.
+     * @param index The index or number of the season.
+     * @return true if the new cast member is valid, false otherwise.
+     */
     public boolean validateNewCast(String value, int index) {
         if (validateNewString(value, "Elenco da " + index + "° temporada")) {
             if (value.matches("[\\p{L}, ]*")) {
@@ -60,10 +91,24 @@ public class SeasonController {
         }
     } // Valida novo elenco
 
+    /**
+     * Validates the year of release for a given season.
+     *
+     * @param yearOfRelease The year of the season as a string.
+     * @param index The index or number of the season.
+     * @return true if the year is valid, false otherwise.
+     */
     public boolean validateYearSeason(String yearOfRelease, int index) {
         return validateNewYear(yearOfRelease, index);
     } // Valida ano de lançamento
 
+    /**
+     * Validates a new year value for a given season.
+     *
+     * @param value The new year value as a string.
+     * @param index The index or number of the season.
+     * @return true if the year is valid, false otherwise.
+     */
     public boolean validateNewYear(String value, int index) {
         // Verifica se o valor do ano de lançamento é válido (não vazio)
         if (validateNewString(value, "Ano de lançamento da " + index + "° temporada")) {
@@ -90,10 +135,24 @@ public class SeasonController {
         return false;
     } // Valida novo ano de lançamento
 
+    /**
+     * Validates the watched status for a given season.
+     *
+     * @param watched The watched status as a string.
+     * @param index The index or number of the season.
+     * @return true if the watched status is valid, false otherwise.
+     */
     public boolean validateWatched(String watched, int index) {
         return validateNewWatched(watched, index);
     } // Valida visualização
 
+    /**
+     * Validates a new watched status value for a given season.
+     *
+     * @param value The new watched status as a string.
+     * @param index The index or number of the season.
+     * @return true if the watched status is valid, false otherwise.
+     */
     public boolean validateNewWatched(String value, int index) {
         // Verifica se a entrada de "visualização" não é vazia e válida
         if (validateNewString(value, "Visualização da " + index + "° temporada")) {
@@ -118,6 +177,13 @@ public class SeasonController {
         return false;
     } // Valida nova visualização
 
+    /**
+     * Validates a new string value for a given field.
+     *
+     * @param value The new value to validate.
+     * @param name The name of the field to validate.
+     * @return true if the value is valid, false otherwise.
+     */
     public boolean validateNewString(String value, String name) {
         if (value.isEmpty()) {
             seasonView.emptyValueMessage(name);
@@ -126,6 +192,11 @@ public class SeasonController {
         return true;
     } //  Valida se string não está vazia
 
+    /**
+     * Opens and displays the details of the given season.
+     *
+     * @param season The SeasonModel to open.
+     */
     public void openSeason(SeasonModel season) {
         seasonView.fullSeasonInformation(season);
     } // Abre informações de uma temporada

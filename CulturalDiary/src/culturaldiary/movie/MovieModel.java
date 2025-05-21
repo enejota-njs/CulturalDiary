@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Contains attributes and methods related to a movie entity.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class MovieModel {
     private String title; // Título do filme
@@ -26,7 +26,21 @@ public class MovieModel {
     private boolean evaluatedMovie; // Se o filme foi avaliado
     private boolean watched; // Se o filme foi assistido
 
-
+    /**
+     * Constructs a MovieModel object.
+     *
+     * @param title The movie title.
+     * @param genre The movie genre.
+     * @param yearOfRelease The release year.
+     * @param durationTime The duration of the movie.
+     * @param direction The director.
+     * @param screenplay The screenplay writer.
+     * @param cast The cast list.
+     * @param originalTitle The original title.
+     * @param whereToWatch Where to watch the movie.
+     * @param watched Whether the movie has been watched.
+     * @param movieIndex The movie index.
+     */
     public MovieModel(String title, String genre, int yearOfRelease, String durationTime,
                       String direction, String screenplay, ArrayList<String> cast,
                       String originalTitle, String whereToWatch, boolean watched, int movieIndex) {

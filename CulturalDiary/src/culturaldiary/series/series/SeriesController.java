@@ -21,7 +21,7 @@ import java.util.Set;
  * Controller class for managing series-related operations.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class SeriesController {
     SeriesModel seriesModel;
@@ -32,9 +32,9 @@ public class SeriesController {
 
     Calendar calendar = Calendar.getInstance();
 
-    Gson gson = new Gson();
-    File repository = new File("src/culturaldiary/series/repository/");
-    File file = new File(repository,"series_file.json");
+    Gson gson = new Gson(); // Instância do Gson para manipulação de JSON
+    File repository = new File("src/culturaldiary/series/repository/"); // Diretório do repositório de séries
+    File file = new File(repository,"series_file.json"); // Arquivo JSON dentro do repositório de séries
 
     public boolean registerSeries(String title, String yearOfReleaseString, String yearOfConclusionString, String originalTitle, String whereToWatch, String[][] listOfSeasonString) {
         // Remove espaços em branco antes/depois dos valores recebidos
@@ -874,39 +874,39 @@ public class SeriesController {
     } // Valida nova visualização
 
     public void openFile() {
-        if (!repository.exists()) {
-            repository.mkdirs();
+        if (!repository.exists()) { // Verifica se o diretório não existe
+            repository.mkdirs(); // Cria o diretório
         }
 
-        if (!file.exists()){
+        if (!file.exists()){ // Verifica se o arquivo não existe
             try {
-                file.createNewFile();
+                file.createNewFile(); // Tenta criar o arquivo
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            if (file != null && file.length() > 0) {
-                uploadFile();
+            if (file != null && file.length() > 0) { // Se o arquivo existe e não está vazio
+                uploadFile(); // Carrega os dados do arquivo
             }
         }
-    }
+    } // Abre um arquivo do repositório
 
     public void uploadFile() {
-        try (FileReader reader = new FileReader(file)) {
-            Type typeList = new TypeToken<ArrayList<SeriesModel>>() {}.getType();
-            listOfSeries = gson.fromJson(reader, typeList);
+        try (FileReader reader = new FileReader(file)) { // Lê o conteúdo do arquivo JSON
+            Type typeList = new TypeToken<ArrayList<SeriesModel>>() {}.getType(); // Define o tipo da lista
+            listOfSeries = gson.fromJson(reader, typeList); // Converte o JSON para lista de séries
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Imprime erro caso ocorra falha na leitura
         }
-    }
+    } // Carrega um arquivo do repositório
 
     public void saveFile() {
-        try (FileWriter writer = new FileWriter(file)) {
-            gson.toJson(listOfSeries, writer);
+        try (FileWriter writer = new FileWriter(file)) { // Abre o arquivo para escrita
+            gson.toJson(listOfSeries, writer); // Converte a lista de séries para JSON e grava no arquivo
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Imprime erro caso ocorra falha na escrita
         }
-    }
+    } // Salva um arquivo no repositório
 
     public ArrayList<SeriesModel> getListOfSeries() {
         return listOfSeries;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Contains attributes and methods related to the series season.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class SeasonModel {
     private String genre; // Gênero
@@ -20,6 +20,15 @@ public class SeasonModel {
     private boolean watched; // Assistido
     private int seasonIndex; // Índice da temporada
 
+    /**
+     * Creates a SeasonModel with genre, cast, year, watched status, and index.
+     *
+     * @param genre The genre of the season.
+     * @param cast The list of cast members.
+     * @param yearSeason The release year of the season.
+     * @param watched Indicates if the season has been watched.
+     * @param seasonIndex The index or number of the season.
+     */
     public SeasonModel(String genre, ArrayList<String> cast, int yearSeason, boolean watched, int seasonIndex) {
         this.genre = genre;
         this.cast = cast;

@@ -18,7 +18,7 @@ import java.util.Set;
  * Controller class for managing movie-related operations.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 public class MovieController {
     MovieView movieView = new MovieView(); // Instancia a visualização (interface) dos filmes
@@ -27,10 +27,25 @@ public class MovieController {
 
     Calendar calendar = Calendar.getInstance(); // Obtém uma instância do calendário com a data/hora atual
 
-    Gson gson = new Gson();
-    File repository = new File("src/culturaldiary/movie/repository/");
-    File file = new File(repository,"movie_file.json");
+    Gson gson = new Gson(); // Instância do Gson para manipulação de JSON
+    File repository = new File("src/culturaldiary/movie/repository/"); // Diretório do repositório de filmes
+    File file = new File(repository, "movie_file.json"); // Arquivo JSON dentro do repositório de filmes
 
+    /**
+     * Registers a movie with the given information.
+     *
+     * @param title Movie title
+     * @param genre Movie genre
+     * @param yearOfReleaseString Year of release as a string
+     * @param durationTime Duration of the movie
+     * @param direction Director's name
+     * @param screenplay Screenplay
+     * @param castString Cast as a single string
+     * @param originalTitle Original movie title
+     * @param whereToWatch Platform or location to watch
+     * @param watchedString Watched status as a string
+     * @return {@code true} if the movie is successfully registered; {@code false} otherwise
+     */
     public boolean registerMovie(String title, String genre, String yearOfReleaseString, String durationTime, String direction,
                                  String screenplay, String castString, String originalTitle, String whereToWatch, String watchedString) {
 
@@ -118,46 +133,112 @@ public class MovieController {
         }
     } // Registra filme
 
+    /**
+     * Validates the movie title.
+     *
+     * @param title The title to validate.
+     * @return {@code true} if the title is valid; {@code false} otherwise.
+     */
     public boolean validateTitle(String title) {
         return validateNewString(title, "Título");
     }  // Valida o título do filme
 
+    /**
+     * Validates the movie genre.
+     *
+     * @param genre The genre to validate.
+     * @return {@code true} if the genre is valid; {@code false} otherwise.
+     */
     public boolean validateGenre(String genre) {
         return validateNewString(genre, "Gênero");
     }  // Valida o gênero do filme
 
+    /**
+     * Validates the year of release.
+     *
+     * @param yearOfRelease The year to validate as a string.
+     * @return {@code true} if the year is valid; {@code false} otherwise.
+     */
     public boolean validateYearOfRelease(String yearOfRelease) {
         return validateNewYear(yearOfRelease);
     }  // Valida o ano de lançamento do filme
 
+    /**
+     * Validates the movie duration time.
+     *
+     * @param durationTime The duration to validate.
+     * @return {@code true} if the duration is valid; {@code false} otherwise.
+     */
     public boolean validateDurationTime(String durationTime) {
         return validateNewTime(durationTime);
     }  // Valida o tempo de duração do filme
 
+    /**
+     * Validates the director's name.
+     *
+     * @param direction The director's name to validate.
+     * @return {@code true} if the name is valid; {@code false} otherwise.
+     */
     public boolean validateDirection(String direction) {
         return validateNewString(direction, "Direção");
     }  // Valida a direção do filme
 
+    /**
+     * Validates the screenplay information.
+     *
+     * @param screenplay The screenplay to validate.
+     * @return {@code true} if the screenplay is valid; {@code false} otherwise.
+     */
     public boolean validateScreenplay(String screenplay) {
         return validateNewString(screenplay, "Roteiro");
     }  // Valida o roteiro do filme
 
+    /**
+     * Validates the cast information.
+     *
+     * @param cast The cast to validate.
+     * @return {@code true} if the cast is valid; {@code false} otherwise.
+     */
     public boolean validateCast(String cast) {
         return validateNewCast(cast);
     }  // Valida o elenco do filme
 
+    /**
+     * Validates the original title of the movie.
+     *
+     * @param originalTitle The original title to validate.
+     * @return {@code true} if the original title is valid; {@code false} otherwise.
+     */
     public boolean validateOriginalTitle(String originalTitle) {
         return validateNewString(originalTitle, "Título original");
     }  // Valida o título original do filme
 
+    /**
+     * Validates the platform or place to watch the movie.
+     *
+     * @param whereToWatch The platform or location to validate.
+     * @return {@code true} if the information is valid; {@code false} otherwise.
+     */
     public boolean validateWhereToWatch(String whereToWatch) {
         return validateNewString(whereToWatch, "Onde assistir");
     }  // Valida onde o filme pode ser assistido
 
+    /**
+     * Validates the watched status.
+     *
+     * @param watched The watched status to validate.
+     * @return {@code true} if the status is valid; {@code false} otherwise.
+     */
     public boolean validateWatched(String watched) {
         return validateNewWatched(watched);
     }  // Valida se o filme foi assistido
 
+    /**
+     * Validates the new time value.
+     *
+     * @param value The time value to validate.
+     * @return {@code true} if the time is valid; {@code false} otherwise.
+     */
     public boolean validateNewTime(String value) {
         // Verifica se a entrada é uma string válida
         if (validateNewInputString(value)) {
@@ -197,6 +278,12 @@ public class MovieController {
         }
     }  // Valida o formato de tempo (HH:MN)
 
+    /**
+     * Validates the new year value.
+     *
+     * @param value The year value to validate.
+     * @return {@code true} if the year is valid; {@code false} otherwise.
+     */
     public boolean validateNewYear(String value) {
         // Verifica se a string de entrada é válida
         if (validateNewString(value, "Ano de lançamento")) {
@@ -224,6 +311,12 @@ public class MovieController {
         return false;
     }  // Valida o ano de lançamento do filme
 
+    /**
+     * Validates the new cast information.
+     *
+     * @param value The cast information to validate.
+     * @return {@code true} if the cast is valid; {@code false} otherwise.
+     */
     public boolean validateNewCast(String value) {
         // Verifica se a string de entrada é válida
         if (validateNewString(value, "Elenco")) {
@@ -241,6 +334,12 @@ public class MovieController {
         }
     }  // Valida o elenco do filme
 
+    /**
+     * Validates the new watched status.
+     *
+     * @param value The watched status to validate.
+     * @return {@code true} if the status is valid; {@code false} otherwise.
+     */
     public boolean validateNewWatched(String value) {
         // Verifica se a string de entrada para a visualização é válida
         if (validateNewString(value, "Visualização")) {
@@ -265,6 +364,13 @@ public class MovieController {
         return false;
     }  // Valida a resposta sobre se o filme foi assistido ou não
 
+    /**
+     * Validates a new string value based on its name.
+     *
+     * @param value The string value to validate.
+     * @param name The name or type of the value.
+     * @return {@code true} if the value is valid; {@code false} otherwise.
+     */
     public boolean validateNewString(String value, String name) {
         // Verifica se o valor fornecido está vazio
         if (value.isEmpty()) {
@@ -275,6 +381,12 @@ public class MovieController {
         return true;
     }  // Valida se o valor fornecido não está vazio
 
+    /**
+     * Validates a new input string.
+     *
+     * @param value The input string to validate.
+     * @return {@code true} if the input is valid; {@code false} otherwise.
+     */
     public boolean validateNewInputString(String value) {
         // Verifica se o valor fornecido está vazio
         if (value.isEmpty()) {
@@ -285,6 +397,12 @@ public class MovieController {
         return true;
     }  // Valida se o valor fornecido não está vazio
 
+    /**
+     * Searches for a movie by its title.
+     *
+     * @param value The title to search for.
+     * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
+     */
     public boolean searchMovieByTitle(String value) {
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
@@ -321,6 +439,12 @@ public class MovieController {
         return false;
     } // Busca filme por título
 
+    /**
+     * Searches for a movie by director's name.
+     *
+     * @param value The director's name to search for.
+     * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
+     */
     public boolean searchMovieByDirection(String value) {
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
@@ -357,6 +481,12 @@ public class MovieController {
         return false;
     } // Busca filme por nome do diretor
 
+    /**
+     * Searches for a movie by actor in the cast.
+     *
+     * @param value The actor's name to search for.
+     * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
+     */
     public boolean searchMovieByActorInTheCast(String value) {
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
@@ -402,6 +532,12 @@ public class MovieController {
         return false;
     } // Busca filme por ator no elenco
 
+    /**
+     * Searches for a movie by genre.
+     *
+     * @param value The genre to search for.
+     * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
+     */
     public boolean searchMovieByGenre(String value) {
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
@@ -436,6 +572,12 @@ public class MovieController {
         return false;
     } // Busca filme por gênero
 
+    /**
+     * Searches for a movie by year of release.
+     *
+     * @param value The year to search for.
+     * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
+     */
     public boolean searchMovieByYearOfRelease(String value) {
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
@@ -481,6 +623,11 @@ public class MovieController {
         return false;
     } // Busca filme por ano de lançamento
 
+    /**
+     * Lists all movies.
+     *
+     * @return {@code true} if the list is shown successfully; {@code false} if an error occurs.
+     */
     public boolean listMovies() {
         try {
             // Verifica se a lista de filmes está vazia
@@ -500,6 +647,12 @@ public class MovieController {
         }
     } // Lista todos os filmes
 
+    /**
+     * Filters the list of movies by genre.
+     *
+     * @param value The genre to filter by.
+     * @return {@code true} if filtering is successful; {@code false} if an error occurs.
+     */
     public boolean filterListOfMoviesByGenre(String value) {
         value = value.trim(); // Remove espaços em branco extras ao redor do valor fornecido
 
@@ -530,6 +683,12 @@ public class MovieController {
         return false;
     } // Filtra a lista de filmes pelo gênero
 
+    /**
+     * Filters the list of movies by year of release.
+     *
+     * @param value The year to filter by.
+     * @return {@code true} if filtering is successful; {@code false} if an error occurs.
+     */
     public boolean filterListOfMoviesByYearOfRelease(String value) {
         value = value.trim(); // Remove espaços em branco extras ao redor do valor fornecido
 
@@ -568,6 +727,11 @@ public class MovieController {
         return false;
     } // Filtra a lista de filmes pelo ano de lançamento
 
+    /**
+     * Sorts the list of movies by top rated.
+     *
+     * @return {@code true} if sorting is successful; {@code false} if an error occurs.
+     */
     public boolean sortListByTopRated() {
         try {
             if (!listOfMovies.isEmpty()) { // Verifica se a lista de filmes não está vazia
@@ -604,6 +768,11 @@ public class MovieController {
         }
     } // Ordena a lista de filmes pela avaliação, exibindo os mais bem avaliados
 
+    /**
+     * Sorts the list of movies by lowest rating.
+     *
+     * @return {@code true} if sorting is successful; {@code false} if an error occurs.
+     */
     public boolean sortListByLowRated() {
         try {
             if (!listOfMovies.isEmpty()) { // Verifica se a lista de filmes não está vazia
@@ -640,6 +809,12 @@ public class MovieController {
         }
     } // Ordena a lista de filmes pela avaliação, exibindo os filmes com as piores avaliações primeiro
 
+    /**
+     * Opens the movie at the specified index.
+     *
+     * @param index The index of the movie to open.
+     * @return {@code true} if the movie is opened successfully; {@code false} if an error occurs.
+     */
     public boolean openMovie(int index) {
         try {
             MovieModel movie; // Declaração da variável que armazenará o filme
@@ -658,6 +833,13 @@ public class MovieController {
         }
     } // Abre um filme a partir de um índice, exibindo suas informações completas
 
+    /**
+     * Changes the viewing status of a movie at the given index.
+     *
+     * @param index The index of the movie.
+     * @param value The new viewing status.
+     * @return {@code true} if the status is changed successfully; {@code false} if an error occurs.
+     */
     public boolean changeMovieViewingStatus(int index, String value) {
         MovieModel movie;
 
@@ -719,6 +901,15 @@ public class MovieController {
         }
     } // Muda o status de visualização de um filme
 
+    /**
+     * Evaluates a movie with a score, consumption date, and comment.
+     *
+     * @param index The index of the movie.
+     * @param score The score given to the movie.
+     * @param consumptionDate The date the movie was watched.
+     * @param comment Additional comments about the movie.
+     * @return {@code true} if the evaluation is successful; {@code false} if an error occurs.
+     */
     public boolean evaluateMovie(int index, String score, String consumptionDate, String comment) {
         try {
             // Remover espaços extras das entradas
@@ -779,6 +970,15 @@ public class MovieController {
         }
     } // Avalia um filme
 
+    /**
+     * Updates the evaluation of a movie.
+     *
+     * @param index The index of the movie.
+     * @param score The new score.
+     * @param consumptionDate The new consumption date.
+     * @param comment The new comment.
+     * @return {@code true} if the update is successful; {@code false} if an error occurs.
+     */
     public boolean evaluateMovieAgain(int index, String score, String consumptionDate, String comment) {
         try {
             // Remove espaços extras das entradas de dados
@@ -807,6 +1007,12 @@ public class MovieController {
         }
     } // Avalia um filme novamente
 
+    /**
+     * Validates a new score value.
+     *
+     * @param value The score to validate.
+     * @return {@code true} if the score is valid; {@code false} otherwise.
+     */
     public boolean validateNewScore(String value) {
         // Remove espaços extras no valor de entrada
         value = value.trim();
@@ -835,6 +1041,13 @@ public class MovieController {
         return false; // Retorna falso caso a validação do valor de entrada falhe
     } // Valida um novo score
 
+    /**
+     * Validates a new date for a movie.
+     *
+     * @param movie The movie to validate the date against.
+     * @param value The date value to validate.
+     * @return {@code true} if the date is valid; {@code false} otherwise.
+     */
     public boolean validateNewDate(MovieModel movie, String value) {
         // Remove espaços extras do valor fornecido
         value = value.trim();
@@ -889,6 +1102,14 @@ public class MovieController {
         return false;
     } // Valida uma nova data
 
+    /**
+     * Validates an existing date given day, month, and year.
+     *
+     * @param day The day part of the date.
+     * @param month The month part of the date.
+     * @param year The year part of the date.
+     * @return {@code true} if the date is valid; {@code false} otherwise.
+     */
     public boolean validateExistingDate(String day, String month, String year) {
         try {
             // Converte o dia, mês e ano fornecidos em inteiros
@@ -939,6 +1160,12 @@ public class MovieController {
         }
     } // Valida existência de data
 
+    /**
+     * Checks if a movie has a review.
+     *
+     * @param movie The movie to check.
+     * @return {@code true} if the movie has a review; {@code false} otherwise.
+     */
     public boolean checkMovieReview(MovieModel movie) {
         // Verifica se o filme já foi avaliado (ou seja, se a propriedade 'evaluatedMovie' é verdadeira)
         if (movie.isEvaluatedMovie()) {
@@ -947,6 +1174,12 @@ public class MovieController {
         return false;
     } // Verifica se um filme já foi avaliado
 
+    /**
+     * Validates if the input string is a valid integer.
+     *
+     * @param value The input string to validate.
+     * @return {@code true} if the input is a valid integer; {@code false} otherwise.
+     */
     public boolean validateNewInputInt(String value) {
         try {
             // Tenta converter o valor de entrada para um número inteiro
@@ -959,40 +1192,49 @@ public class MovieController {
         }
     } // Valida uma nova entrada de um número inteiro
 
+    /**
+     * Opens the file, creating directory and file if needed.
+     */
     public void openFile() {
-        if (!repository.exists()) {
-            repository.mkdirs();
+        if (!repository.exists()) { // Verifica se o diretório não existe
+            repository.mkdirs(); // Cria o diretório
         }
 
-        if (!file.exists()){
+        if (!file.exists()){ // Verifica se o arquivo não existe
             try {
-                file.createNewFile();
+                file.createNewFile(); // Tenta criar o arquivo
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            if (file != null && file.length() > 0) {
-                uploadFile();
+            if (file != null && file.length() > 0) {  // Se o arquivo existe e não está vazio
+                uploadFile(); // Carrega os dados do arquivo
             }
         }
-    }
+    } // Abre um arquivo do repositório
 
+    /**
+     * Loads the data from the file into the list of movies.
+     */
     public void uploadFile() {
-        try (FileReader reader = new FileReader(file)) {
-            Type typeList = new TypeToken<ArrayList<MovieModel>>() {}.getType();
-            listOfMovies = gson.fromJson(reader, typeList);
+        try (FileReader reader = new FileReader(file)) {  // Lê o conteúdo do arquivo JSON
+            Type typeList = new TypeToken<ArrayList<MovieModel>>() {}.getType();  // Define o tipo da lista
+            listOfMovies = gson.fromJson(reader, typeList);  // Converte o JSON para lista de filmes
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();  // Imprime erro caso ocorra falha na leitura
         }
-    }
+    } // Carrega um arquivo do repositório
 
+    /**
+     * Saves the list of movies to the file in JSON format.
+     */
     public void saveFile() {
-        try (FileWriter writer = new FileWriter(file)) {
-            gson.toJson(listOfMovies, writer);
+        try (FileWriter writer = new FileWriter(file)) { // Abre o arquivo para escrita
+            gson.toJson(listOfMovies, writer); // Converte a lista de filmes para JSON e grava no arquivo
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Imprime erro caso ocorra falha na escrita
         }
-    }
+    } // Salva um arquivo no repositório
 
     public ArrayList<MovieModel> getListOfMovies() {
         return listOfMovies;

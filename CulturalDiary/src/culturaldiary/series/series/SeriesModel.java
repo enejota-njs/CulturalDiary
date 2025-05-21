@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Contains attributes and methods related to a series.
  *
  * @author Nathan de Jesus dos Santos
- * @version 1.0
+ * @version 1.1
  */
 
 public class SeriesModel {
@@ -22,6 +22,18 @@ public class SeriesModel {
     private float seriesReview; // Nota média
     private int seriesIndex; // Índice da série
 
+    /**
+     * Creates a SeriesModel with title, release and conclusion years, original title,
+     * platform information, list of seasons, and series index.
+     *
+     * @param title The title of the series.
+     * @param yearOfRelease The year the series was released.
+     * @param yearOfConclusion The year the series concluded.
+     * @param originalTitle The original title of the series.
+     * @param whereToWatch The platform or location to watch the series.
+     * @param listOfSeasons The list of seasons in the series.
+     * @param seriesIndex The index or number of the series.
+     */
     public SeriesModel(String title, int yearOfRelease, int yearOfConclusion, String originalTitle, String whereToWatch, ArrayList<SeasonModel> listOfSeasons, int seriesIndex) {
         this.title = title;
         this.yearOfRelease = yearOfRelease;
