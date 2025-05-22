@@ -36,6 +36,17 @@ public class SeriesController {
     File repository = new File("src/culturaldiary/series/repository/"); // Diretório do repositório de séries
     File file = new File(repository,"series_file.json"); // Arquivo JSON dentro do repositório de séries
 
+    /**
+     * Registers a new series with the given details.
+     *
+     * @param title The title of the series.
+     * @param yearOfReleaseString The release year of the series as a string.
+     * @param yearOfConclusionString The conclusion year of the series as a string.
+     * @param originalTitle The original title of the series.
+     * @param whereToWatch The platform or location where the series can be watched.
+     * @param listOfSeasonString A 2D array containing season information as strings.
+     * @return true if the series was successfully registered; false otherwise.
+     */
     public boolean registerSeries(String title, String yearOfReleaseString, String yearOfConclusionString, String originalTitle, String whereToWatch, String[][] listOfSeasonString) {
         // Remove espaços em branco antes/depois dos valores recebidos
         title = title.trim();
@@ -156,22 +167,53 @@ public class SeriesController {
         }
     }
 
+    /**
+     * Validates the given title.
+     *
+     * @param title The title to validate.
+     * @return true if the title is valid; false otherwise.
+     */
     public boolean validateTitle(String title) {
         return validateNewString(title, "Título");
     } // Valida título
 
+    /**
+     * Validates the given year of release.
+     *
+     * @param yearOfRelease The year of release as a string.
+     * @return true if the year of release is valid; false otherwise.
+     */
     public boolean validateYearOfRelease(String yearOfRelease) {
         return validateNewYear(yearOfRelease, "Ano de lançamento");
     } // Valida ano de lançamento
 
+    /**
+     * Validates the given year of conclusion.
+     *
+     * @param yearOfConclusion The year of conclusion as a string.
+     * @return true if the year of conclusion is valid; false otherwise.
+     */
     public boolean validateYearOfConclusion(String yearOfConclusion) {
         return validateNewYear(yearOfConclusion, "Ano de encerramento");
     } // Valida ano de conclusão
 
+    /**
+     * Validates the given original title.
+     *
+     * @param originalTitle The original title to validate.
+     * @return true if the original title is valid; false otherwise.
+     */
     public boolean validateOriginalTitle(String originalTitle) {
         return validateNewString(originalTitle, "Título original");
     } // Valida título original
 
+    /**
+     * Validates the given string value based on the specified field name.
+     *
+     * @param value The string value to validate.
+     * @param name The name of the field being validated.
+     * @return true if the value is valid; false otherwise.
+     */
     public boolean validateNewString(String value, String name) {
         if (value.isEmpty()) {
             seriesView.emptyValueMessage(name);
@@ -180,10 +222,23 @@ public class SeriesController {
         return true;
     } // Valida nova string
 
+    /**
+     * Validates the given platform or location where the series can be watched.
+     *
+     * @param whereToWatch The platform or location string to validate.
+     * @return true if the value is valid; false otherwise.
+     */
     public boolean validateWhereToWatch(String whereToWatch) {
         return validateNewString(whereToWatch, "Onde assistir");
     } // Valida onde assistir
 
+    /**
+     * Validates the given year string based on the specified field name.
+     *
+     * @param value The year value as a string to validate.
+     * @param name The name of the field being validated.
+     * @return true if the year is valid; false otherwise.
+     */
     public boolean validateNewYear(String value, String name) {
 
         // Primeiro, valida se a string não está vazia ou nula
@@ -210,6 +265,12 @@ public class SeriesController {
         return false; // Retorna false se a string for inválida
     } // Valida novo ano
 
+    /**
+     * Performs a search for a series by its title.
+     *
+     * @param value The title to search for.
+     * @return true if the search was performed (even if no series was found); false if an error occurred.
+     */
     public boolean searchSeriesByTitle(String value) {
         value = value.trim(); // Remove espaços em branco nas extremidades
 
@@ -245,6 +306,11 @@ public class SeriesController {
         return false; // Entrada inválida, então não realiza a busca
     } // Busca série por título
 
+    /**
+     * Lists all the series.
+     *
+     * @return true if the listing was successful; false if an error occurred.
+     */
     public boolean listSeries() {
         try {
             // Verifica se a lista de séries está vazia
@@ -265,6 +331,12 @@ public class SeriesController {
         }
     } // Lista séries
 
+    /**
+     * Filters the list of series by the specified genre.
+     *
+     * @param value The genre to filter the series by.
+     * @return true if the filtering was successful; false if an error occurred.
+     */
     public boolean filterListOfSeriesByGenre(String value) {
         value = value.trim(); // Remove espaços em branco do início e fim da entrada
 
@@ -307,6 +379,12 @@ public class SeriesController {
         return false; // Retorna falso se a entrada for inválida
     } // Filtra séries por gênero
 
+    /**
+     * Filters the list of series by the specified year of release.
+     *
+     * @param value The year of release to filter the series by.
+     * @return true if the filtering was successful; false if an error occurred.
+     */
     public boolean filterListOfSeriesByYearOfRelease(String value) {
         value = value.trim(); // Remove espaços em branco no início e fim da string
 
@@ -354,6 +432,11 @@ public class SeriesController {
         return false; // Retorna falso se a entrada foi inválida
     } // Filtra séries por ano de lançamento
 
+    /**
+     * Sorts the list of series by top-rated criteria.
+     *
+     * @return true if the sorting was successful; false if an error occurred.
+     */
     public boolean sortListByTopRated() {
         try {
             // Verifica se a lista de séries não está vazia
@@ -403,6 +486,11 @@ public class SeriesController {
         }
     } // Ordena séries por bem avaliados
 
+    /**
+     * Sorts the list of series by lowest-rated criteria.
+     *
+     * @return true if the sorting was successful; false if an error occurred.
+     */
     public boolean sortListByLowRated() {
         try {
             // Verifica se a lista principal de séries não está vazia
@@ -449,6 +537,12 @@ public class SeriesController {
         }
     }
 
+    /**
+     * Opens the series at the specified index.
+     *
+     * @param index The index of the series to open.
+     * @return true if the series was successfully opened; false if an error occurred.
+     */
     public boolean openSeries(int index) {
         try {
             // Declara a variável para armazenar o objeto SeriesModel
@@ -479,6 +573,14 @@ public class SeriesController {
         }
     } // Abri série
 
+    /**
+     * Changes the viewing status of a season in a specified series.
+     *
+     * @param indexSeries The index of the series.
+     * @param indexSeason The index of the season within the series.
+     * @param value The new viewing status value.
+     * @return true if the viewing status was successfully changed; false if an error occurred.
+     */
     public boolean changeSeasonViewingStatus(int indexSeries, int indexSeason, String value) {
         SeriesModel series;
         SeasonModel season;
@@ -554,6 +656,16 @@ public class SeriesController {
         }
     } // Altera situação de visualização de temporada
 
+    /**
+     * Evaluates a season of a series with a score, consumption date, and comment.
+     *
+     * @param indexSeries The index of the series.
+     * @param indexSeason The index of the season within the series.
+     * @param score The score given to the season.
+     * @param consumptionDate The date when the season was watched.
+     * @param comment Additional comments about the season.
+     * @return true if the evaluation was successfully registered; false if an error occurred.
+     */
     public boolean evaluateSeason(int indexSeries, int indexSeason, String score, String consumptionDate, String comment) {
         try {
             // Remove espaços extras do valor fornecido
@@ -632,6 +744,16 @@ public class SeriesController {
         }
     } // Avalia temporada
 
+    /**
+     * Re-evaluates a season of a series with a new score, consumption date, and comment.
+     *
+     * @param indexSeries The index of the series.
+     * @param indexSeason The index of the season within the series.
+     * @param score The new score given to the season.
+     * @param consumptionDate The new date when the season was watched.
+     * @param comment Additional comments about the season.
+     * @return true if the re-evaluation was successfully registered; false if an error occurred.
+     */
     public boolean evaluateSeasonAgain(int indexSeries, int indexSeason, String score, String consumptionDate, String comment) {
         try {
             // Remove espaços extras dos valores fornecidos
@@ -661,6 +783,12 @@ public class SeriesController {
         }
     } // Avalia temporada novamente
 
+    /**
+     * Checks if the specified season has already been reviewed.
+     *
+     * @param season The season object to check.
+     * @return true if the season has a review; false otherwise.
+     */
     public boolean checkSeasonReview(SeasonModel season) {
         if (season.isEvaluatedSeason()) {
             return true;
@@ -668,6 +796,12 @@ public class SeriesController {
         return false;
     } // Verifica se temporada já foi atualizada
 
+    /**
+     * Updates the average rating of the specified series.
+     *
+     * @param series The series object whose average rating will be updated.
+     * @return true if the average was successfully updated; false if an error occurred.
+     */
     public boolean updateAverage(SeriesModel series) {
         // Variáveis para somar as notas e contar o número de avaliações
         float sum = 0;
@@ -699,6 +833,13 @@ public class SeriesController {
         }
     } // Atualiza nota média da série
 
+    /**
+     * Validates a new date value for the specified season.
+     *
+     * @param season The season object related to the date.
+     * @param value The date string to validate.
+     * @return true if the date is valid; false otherwise.
+     */
     public boolean validateNewDate(SeasonModel season, String value) {
         // Remove espaços extras do início e final da string de entrada
         value = value.trim();
@@ -752,6 +893,14 @@ public class SeriesController {
         return false; // Retorna falso se a validação da string falhar
     } // Valida nova data
 
+    /**
+     * Validates an existing date based on day, month, and year strings.
+     *
+     * @param day The day part of the date as a string.
+     * @param month The month part of the date as a string.
+     * @param year The year part of the date as a string.
+     * @return true if the date is valid; false otherwise.
+     */
     public boolean validateExistingDate(String day, String month, String year) {
         try {
             // Converte o dia, mês e ano para inteiros
@@ -802,6 +951,12 @@ public class SeriesController {
         }
     } // Valida existência de data
 
+    /**
+     * Validates a new score value.
+     *
+     * @param value The score value as a string to validate.
+     * @return true if the score is valid; false otherwise.
+     */
     public boolean validateNewScore(String value) {
         // Remove espaços em branco antes e depois da string
         value = value.trim();
@@ -831,6 +986,12 @@ public class SeriesController {
         return false;
     } // Valida nova nota
 
+    /**
+     * Validates if the given string can be converted to an integer.
+     *
+     * @param value The string value to validate.
+     * @return true if the string represents a valid integer; false otherwise.
+     */
     public boolean validateNewInputInt(String value) {
         try {
             int valueInt = Integer.parseInt(value);
@@ -841,6 +1002,12 @@ public class SeriesController {
         }
     } //  Valida nova entrada de número inteiro
 
+    /**
+     * Validates the given string input.
+     *
+     * @param value The string value to validate.
+     * @return true if the input string is valid; false otherwise.
+     */
     public boolean validateNewInputString(String value) {
         if (value.isEmpty()) {
             seriesView.emptyInformationMessage();
@@ -849,6 +1016,12 @@ public class SeriesController {
         return true;
     } // Valida nova string
 
+    /**
+     * Validates the given watched status input.
+     *
+     * @param value The watched status string to validate.
+     * @return true if the watched status is valid; false otherwise.
+     */
     public boolean validateNewWatched(String value) {
         // Valida se o valor fornecido é uma string válida, no caso de "Visualização"
         if (validateNewString(value, "Visualização")) {
@@ -873,6 +1046,9 @@ public class SeriesController {
         return false;
     } // Valida nova visualização
 
+    /**
+     * Opens a file located in the repository.
+     */
     public void openFile() {
         if (!repository.exists()) { // Verifica se o diretório não existe
             repository.mkdirs(); // Cria o diretório
@@ -891,6 +1067,9 @@ public class SeriesController {
         }
     } // Abre um arquivo do repositório
 
+    /**
+     * Loads the file from the repository into the main list.
+     */
     public void uploadFile() {
         try (FileReader reader = new FileReader(file)) { // Lê o conteúdo do arquivo JSON
             Type typeList = new TypeToken<ArrayList<SeriesModel>>() {}.getType(); // Define o tipo da lista
@@ -900,6 +1079,9 @@ public class SeriesController {
         }
     } // Carrega um arquivo do repositório
 
+    /**
+     * Saves the main list to the file in the repository.
+     */
     public void saveFile() {
         try (FileWriter writer = new FileWriter(file)) { // Abre o arquivo para escrita
             gson.toJson(listOfSeries, writer); // Converte a lista de séries para JSON e grava no arquivo
