@@ -1,0 +1,52 @@
+package review;
+
+/**
+ * Model class representing a review.
+ * Contains attributes and methods related to a book or movie review.
+ *
+ * @author Nathan de Jesus dos Santos
+ * @version 1.1
+ */
+public class ReviewModel {
+    private float score; // Nota
+    private String consumptionDate; // Data de consumo
+    private String comment; // Comentários
+
+    /**
+     * Creates a ReviewModel with score, date, and comment.
+     *
+     * @param score The rating score.
+     * @param consumptionDate The date of consumption.
+     * @param comment The review comment.
+     */
+    public ReviewModel(float score, String consumptionDate, String comment) {
+        this.score = score;
+        this.consumptionDate = consumptionDate;
+        this.comment = comment;
+    } // Construtor
+
+    // Métodos Getters e Setters
+    public float getScore() {
+        return score;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
+    }
+
+    public String getConsumptionDate() {
+        return consumptionDate;
+    }
+
+    public void setConsumptionDate(String consumptionDate) {
+        this.consumptionDate = consumptionDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+}
