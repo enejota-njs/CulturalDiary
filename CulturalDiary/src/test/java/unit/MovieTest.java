@@ -2,9 +2,9 @@ package unit;
 
 import movie.MovieController;
 import movie.MovieModel;
-import review.ReviewModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import review.ReviewModel;
 
 import java.util.ArrayList;
 

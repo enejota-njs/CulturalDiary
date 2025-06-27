@@ -8,9 +8,13 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <TabPane maxHeight="600.0" maxWidth="750.0" minHeight="600.0" minWidth="750.0" prefHeight="600.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.RegistrationController">
   <tabs>
@@ -23,65 +27,97 @@
                         <Label text="Título" />
                         <TextField fx:id="txtTitle" prefHeight="32.0" prefWidth="677.0" promptText="Digite o título">
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label text="Autor" />
+                        <Label fx:id="lblErrorTitle" text="* Inválido" textFill="RED" visible="false" />
+                        <Label text="Autor">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Label>
                         <TextField fx:id="txtAuthor" prefHeight="32.0" prefWidth="305.0" promptText="Digite o autor">
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label text="Editora" />
+                        <Label fx:id="lblErrorAuthor" text="* Inválido" textFill="RED" visible="false" />
+                        <Label text="Editora">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Label>
                         <TextField fx:id="txtPublisher" cache="true" prefHeight="32.0" prefWidth="305.0" promptText="Digite a editora">
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label text="ISBN" />
+                        <Label fx:id="lblErrorPublisher" text="* Inválido" textFill="RED" visible="false" />
+                        <Label text="ISBN">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin></Label>
                         <TextField fx:id="txtIsbn" prefHeight="32.0" prefWidth="305.0" promptText="Digite o ISBN">
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets />
                            </VBox.margin>
                         </TextField>
-                        <HBox prefHeight="69.0" prefWidth="677.0" spacing="40.0">
+                        <Label fx:id="lblErrorIsbn" text="* Inválido" textFill="RED" visible="false" />
+                        <HBox prefHeight="66.0" prefWidth="677.0" spacing="40.0">
                            <children>
-                              <VBox prefHeight="46.0" prefWidth="307.0">
+                              <VBox prefHeight="76.0" prefWidth="307.0">
                                  <children>
                                     <Label text="Ano de publicação" />
                                     <TextField fx:id="txtYearOfPublication" cache="true" prefHeight="32.0" prefWidth="307.0" promptText="Digite a editora">
                                        <VBox.margin>
-                                          <Insets bottom="20.0" />
+                                          <Insets />
                                        </VBox.margin>
                                     </TextField>
+                                    <Label fx:id="lblErrorYearOfPublication" text="* Inválido" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="42.0" prefWidth="330.0">
                                  <children>
                                     <Label text="Gênero" />
-                                    <ComboBox fx:id="comboBoxGenre" prefHeight="25.0" prefWidth="338.0" promptText="Selecione o gênero" />
+                                    <ComboBox fx:id="comboBoxGenre" prefHeight="25.0" prefWidth="338.0" visibleRowCount="5" />
+                                    <Label fx:id="lblErrorGenre" text="* Inválido" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </HBox>
                         <CheckBox fx:id="checkBoxHasCopy" mnemonicParsing="false" text="Marque esta opção se você possui um exemplar deste livro">
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </CheckBox>
                         <CheckBox fx:id="checkBoxRead" mnemonicParsing="false" text="Marque esta opção se você já leu este livro">
                            <VBox.margin>
-                              <Insets bottom="20.0" />
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </CheckBox>
                      </children>
                   </VBox>
                   <HBox layoutX="37.0" layoutY="504.0" prefHeight="35.0" prefWidth="677.0">
                      <children>
-                        <Button fx:id="btnBack" mnemonicParsing="false" text="    Voltar    " />
-                        <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#registerBook" text="    Cadastrar    " translateX="510.0" />
+                        <Button mnemonicParsing="false" onAction="#onBtnReturnAction" text="    Voltar    " />
+                        <Button mnemonicParsing="false" onAction="#onBtnRegisterBookAction" text="    Cadastrar    " translateX="510.0" />
                      </children>
                   </HBox>
+                  <StackPane fx:id="stackPaneSucess" cacheShape="false" centerShape="false" layoutX="248.0" layoutY="16.0" prefHeight="55.0" prefWidth="264.0" visible="false">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="46.0" stroke="BLACK" strokeType="INSIDE" width="264.0">
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </Rectangle>
+                        <Label fx:id="lblSucess" prefHeight="27.0" prefWidth="244.0" textFill="#469031">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
                </children>
             </AnchorPane>
          </content>

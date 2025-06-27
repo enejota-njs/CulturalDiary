@@ -25,6 +25,7 @@ public class MenuController implements Initializable {
     @FXML
     private Button btnExit;
 
+
     @FXML
     public void onBtnRegisterAction() throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/gui/RegistrationScreen.fxml"));

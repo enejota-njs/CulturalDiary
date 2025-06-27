@@ -1,7 +1,7 @@
 package integration;
 
-import series.series.SeriesController;
 import org.junit.jupiter.api.Test;
+import series.series.SeriesController;
 
 class SeriesTest {
 

@@ -1,11 +1,11 @@
 package unit;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import review.ReviewModel;
 import series.season.SeasonModel;
 import series.series.SeriesController;
 import series.series.SeriesModel;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
