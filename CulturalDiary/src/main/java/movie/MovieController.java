@@ -1,5 +1,6 @@
 package movie;
 
+import book.BookController;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import review.ReviewModel;
@@ -21,9 +22,20 @@ import java.util.Set;
  * @version 1.1
  */
 public class MovieController {
+    private static MovieController instance;
+
+    private MovieController() { openFile();}
+
+    public static MovieController getInstance() {
+        if (instance == null) {
+            instance = new MovieController();
+        }
+        return instance;
+    }
+
+    private ArrayList<MovieModel> listOfMovies = new ArrayList<MovieModel>(); // Recupera a lista de filmes do repositório
     MovieView movieView = new MovieView(); // Instancia a visualização (interface) dos filmes
     MovieModel movieModel; // Declara um modelo de filme (não instanciado ainda)
-    private ArrayList<MovieModel> listOfMovies = new ArrayList<MovieModel>(); // Recupera a lista de filmes do repositório
 
     Calendar calendar = Calendar.getInstance(); // Obtém uma instância do calendário com a data/hora atual
 

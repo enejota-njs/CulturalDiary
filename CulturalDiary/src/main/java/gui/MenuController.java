@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,10 +25,6 @@ public class MenuController implements Initializable {
     private Button btnList;
 
     @FXML
-    private Button btnExit;
-
-
-    @FXML
     public void onBtnRegisterAction() throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/gui/RegistrationScreen.fxml"));
         Stage stage = (Stage) btnRegister.getScene().getWindow();
@@ -45,8 +43,8 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    public void onBtnExitAction() {
-        System.out.println("Sair");
+    public void onBtnExitAction(ActionEvent event) {
+        Platform.exit();
     }
 
     @Override

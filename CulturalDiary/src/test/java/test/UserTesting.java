@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class UserTesting {
     static BookController bookController = BookController.getInstance();
-    static MovieController movieController = new MovieController();
+    static MovieController movieController = MovieController.getInstance();
     static SeriesController seriesController = new SeriesController();
 
     public static void main(String[] args) {

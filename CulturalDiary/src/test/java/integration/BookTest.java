@@ -7,7 +7,7 @@ class BookTest {
 
     @Test
     void test() {
-        BookController bookController = new BookController();
+        BookController bookController = BookController.getInstance();
 
         bookController.sortListByLowRated();
         bookController.listBooks();

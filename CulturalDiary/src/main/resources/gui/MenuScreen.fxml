@@ -34,7 +34,7 @@
             </Label>
             <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onBtnSearchAction" prefHeight="25.0" prefWidth="135.0" text="Buscar" translateY="5.0" />
             <Button fx:id="btnList" mnemonicParsing="false" onAction="#onBtnListAction" prefWidth="135.0" text="Listar" translateY="35.0" />
-            <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onBtnExitAction" prefWidth="135.0" text="Sair" translateY="65.0" />
+            <Button mnemonicParsing="false" onAction="#onBtnExitAction" prefWidth="135.0" text="Sair" translateY="65.0" />
          </children>
       </StackPane>
    </children>

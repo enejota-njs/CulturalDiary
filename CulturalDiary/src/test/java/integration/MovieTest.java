@@ -7,7 +7,7 @@ class MovieTest {
 
     @Test
     void test() {
-        MovieController movieController = new MovieController();
+        MovieController movieController = MovieController.getInstance();
 
         movieController.sortListByLowRated();
         movieController.listMovies();

@@ -5,14 +5,17 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -20,65 +23,65 @@
   <tabs>
     <Tab text="    Livro    ">
          <content>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane maxHeight="600.0" maxWidth="750.0" minHeight="600.0" minWidth="750.0" prefHeight="600.0" prefWidth="750.0">
                <children>
                   <VBox layoutX="37.0" layoutY="44.0" prefHeight="421.0" prefWidth="677.0">
                      <children>
                         <Label text="Título" />
-                        <TextField fx:id="txtTitle" prefHeight="32.0" prefWidth="677.0" promptText="Digite o título">
+                        <TextField fx:id="txtTitleBook" prefHeight="32.0" prefWidth="677.0" promptText="Digite o título">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label fx:id="lblErrorTitle" text="* Inválido" textFill="RED" visible="false" />
+                        <Label fx:id="lblErrorTitleBook" text="* Inválido" textFill="RED" visible="false" />
                         <Label text="Autor">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin></Label>
-                        <TextField fx:id="txtAuthor" prefHeight="32.0" prefWidth="305.0" promptText="Digite o autor">
+                        <TextField fx:id="txtAuthorBook" prefHeight="32.0" prefWidth="305.0" promptText="Digite o autor">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label fx:id="lblErrorAuthor" text="* Inválido" textFill="RED" visible="false" />
+                        <Label fx:id="lblErrorAuthorBook" text="* Inválido" textFill="RED" visible="false" />
                         <Label text="Editora">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin></Label>
-                        <TextField fx:id="txtPublisher" cache="true" prefHeight="32.0" prefWidth="305.0" promptText="Digite a editora">
+                        <TextField fx:id="txtPublisherBook" cache="true" prefHeight="32.0" prefWidth="305.0" promptText="Digite a editora">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label fx:id="lblErrorPublisher" text="* Inválido" textFill="RED" visible="false" />
+                        <Label fx:id="lblErrorPublisherBook" text="* Inválido" textFill="RED" visible="false" />
                         <Label text="ISBN">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin></Label>
-                        <TextField fx:id="txtIsbn" prefHeight="32.0" prefWidth="305.0" promptText="Digite o ISBN">
+                        <TextField fx:id="txtIsbnBook" prefHeight="32.0" prefWidth="305.0" promptText="Digite o ISBN">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label fx:id="lblErrorIsbn" text="* Inválido" textFill="RED" visible="false" />
+                        <Label fx:id="lblErrorIsbnBook" text="* Inválido" textFill="RED" visible="false" />
                         <HBox prefHeight="66.0" prefWidth="677.0" spacing="40.0">
                            <children>
                               <VBox prefHeight="76.0" prefWidth="307.0">
                                  <children>
                                     <Label text="Ano de publicação" />
-                                    <TextField fx:id="txtYearOfPublication" cache="true" prefHeight="32.0" prefWidth="307.0" promptText="Digite a editora">
+                                    <TextField fx:id="txtYearOfPublicationBook" cache="true" prefHeight="32.0" prefWidth="307.0" promptText="Digite o ano de publicação">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="lblErrorYearOfPublication" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label fx:id="lblErrorYearOfPublicationBook" text="* Inválido" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="42.0" prefWidth="330.0">
                                  <children>
                                     <Label text="Gênero" />
-                                    <ComboBox fx:id="comboBoxGenre" prefHeight="25.0" prefWidth="338.0" visibleRowCount="5" />
-                                    <Label fx:id="lblErrorGenre" text="* Inválido" textFill="RED" visible="false" />
+                                    <ComboBox fx:id="comboBoxGenreBook" prefHeight="25.0" prefWidth="338.0" visibleRowCount="5" />
+                                    <Label fx:id="lblErrorGenreBook" text="* Inválido" textFill="RED" visible="false" />
                                  </children>
                               </VBox>
                            </children>
@@ -86,19 +89,19 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </HBox>
-                        <CheckBox fx:id="checkBoxHasCopy" mnemonicParsing="false" text="Marque esta opção se você possui um exemplar deste livro">
+                        <CheckBox fx:id="checkBoxHasCopyBook" mnemonicParsing="false" text="Marque esta opção se você possui um exemplar deste livro">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </CheckBox>
-                        <CheckBox fx:id="checkBoxRead" mnemonicParsing="false" text="Marque esta opção se você já leu este livro">
+                        <CheckBox fx:id="checkBoxReadBook" mnemonicParsing="false" text="Marque esta opção se você já leu este livro">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </CheckBox>
                      </children>
                   </VBox>
-                  <HBox layoutX="37.0" layoutY="504.0" prefHeight="35.0" prefWidth="677.0">
+                  <HBox layoutX="37.0" layoutY="511.0" prefHeight="35.0" prefWidth="677.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onBtnReturnAction" text="    Voltar    " />
                         <Button mnemonicParsing="false" onAction="#onBtnRegisterBookAction" text="    Cadastrar    " translateX="510.0" />
@@ -106,14 +109,17 @@
                   </HBox>
                   <StackPane fx:id="stackPaneSucess" cacheShape="false" centerShape="false" layoutX="248.0" layoutY="16.0" prefHeight="55.0" prefWidth="264.0" visible="false">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="46.0" stroke="BLACK" strokeType="INSIDE" width="264.0">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="46.0" stroke="#00000026" strokeType="INSIDE" width="264.0">
                            <effect>
-                              <DropShadow />
+                              <DropShadow blurType="GAUSSIAN" height="32.24" radius="15.620000000000001" width="32.24">
+                                 <color>
+                                    <Color red="0.6710526347160339" green="0.6182383298873901" blue="0.6182383298873901" />
+                                 </color></DropShadow>
                            </effect>
                         </Rectangle>
-                        <Label fx:id="lblSucess" prefHeight="27.0" prefWidth="244.0" textFill="#469031">
+                        <Label fx:id="lblSucess" text="Label">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="14.0" />
                            </font>
                         </Label>
                      </children>
@@ -124,12 +130,290 @@
     </Tab>
     <Tab text="    Filme    ">
          <content>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane maxHeight="570.0" maxWidth="750.0" minHeight="570.0" minWidth="750.0" prefHeight="570.0" prefWidth="750.0" translateX="-1.0">
+               <children>
+                  <ScrollPane hbarPolicy="NEVER" layoutY="-1.0" maxHeight="573.0" maxWidth="750.0" minHeight="500.0" minWidth="750.0" prefHeight="573.0" prefWidth="750.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <AnchorPane maxHeight="730.0" maxWidth="750.0" minHeight="730.0" minWidth="750.0" prefHeight="730.0" prefWidth="750.0">
+                           <children>
+                              <VBox layoutX="37.0" layoutY="44.0" prefHeight="610.0" prefWidth="685.0">
+                                 <children>
+                                    <Label text="Título" />
+                                    <TextField fx:id="txtTitleMovie" prefHeight="32.0" prefWidth="677.0" promptText="Digite o título">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorTitleMovie" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label text="Diretor(a)">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="txtDirectionMovie" prefHeight="32.0" prefWidth="305.0" promptText="Digite o(a) diretor(a)">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorDirectionMovie" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label text="Elenco">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="txtCastMovie" cache="true" prefHeight="32.0" prefWidth="305.0" promptText="Digite o elenco (separado por vírgula)">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorCastMovie" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label text="Título original">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="txtOriginalTitleMovie" prefHeight="32.0" prefWidth="305.0" promptText="Digite o título original">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorOriginalTitleMovie" text="* Inválido" textFill="RED" visible="false" />
+                                    <HBox prefHeight="66.0" prefWidth="677.0" spacing="40.0">
+                                       <children>
+                                          <VBox prefHeight="57.0" prefWidth="307.0">
+                                             <children>
+                                                <Label text="Ano de lançamento" />
+                                                <TextField fx:id="txtYearOfReleaseMovie" cache="true" prefHeight="32.0" prefWidth="307.0" promptText="Digite o ano de lançamento">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Label fx:id="lblErrorYearOfReleaseMovie" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="42.0" prefWidth="330.0">
+                                             <children>
+                                                <Label text="Gênero" />
+                                                <ComboBox fx:id="comboBoxGenreMovie" prefHeight="25.0" prefWidth="338.0" visibleRowCount="5" />
+                                                <Label fx:id="lblErrorGenreMovie" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Label text="Roteiro">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="txtScreenplayMovie" prefHeight="71.0" prefWidth="677.0" promptText="Digite o roteiro" />
+                                    <Label fx:id="lblErrorScreenplayMovie" text="* Inválido" textFill="RED" visible="false" />
+                                    <HBox prefHeight="52.0" prefWidth="677.0" spacing="40.0">
+                                       <children>
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Tempo de duração">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <TextField fx:id="txtDurationTimeMovie" maxHeight="32.0" maxWidth="307.0" minHeight="32.0" minWidth="307.0" prefHeight="32.0" prefWidth="307.0" promptText="Digite o tempo de duração (ex.: 02:15)" />
+                                                <Label fx:id="lblErrorDurationTimeMovie" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Onde assistir" />
+                                                <TextField fx:id="txtWhereToWatchMovie" maxHeight="32.0" maxWidth="338.0" minHeight="32.0" minWidth="338.0" prefHeight="32.0" prefWidth="338.0" promptText="Digite onde assistir" />
+                                                <Label fx:id="lblErrorWhereToWatchMovie" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <CheckBox fx:id="checkBoxWatchedMovie" mnemonicParsing="false" text="Marque esta opção se você já assistiu esse filme">
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </VBox>
+                              <HBox layoutX="37.0" layoutY="672.0" prefHeight="35.0" prefWidth="677.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#onBtnReturnAction" text="    Voltar    " />
+                                    <Button mnemonicParsing="false" onAction="#onBtnRegisterMovieAction" text="    Cadastrar    " translateX="510.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+                  <StackPane fx:id="stackPaneSucess2" cacheShape="false" centerShape="false" layoutX="248.0" layoutY="16.0" prefHeight="55.0" prefWidth="264.0" visible="false">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="46.0" stroke="#00000026" strokeType="INSIDE" width="264.0">
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" height="32.24" radius="15.620000000000001" width="32.24">
+                                 <color>
+                                    <Color red="0.6710526347160339" green="0.6182383298873901" blue="0.6182383298873901" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Rectangle>
+                        <Label fx:id="lblSucess2" text="Label">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </StackPane>
+               </children>
+            </AnchorPane>
          </content>
     </Tab>
       <Tab text="    Série    ">
          <content>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+            <AnchorPane maxHeight="570.0" maxWidth="750.0" minHeight="570.0" minWidth="750.0" prefHeight="570.0" prefWidth="750.0" translateX="-1.0">
+               <children>
+                  <ScrollPane hbarPolicy="NEVER" layoutY="-1.0" maxHeight="573.0" maxWidth="750.0" minHeight="500.0" minWidth="750.0" prefHeight="573.0" prefWidth="750.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <AnchorPane maxHeight="730.0" maxWidth="750.0" minHeight="730.0" minWidth="750.0" prefHeight="730.0" prefWidth="750.0">
+                           <children>
+                              <VBox layoutX="37.0" layoutY="44.0" prefHeight="610.0" prefWidth="685.0">
+                                 <children>
+                                    <Label text="Título" />
+                                    <TextField fx:id="txtTitleMovie1" prefHeight="32.0" prefWidth="677.0" promptText="Digite o título">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorTitleMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label text="Diretor(a)">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="txtDirectionMovie1" prefHeight="32.0" prefWidth="305.0" promptText="Digite o(a) diretor(a)">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorDirectionMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label text="Elenco">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="txtCastMovie1" cache="true" prefHeight="32.0" prefWidth="305.0" promptText="Digite o elenco (separado por vírgula)">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorCastMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                    <Label text="Título original">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="txtOriginalTitleMovie1" prefHeight="32.0" prefWidth="305.0" promptText="Digite o título original">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label fx:id="lblErrorOriginalTitleMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                    <HBox prefHeight="66.0" prefWidth="677.0" spacing="40.0">
+                                       <children>
+                                          <VBox prefHeight="57.0" prefWidth="307.0">
+                                             <children>
+                                                <Label text="Ano de lançamento" />
+                                                <TextField fx:id="txtYearOfReleaseMovie1" cache="true" prefHeight="32.0" prefWidth="307.0" promptText="Digite o ano de lançamento">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <Label fx:id="lblErrorYearOfReleaseMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="42.0" prefWidth="330.0">
+                                             <children>
+                                                <Label text="Gênero" />
+                                                <ComboBox fx:id="comboBoxGenreMovie1" prefHeight="25.0" prefWidth="338.0" visibleRowCount="5" />
+                                                <Label fx:id="lblErrorGenreMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Label text="Roteiro">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea fx:id="txtScreenplayMovie1" prefHeight="71.0" prefWidth="677.0" promptText="Digite o roteiro" />
+                                    <Label fx:id="lblErrorScreenplayMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                    <HBox prefHeight="52.0" prefWidth="677.0" spacing="40.0">
+                                       <children>
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Tempo de duração">
+                                                   <VBox.margin>
+                                                      <Insets />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <TextField fx:id="txtDurationTimeMovie1" maxHeight="32.0" maxWidth="307.0" minHeight="32.0" minWidth="307.0" prefHeight="32.0" prefWidth="307.0" promptText="Digite o tempo de duração (ex.: 02:15)" />
+                                                <Label fx:id="lblErrorDurationTimeMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label text="Onde assistir" />
+                                                <TextField fx:id="txtWhereToWatchMovie1" maxHeight="32.0" maxWidth="338.0" minHeight="32.0" minWidth="338.0" prefHeight="32.0" prefWidth="338.0" promptText="Digite onde assistir" />
+                                                <Label fx:id="lblErrorWhereToWatchMovie1" text="* Inválido" textFill="RED" visible="false" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <CheckBox fx:id="checkBoxWatchedMovie1" mnemonicParsing="false" text="Marque esta opção se você já assistiu esse filme">
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </CheckBox>
+                                 </children>
+                              </VBox>
+                              <HBox layoutX="37.0" layoutY="672.0" prefHeight="35.0" prefWidth="677.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#onBtnReturnAction" text="    Voltar    " />
+                                    <Button mnemonicParsing="false" onAction="#onBtnRegisterMovieAction" text="    Cadastrar    " translateX="510.0" />
+                                 </children>
+                              </HBox>
+                              <StackPane fx:id="stackPaneSucess11" cacheShape="false" centerShape="false" layoutX="248.0" layoutY="16.0" prefHeight="55.0" prefWidth="264.0" visible="false">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="46.0" stroke="BLACK" strokeType="INSIDE" width="264.0">
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </Rectangle>
+                                    <Label fx:id="lblSucess11" prefHeight="27.0" prefWidth="244.0" textFill="#469031">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
          </content>
       </Tab>
   </tabs>
