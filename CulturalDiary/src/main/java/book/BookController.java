@@ -31,6 +31,7 @@ public class BookController {
     }
 
     private ArrayList<BookModel> listOfBooks = new ArrayList<BookModel>(); // Lista de livros
+    private ArrayList<BookModel> reserveListOfBooks = new ArrayList<>();
     BookView bookView = new BookView(); // Visual da interface
     BookModel bookModel; // Modelo do livro
 
@@ -560,6 +561,7 @@ public class BookController {
      * @return {@code true} if the filter was applied successfully; {@code false} if an error occurred.
      */
     public boolean filterListOfBooksByGenre(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value)) { // Valida a entrada do gênero
@@ -569,7 +571,7 @@ public class BookController {
 
                 // Itera sobre os livros filtrando pelo gênero
                 for (BookModel book : listOfBooks) {
-                    if (book.getGenre().toLowerCase().contains(value.toLowerCase().trim())) {
+                    if (book.getGenre().toLowerCase().equals(value.toLowerCase().trim())) {
 
                         if (!bookFound) {
                             bookView.headerForBook(); // Exibe cabeçalho da lista de livros encontrados
@@ -577,6 +579,7 @@ public class BookController {
                         }
 
                         bookView.bookInformation(book); // Exibe informações do livro
+                        reserveListOfBooks.add(book);
                     }
                 }
 
@@ -595,6 +598,7 @@ public class BookController {
      * @return {@code true} if the filtering was performed successfully; {@code false} if an error occurred.
      */
     public boolean filterListOfBooksByYearOfPublication(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value) && validateNewInputInt(value)) { // Valida a entrada e verifica se é um número válido
@@ -620,6 +624,7 @@ public class BookController {
                         }
 
                         bookView.bookInformation(book); // Exibe informações do livro
+                        reserveListOfBooks.add(book);
                     }
                 }
 
@@ -637,6 +642,8 @@ public class BookController {
      * @return {@code true} if the sorting and display were successful; {@code false} if an error occurred.
      */
     public boolean sortListByTopRated() {
+        reserveListOfBooks.clear();
+
         try {
             if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
                 ArrayList<BookModel> listOfReviewedBooks = new ArrayList<BookModel>();
@@ -653,6 +660,7 @@ public class BookController {
                 if (!highlyRatedBooks.isEmpty()) {
                     // Ordena os livros com avaliações pela pontuação (do maior para o menor)
                     highlyRatedBooks.sort(Comparator.comparing(bookModel -> bookModel.getBookReview().getScore(), Comparator.reverseOrder()));
+                    setReserveListOfBooks(highlyRatedBooks);
                 } else {
                     bookView.emptyEvaluatedListMessage(); // Exibe mensagem caso não haja livros avaliados
                     return true;
@@ -680,6 +688,8 @@ public class BookController {
      * @return {@code true} if the sorting and display were successful; {@code false} if an error occurred.
      */
     public boolean sortListByLowRated() {
+        reserveListOfBooks.clear();
+
         try {
             if (!listOfBooks.isEmpty()) { // Verifica se a lista de livros não está vazia
                 ArrayList<BookModel> listOfReviewedBooks = new ArrayList<BookModel>();
@@ -696,6 +706,7 @@ public class BookController {
                 if (!poorlyRatedBooks.isEmpty()) {
                     // Ordena os livros com avaliações pela pontuação (do menor para o maior)
                     poorlyRatedBooks.sort(Comparator.comparing(bookModel -> bookModel.getBookReview().getScore()));
+                    setReserveListOfBooks(poorlyRatedBooks);
                 } else {
                     bookView.emptyEvaluatedListMessage(); // Exibe mensagem caso não haja livros avaliados
                     return true;
@@ -1159,5 +1170,13 @@ public class BookController {
 
     public void setListOfBooks(ArrayList<BookModel> listOfBooks) {
         this.listOfBooks = listOfBooks;
+    }
+
+    public ArrayList<BookModel> getReserveListOfBooks() {
+        return reserveListOfBooks;
+    }
+
+    public void setReserveListOfBooks(ArrayList<BookModel> reserveListOfBooks) {
+        this.reserveListOfBooks = reserveListOfBooks;
     }
 }

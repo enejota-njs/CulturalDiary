@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class UserTesting {
     static BookController bookController = BookController.getInstance();
     static MovieController movieController = MovieController.getInstance();
-    static SeriesController seriesController = new SeriesController();
+    static SeriesController seriesController = SeriesController.getInstance();
 
     public static void main(String[] args) {
         bookController.openFile();

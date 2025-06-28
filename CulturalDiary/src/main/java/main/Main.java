@@ -13,6 +13,7 @@ public class Main extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScreen.fxml"));
             stage.setScene(new Scene(root));
             stage.setResizable(false);
+            stage.centerOnScreen();
             stage.setTitle("Diário Cultural");
             stage.show();
         } catch (Exception e) {

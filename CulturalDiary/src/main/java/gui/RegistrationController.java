@@ -311,6 +311,8 @@ public class RegistrationController implements Initializable {
     @FXML
     private Label lblSeason;
 
+    private List<String[]> arrayOfSeasons = new ArrayList<>();
+
     public boolean validateSeriesInformation() {
         String title = txtTitleSeries.getText();
         boolean validTitle = seriesController.validateTitle(title.trim());
@@ -355,8 +357,6 @@ public class RegistrationController implements Initializable {
             tabSeries.setDisable(true);
         }
     }
-
-    private List<String[]> arrayOfSeasons = new ArrayList<>();
 
     @FXML
     public void onBtnRegisterSeasonAction() {
@@ -462,6 +462,7 @@ public class RegistrationController implements Initializable {
     private void onBtnReturnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScreen.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.centerOnScreen();
         stage.setScene(new Scene(root));
         stage.setTitle("Diário Cultural");
         stage.show();

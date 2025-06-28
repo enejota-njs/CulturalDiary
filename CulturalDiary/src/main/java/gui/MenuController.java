@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,17 +30,26 @@ public class MenuController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/gui/RegistrationScreen.fxml"));
         Stage stage = (Stage) btnRegister.getScene().getWindow();
         stage.setScene(new Scene(root));
-        stage.setTitle("Cadastro de Mídia");
+        stage.centerOnScreen();
+        stage.setTitle("Diário Cultural");
     }
 
     @FXML
-    public void onBtnSearchAction() {
-        System.out.println("Buscar");
+    public void onBtnSearchAction() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/SearchScreen.fxml"));
+        Stage stage = (Stage) btnSearch.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.centerOnScreen();
+        stage.setTitle("Diário Cultural");
     }
 
     @FXML
-    public void onBtnListAction() {
-        System.out.println("Listar");
+    public void onBtnListAction() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/gui/ListScreen.fxml"));
+        Stage stage = (Stage) btnList.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.centerOnScreen();
+        stage.setTitle("Diário Cultural");
     }
 
     @FXML
