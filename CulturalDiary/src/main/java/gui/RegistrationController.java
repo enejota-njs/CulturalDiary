@@ -14,9 +14,13 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import movie.MovieController;
+import series.season.SeasonController;
+import series.series.SeriesController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegistrationController implements Initializable {
@@ -67,6 +71,12 @@ public class RegistrationController implements Initializable {
     private Label lblErrorGenreBook;
 
     @FXML
+    private StackPane stackPaneBook;
+
+    @FXML
+    private Label lblBook;
+
+    @FXML
     public void onBtnRegisterBookAction() {
         String title = txtTitleBook.getText();
         lblErrorTitleBook.setVisible(!bookController.validateTitle(title.trim()));
@@ -102,7 +112,7 @@ public class RegistrationController implements Initializable {
             checkBoxHasCopyBook.setSelected(false);
             checkBoxReadBook.setSelected(false);
 
-            displayRegistrationMessage("Livro cadastrado com sucesso!");
+            displayRegistrationMessage(stackPaneBook, lblBook, "Livro cadastrado com sucesso!");
         }
     }
 
@@ -168,6 +178,12 @@ public class RegistrationController implements Initializable {
     private Label lblErrorGenreMovie;
 
     @FXML
+    private StackPane stackPaneMovie;
+
+    @FXML
+    private Label lblMovie;
+
+    @FXML
     public void onBtnRegisterMovieAction() {
         String title = txtTitleMovie.getText();
         lblErrorTitleMovie.setVisible(!movieController.validateTitle(title.trim()));
@@ -214,24 +230,231 @@ public class RegistrationController implements Initializable {
             txtWhereToWatchMovie.clear();
             checkBoxWatchedMovie.setSelected(false);
 
-            displayRegistrationMessage("Filme cadastrado com sucesso!");
+            displayRegistrationMessage(stackPaneMovie, lblMovie,"Filme cadastrado com sucesso!");
         }
     }
 
     // ==========================================================================================================
 
-    @FXML
-    private StackPane stackPaneSucess;
+    SeriesController seriesController = SeriesController.getInstance();
+    SeasonController seasonController = SeasonController.getInstance();
 
     @FXML
-    private Label lblSucess;
+    private TextField txtTitleSeries;
 
-    public void displayRegistrationMessage(String text) {
-        lblSucess.setText(text);
-        stackPaneSucess.setVisible(true);
+    @FXML
+    private TextField txtOriginalTitleSeries;
+
+    @FXML
+    private TextField txtWhereToWatchSeries;
+
+    @FXML
+    private TextField txtYearOfReleaseSeries;
+
+    @FXML
+    private TextField txtYearOfConclusionSeries;
+
+    @FXML
+    private TextField txtYearOfSeason;
+
+    @FXML
+    private ComboBox<String> comboBoxGenreSeason;
+
+    @FXML
+    private TextField txtCastSeason;
+
+    @FXML
+    private CheckBox checkBoxWatchedSeason;
+
+    @FXML
+    private Label lblErrorTitleSeries;
+
+    @FXML
+    private Label lblErrorOriginalTitleSeries;
+
+    @FXML
+    private Label lblErrorWhereToWatchSeries;
+
+    @FXML
+    private Label lblErrorYearOfReleaseSeries;
+
+    @FXML
+    private Label lblErrorYearOfConclusionSeries;
+
+    @FXML
+    private Label lblErrorYearOfSeason;
+
+    @FXML
+    private Label lblErrorGenreSeason;
+
+    @FXML
+    private Label lblErrorCastSeason;
+
+    @FXML
+    private TabPane tabPaneRegistration;
+
+    @FXML
+    private Tab tabSeason;
+
+    @FXML
+    private Tab tabSeries;
+
+    @FXML
+    private StackPane stackPaneSeries;
+
+    @FXML
+    private Label lblSeries;
+
+    @FXML
+    private StackPane stackPaneSeason;
+
+    @FXML
+    private Label lblSeason;
+
+    public boolean validateSeriesInformation() {
+        String title = txtTitleSeries.getText();
+        boolean validTitle = seriesController.validateTitle(title.trim());
+        lblErrorTitleSeries.setVisible(!validTitle);
+
+        String originalTitle = txtOriginalTitleSeries.getText();
+        boolean validOriginalTitle = seriesController.validateOriginalTitle(originalTitle.trim());
+        lblErrorOriginalTitleSeries.setVisible(!validOriginalTitle);
+
+        String whereToWactch = txtWhereToWatchSeries.getText();
+        boolean validWhereToWatch = seriesController.validateWhereToWatch(whereToWactch.trim());
+        lblErrorWhereToWatchSeries.setVisible(!validWhereToWatch);
+
+        String yearOfRelease = txtYearOfReleaseSeries.getText();
+        boolean validYearOfRelease = seriesController.validateYearOfRelease(yearOfRelease.trim());
+        lblErrorYearOfReleaseSeries.setVisible(!validYearOfRelease);
+
+        String yearOfConclusion = txtYearOfConclusionSeries.getText();
+        boolean validYearOfConslusion = seriesController.validateYearOfConclusion(yearOfConclusion.trim());
+        lblErrorYearOfConclusionSeries.setVisible(!validYearOfConslusion);
+
+        if (!validTitle || !validOriginalTitle || !validWhereToWatch || !validYearOfRelease || !validYearOfConslusion) {
+            return false;
+        }
+
+        int yearOfReleaseInt = Integer.parseInt(yearOfRelease.trim());
+        int yearOfConclusionInt = Integer.parseInt(yearOfConclusion.trim());
+
+        if (yearOfConclusionInt < yearOfReleaseInt) {
+            displayRegistrationMessage(stackPaneSeries, lblSeries, "Ano de lançamento e conclusão inválidos!");
+            return false;
+        }
+
+        return true;
+    }
+
+    @FXML
+    public void onBtnRegisterSeasonsAction() {
+        if (validateSeriesInformation()) {
+            tabSeason.setDisable(false);
+            tabPaneRegistration.getSelectionModel().select(tabSeason);
+            tabSeries.setDisable(true);
+        }
+    }
+
+    private List<String[]> arrayOfSeasons = new ArrayList<>();
+
+    @FXML
+    public void onBtnRegisterSeasonAction() {
+        String validGenre = comboBoxGenreSeason.getValue();
+        String genre = validGenre == null ? "" : validGenre;
+        boolean validGenreSeason = seasonController.validateGenre(genre.trim(), 1);
+        lblErrorGenreSeason.setVisible(!validGenreSeason);
+
+        String yearOfSeason = txtYearOfSeason.getText();
+        boolean validYearOfSeason = seasonController.validateYearSeason(yearOfSeason.trim(), 1);
+        lblErrorYearOfSeason.setVisible(!validYearOfSeason);
+
+        String cast = txtCastSeason.getText();
+        boolean validCast = seasonController.validateCast(cast.trim(), 1);
+        lblErrorCastSeason.setVisible(!validCast);
+
+        String watched = checkBoxWatchedSeason.isSelected() ? "Sim" : "Não";
+
+        if (validGenreSeason && validYearOfSeason && validCast) {
+            String yearOfRelease = txtYearOfReleaseSeries.getText();
+            String yearOfConclusion = txtYearOfConclusionSeries.getText();
+
+            int yearOfReleaseInt = Integer.parseInt(yearOfRelease.trim());
+            int yearOfConclusionInt = Integer.parseInt(yearOfConclusion.trim());
+            int yearOfSeasonInt = Integer.parseInt(yearOfSeason.trim());
+
+            if (yearOfSeasonInt < yearOfReleaseInt || yearOfSeasonInt > yearOfConclusionInt) {
+                displayRegistrationMessage(stackPaneSeason, lblSeason, "Ano da temporada incompatível!");
+                return;
+            }
+
+            arrayOfSeasons.add(new String[] {genre, cast, yearOfSeason, watched});
+
+            displayRegistrationMessage(stackPaneSeason, lblSeason, "Temporada cadastrada com sucesso!");
+
+            txtYearOfSeason.clear();
+            comboBoxGenreSeason.getSelectionModel().clearSelection();
+            txtCastSeason.clear();
+            checkBoxWatchedSeason.setSelected(false);
+        }
+    }
+
+    @FXML
+    public void onBtnRegisterSeriesAction() {
+        if (!arrayOfSeasons.isEmpty()) {
+            String[][] listOfSeasons = new String[arrayOfSeasons.size()][];
+
+            for (int i = 0; i < arrayOfSeasons.size(); i++) {
+                listOfSeasons[i] = arrayOfSeasons.get(i);
+            }
+
+            seriesController.registerSeries(txtTitleSeries.getText(), txtYearOfReleaseSeries.getText(), txtYearOfConclusionSeries.getText(),
+                    txtOriginalTitleSeries.getText(), txtWhereToWatchSeries.getText(), listOfSeasons);
+
+            txtYearOfSeason.clear();
+            comboBoxGenreSeason.getSelectionModel().clearSelection();
+            txtCastSeason.clear();
+            checkBoxWatchedSeason.setSelected(false);
+
+            txtTitleSeries.clear();
+            txtOriginalTitleSeries.clear();
+            txtYearOfReleaseSeries.clear();
+            txtYearOfConclusionSeries.clear();
+            txtWhereToWatchSeries.clear();
+
+            arrayOfSeasons.clear();
+            tabSeries.setDisable(false);
+            tabPaneRegistration.getSelectionModel().select(tabSeries);
+            tabSeason.setDisable(true);
+
+            displayRegistrationMessage(stackPaneSeries, lblSeries, "Série cadastrada com sucesso!");
+        } else {
+            displayRegistrationMessage(stackPaneSeason, lblSeason, "Lista de temporadas vazia!");
+        }
+    }
+
+    @FXML
+    public void onBtnReturnTabSeriesAction() {
+        txtTitleSeries.clear();
+        txtOriginalTitleSeries.clear();
+        txtYearOfReleaseSeries.clear();
+        txtYearOfConclusionSeries.clear();
+        txtWhereToWatchSeries.clear();
+
+        arrayOfSeasons.clear();
+        tabSeries.setDisable(false);
+        tabPaneRegistration.getSelectionModel().select(tabSeries);
+        tabSeason.setDisable(true);
+    }
+
+    // ==========================================================================================================
+
+    public void displayRegistrationMessage(StackPane stackPane, Label lbl, String text) {
+        lbl.setText(text);
+        stackPane.setVisible(true);
 
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(event -> stackPaneSucess.setVisible(false));
+        pause.setOnFinished(event -> stackPane.setVisible(false));
         pause.play();
     }
 
@@ -250,6 +473,9 @@ public class RegistrationController implements Initializable {
                 "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror");
 
         comboBoxGenreMovie.getItems().addAll("Ação", "Animação", "Aventura", "Comédia", "Dança", "Documentário", "Drama", "Faroeste", "Fantasia",
+                "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror");
+
+        comboBoxGenreSeason.getItems().addAll("Ação", "Animação", "Aventura", "Comédia", "Dança", "Documentário", "Drama", "Faroeste", "Fantasia",
                 "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror");
     }
 }

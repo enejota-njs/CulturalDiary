@@ -1,5 +1,7 @@
 package series.season;
 
+import series.series.SeriesController;
+
 import java.util.Calendar;
 import java.util.Set;
 
@@ -10,6 +12,17 @@ import java.util.Set;
  * @version 1.1
  */
 public class SeasonController {
+    private static SeasonController instance;
+
+    private SeasonController() {}
+
+    public static SeasonController getInstance() {
+        if (instance == null) {
+            instance = new SeasonController();
+        }
+        return instance;
+    }
+
     SeasonView seasonView = new SeasonView();
     Calendar calendar = Calendar.getInstance();
 

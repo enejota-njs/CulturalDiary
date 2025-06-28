@@ -23,11 +23,22 @@ import java.util.Set;
  * @version 1.1
  */
 public class SeriesController {
+    private static SeriesController instance;
+
+    private SeriesController() { openFile(); }
+
+    public static SeriesController getInstance() {
+        if (instance == null) {
+            instance = new SeriesController();
+        }
+        return instance;
+    }
+
+    private ArrayList<SeriesModel> listOfSeries = new ArrayList<SeriesModel>();
     SeriesModel seriesModel;
     SeriesView seriesView = new SeriesView();
-    private ArrayList<SeriesModel> listOfSeries = new ArrayList<SeriesModel>();
 
-    SeasonController seasonController = new SeasonController();
+    SeasonController seasonController = SeasonController.getInstance();
 
     Calendar calendar = Calendar.getInstance();
 
