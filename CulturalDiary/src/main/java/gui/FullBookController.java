@@ -1,17 +1,17 @@
 package gui;
 
 import book.BookModel;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -56,6 +56,9 @@ public class FullBookController {
 
     private String previousScreen;
 
+    @FXML
+    private StackPane stackPane;
+
     public void openBook(BookModel book, String screen) {
         title.setText(book.getTitle());
         author.setText(book.getAuthor());
@@ -81,16 +84,20 @@ public class FullBookController {
 
     @FXML
     public void onBtnReviewBookAction() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/BookReviewScreen.fxml"));
-        Parent root = loader.load();
+        if (currentBook.isRead()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/BookReviewScreen.fxml"));
+            Parent root = loader.load();
 
-        BookReviewController bookReviewController = loader.getController();
-        bookReviewController.setBook(currentBook);
+            BookReviewController bookReviewController = loader.getController();
+            bookReviewController.setBook(currentBook);
 
-        Stage stage = (Stage) btnReview.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.centerOnScreen();
-        stage.setTitle("Diário Cultural");
+            Stage stage = (Stage) btnReview.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.centerOnScreen();
+            stage.setTitle("Diário Cultural");
+        } else {
+            displayRegistrationMessage(stackPane);
+        }
     }
 
     @FXML
@@ -109,6 +116,15 @@ public class FullBookController {
             stage.setTitle("Diário Cultural");
         }
     }
+
+    public void displayRegistrationMessage(StackPane stackPane) {
+        stackPane.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        pause.setOnFinished(event -> stackPane.setVisible(false));
+        pause.play();
+    }
+
 
     public String getPreviousScreen() {
         return previousScreen;

@@ -9,7 +9,10 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="600.0" maxWidth="750.0" minHeight="600.0" minWidth="750.0" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FullBookController">
@@ -137,5 +140,19 @@
             <Button fx:id="btnReview" mnemonicParsing="false" onAction="#onBtnReviewBookAction" text="    Avaliar    " />
          </children>
       </HBox>
+      <StackPane fx:id="stackPane" cacheShape="false" centerShape="false" layoutX="268.0" layoutY="36.0" prefHeight="55.0" prefWidth="264.0" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="36.0" stroke="#00000026" strokeType="INSIDE" width="264.0">
+               <effect>
+                  <DropShadow blurType="GAUSSIAN" height="32.24" radius="15.620000000000001" width="32.24">
+                     <color>
+                        <Color red="0.6710526347160339" green="0.6182383298873901" blue="0.6182383298873901" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Label fx:id="lblMovie" text="O livro está marcado como não lido!" />
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>
