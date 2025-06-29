@@ -22,7 +22,6 @@ import java.io.IOException;
 public class ListController {
     // =================================================================================================================
 
-    FullBookController fullBookController = new FullBookController();
     BookController bookController = BookController.getInstance();
 
     @FXML
@@ -61,6 +60,9 @@ public class ListController {
     @FXML
     private TableColumn<BookModel, String> tcScoreBook;
 
+    @FXML
+    private Button btnReturnOpenBook;
+
     private ObservableList<BookModel> observableListBook = FXCollections.observableArrayList(bookController.getListOfBooks());
 
     @FXML
@@ -90,13 +92,16 @@ public class ListController {
     }
 
     public void onBtnOpenBookAction(BookModel book) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/gui/FullBookScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullBookScreen.fxml"));
+        Parent root = loader.load();
+
+        FullBookController fullBookController = loader.getController();
+        fullBookController.openBook(book, "list screen");
+
         Stage stage = (Stage) tvBook.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.centerOnScreen();
         stage.setTitle("Diário Cultural");
-
-        fullBookController.openBook(book);
     }
 
     public void initializeSettingsBooks() {
@@ -132,7 +137,7 @@ public class ListController {
         setupExclusiveCheckBox(checkBoxLowRatedBook, checkBoxGenreBook, checkBoxYearOfPublicationBook, checkBoxTopRatedBook);
 
         tvBook.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // ou 2 para duplo clique
+            if (event.getClickCount() == 2) {
                 BookModel book = tvBook.getSelectionModel().getSelectedItem();
                 if (book != null) {
                     try {
@@ -152,7 +157,7 @@ public class ListController {
     }
 
     @FXML
-    private void onBtnReturnAction(ActionEvent event) throws IOException {
+    public void onBtnReturnAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScreen.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -164,8 +169,8 @@ public class ListController {
     private void setupExclusiveCheckBox(CheckBox main, CheckBox... others) {
         main.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             for (CheckBox cb : others) {
-                cb.setDisable(isSelected);  // desabilita os outros se esse estiver selecionado
-                if (isSelected) cb.setSelected(false);  // desmarca os outros se esse for marcado
+                cb.setDisable(isSelected);
+                if (isSelected) cb.setSelected(false);
             }
         });
     }
