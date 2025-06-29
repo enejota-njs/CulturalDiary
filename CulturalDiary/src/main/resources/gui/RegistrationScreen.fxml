@@ -128,7 +128,7 @@
          <content>
             <AnchorPane maxHeight="570.0" maxWidth="750.0" minHeight="570.0" minWidth="750.0" prefHeight="570.0" prefWidth="750.0" translateX="-1.0">
                <children>
-                  <ScrollPane hbarPolicy="NEVER" layoutY="-1.0" maxHeight="573.0" maxWidth="750.0" minHeight="500.0" minWidth="750.0" prefHeight="573.0" prefWidth="750.0" vbarPolicy="ALWAYS" vvalue="1.0">
+                  <ScrollPane hbarPolicy="NEVER" layoutY="-1.0" maxHeight="573.0" maxWidth="750.0" minHeight="500.0" minWidth="750.0" prefHeight="573.0" prefWidth="750.0" vbarPolicy="ALWAYS">
                      <content>
                         <AnchorPane maxHeight="730.0" maxWidth="750.0" minHeight="730.0" minWidth="750.0" prefHeight="730.0" prefWidth="750.0">
                            <children>

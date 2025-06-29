@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 
 import book.BookModel;
 import javafx.stage.Stage;
+import movie.MovieController;
+import movie.MovieModel;
 import review.ReviewModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -59,9 +61,6 @@ public class ListController {
 
     @FXML
     private TableColumn<BookModel, String> tcScoreBook;
-
-    @FXML
-    private Button btnReturnOpenBook;
 
     private ObservableList<BookModel> observableListBook = FXCollections.observableArrayList(bookController.getListOfBooks());
 
@@ -152,8 +151,136 @@ public class ListController {
 
     // ============================================================================================================================================
 
+    MovieController movieController = MovieController.getInstance();
+
+    @FXML
+    private CheckBox checkBoxGenreMovie;
+
+    @FXML
+    private CheckBox checkBoxYearOfReleaseMovie;
+
+    @FXML
+    private CheckBox checkBoxTopRatedMovie;
+
+    @FXML
+    private CheckBox checkBoxLowRatedMovie;
+
+    @FXML
+    private ComboBox<String> comboBoxGenreMovie;
+
+    @FXML
+    private TextField txtYearOfReleaseMovie;
+
+    @FXML
+    private TableView<MovieModel> tvMovie;
+
+    @FXML
+    private TableColumn<MovieModel, String> tcTitleMovie;
+
+    @FXML
+    private TableColumn<MovieModel, String> tcDirectionMovie;
+
+    @FXML
+    private TableColumn<MovieModel, String> tcGenreMovie;
+
+    @FXML
+    private TableColumn<MovieModel, String> tcYearOfReleaseMovie;
+
+    @FXML
+    private TableColumn<MovieModel, String> tcScoreMovie;
+
+    private ObservableList<MovieModel> observableListMovie = FXCollections.observableArrayList(movieController.getListOfMovies());
+
+    @FXML
+    public void onBtnApplyFiltersMovieAction() {
+        if (checkBoxGenreMovie.isSelected()) {
+            if (comboBoxGenreMovie.getValue() != null) {
+                movieController.filterListOfMoviesByGenre(comboBoxGenreMovie.getValue());
+                tvMovie.setItems(FXCollections.observableArrayList(movieController.getReserveListOfMovies()));
+            }
+        } else if (checkBoxYearOfReleaseMovie.isSelected()) {
+            if (!txtYearOfReleaseMovie.getText().trim().isEmpty()) {
+                movieController.filterListOfMoviesByYearOfRelease(txtYearOfReleaseMovie.getText());
+                tvMovie.setItems(FXCollections.observableArrayList(movieController.getReserveListOfMovies()));
+            }
+        } else if (checkBoxTopRatedMovie.isSelected()) {
+            movieController.sortListByTopRated();
+            tvMovie.setItems(FXCollections.observableArrayList(movieController.getReserveListOfMovies()));
+        } else if (checkBoxLowRatedMovie.isSelected()) {
+            movieController.sortListByLowRated();
+            tvMovie.setItems(FXCollections.observableArrayList(movieController.getReserveListOfMovies()));
+        }
+    }
+
+    @FXML
+    public void onBtnResetFiltersMovieAction() {
+        tvMovie.setItems(observableListMovie);
+    }
+
+    public void onBtnOpenMovieAction(MovieModel movie) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullMovieScreen.fxml"));
+        Parent root = loader.load();
+
+        FullMovieController fullMovieController = loader.getController();
+        fullMovieController.openMovie(movie, "list screen");
+
+        Stage stage = (Stage) tvMovie.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.centerOnScreen();
+        stage.setTitle("Diário Cultural");
+    }
+
+    public void initializeSettingsMovies() {
+        comboBoxGenreMovie.getItems().addAll("Ação", "Animação", "Aventura", "Comédia", "Dança", "Documentário", "Drama", "Faroeste", "Fantasia",
+                "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror");
+
+        tcTitleMovie.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tcDirectionMovie.setCellValueFactory(new PropertyValueFactory<>("direction"));
+        tcGenreMovie.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        tcYearOfReleaseMovie.setCellValueFactory(new PropertyValueFactory<>("yearOfRelease"));
+        tcScoreMovie.setCellValueFactory(cellData -> {
+            ReviewModel review = cellData.getValue().getMovieReview();
+            if (review != null) {
+                return new SimpleStringProperty(review.getScoreString());
+            } else {
+                return new SimpleStringProperty("Vazio");
+            }
+        });
+
+        tvMovie.setItems(observableListMovie);
+
+        checkBoxGenreMovie.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            comboBoxGenreMovie.setDisable(!isNowSelected);
+        });
+
+        checkBoxYearOfReleaseMovie.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            txtYearOfReleaseMovie.setDisable(!isNowSelected);
+        });
+
+        setupExclusiveCheckBox(checkBoxGenreMovie, checkBoxYearOfReleaseMovie, checkBoxTopRatedMovie, checkBoxLowRatedMovie);
+        setupExclusiveCheckBox(checkBoxYearOfReleaseMovie, checkBoxGenreMovie,checkBoxTopRatedMovie, checkBoxLowRatedMovie);
+        setupExclusiveCheckBox(checkBoxTopRatedMovie, checkBoxGenreMovie, checkBoxYearOfReleaseMovie, checkBoxLowRatedMovie);
+        setupExclusiveCheckBox(checkBoxLowRatedMovie, checkBoxGenreMovie, checkBoxYearOfReleaseMovie, checkBoxTopRatedMovie);
+
+        tvMovie.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                MovieModel movie = tvMovie.getSelectionModel().getSelectedItem();
+                if (movie != null) {
+                    try {
+                        onBtnOpenMovieAction(movie);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    // ============================================================================================================================================
+
     public void initialize() {
         initializeSettingsBooks();
+        initializeSettingsMovies();
     }
 
     @FXML

@@ -1,6 +1,7 @@
 package movie;
 
 import book.BookController;
+import book.BookModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import review.ReviewModel;
@@ -34,6 +35,7 @@ public class MovieController {
     }
 
     private ArrayList<MovieModel> listOfMovies = new ArrayList<MovieModel>(); // Recupera a lista de filmes do repositório
+    private ArrayList<MovieModel> reserveListOfMovies = new ArrayList<>();
     MovieView movieView = new MovieView(); // Instancia a visualização (interface) dos filmes
     MovieModel movieModel; // Declara um modelo de filme (não instanciado ainda)
 
@@ -666,6 +668,7 @@ public class MovieController {
      * @return {@code true} if filtering is successful; {@code false} if an error occurs.
      */
     public boolean filterListOfMoviesByGenre(String value) {
+        reserveListOfMovies.clear();
         value = value.trim(); // Remove espaços em branco extras ao redor do valor fornecido
 
         if (validateNewInputString(value)) { // Valida se o valor fornecido não está vazio
@@ -674,7 +677,7 @@ public class MovieController {
             if (!listOfMovies.isEmpty()) { // Verifica se a lista de filmes não está vazia
 
                 for (MovieModel movie : listOfMovies) { // Itera sobre a lista de filmes
-                    if (movie.getGenre().toLowerCase().contains(value.toLowerCase().trim())) { // Verifica se o gênero do filme contém o valor fornecido
+                    if (movie.getGenre().toLowerCase().equals(value.toLowerCase().trim())) { // Verifica se o gênero do filme contém o valor fornecido
 
                         if (!movieFound) { // Se não encontrou nenhum filme ainda
                             movieView.headerForMovie(); // Exibe o cabeçalho
@@ -682,6 +685,7 @@ public class MovieController {
                         }
 
                         movieView.movieInformation(movie); // Exibe as informações do filme
+                        reserveListOfMovies.add(movie);
                     }
                 }
 
@@ -702,6 +706,7 @@ public class MovieController {
      * @return {@code true} if filtering is successful; {@code false} if an error occurs.
      */
     public boolean filterListOfMoviesByYearOfRelease(String value) {
+        reserveListOfMovies.clear();
         value = value.trim(); // Remove espaços em branco extras ao redor do valor fornecido
 
         if (validateNewInputString(value) && validateNewInputInt(value)) { // Valida se o valor fornecido não está vazio e é um número válido
@@ -726,6 +731,7 @@ public class MovieController {
                         }
 
                         movieView.movieInformation(movie); // Exibe as informações do filme
+                        reserveListOfMovies.add(movie);
                     }
                 }
 
@@ -745,6 +751,8 @@ public class MovieController {
      * @return {@code true} if sorting is successful; {@code false} if an error occurs.
      */
     public boolean sortListByTopRated() {
+        reserveListOfMovies.clear();
+
         try {
             if (!listOfMovies.isEmpty()) { // Verifica se a lista de filmes não está vazia
                 ArrayList<MovieModel> listOfReviewedMovies = new ArrayList<MovieModel>(); // Cria uma lista para filmes que possuem avaliação
@@ -759,6 +767,7 @@ public class MovieController {
 
                 if (!highlyRatedMovies.isEmpty()) { // Se existem filmes avaliados
                     highlyRatedMovies.sort(Comparator.comparing(movieModel -> movieModel.getMovieReview().getScore(), Comparator.reverseOrder())); // Ordena os filmes pela avaliação de forma decrescente
+                    setReserveListOfMovies(highlyRatedMovies);
                 } else {
                     movieView.emptyEvaluatedListMessage(); // Exibe mensagem caso não haja filmes avaliados
                     return true; // Retorna true, pois o processo foi realizado
@@ -786,6 +795,8 @@ public class MovieController {
      * @return {@code true} if sorting is successful; {@code false} if an error occurs.
      */
     public boolean sortListByLowRated() {
+        reserveListOfMovies.clear();
+
         try {
             if (!listOfMovies.isEmpty()) { // Verifica se a lista de filmes não está vazia
                 ArrayList<MovieModel> listOfReviewedMovies = new ArrayList<MovieModel>(); // Cria uma lista para filmes com avaliação
@@ -800,6 +811,7 @@ public class MovieController {
 
                 if (!poorlyRatedMovies.isEmpty()) { // Se existem filmes avaliados
                     poorlyRatedMovies.sort(Comparator.comparing(movieModel -> movieModel.getMovieReview().getScore())); // Ordena os filmes pela avaliação de forma crescente (pior avaliação primeiro)
+                    setReserveListOfMovies(poorlyRatedMovies);
                 } else {
                     movieView.emptyEvaluatedListMessage(); // Exibe mensagem caso não haja filmes avaliados
                     return true; // Retorna true, pois o processo foi realizado
@@ -1254,5 +1266,13 @@ public class MovieController {
 
     public void setListOfMovies(ArrayList<MovieModel> listOfMovies) {
         this.listOfMovies = listOfMovies;
+    }
+
+    public ArrayList<MovieModel> getReserveListOfMovies() {
+        return reserveListOfMovies;
+    }
+
+    public void setReserveListOfMovies(ArrayList<MovieModel> reserveListOfMovies) {
+        this.reserveListOfMovies = reserveListOfMovies;
     }
 }
