@@ -418,6 +418,7 @@ public class MovieController {
      * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
      */
     public boolean searchMovieByTitle(String value) {
+        reserveListOfMovies.clear();
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
 
@@ -440,6 +441,7 @@ public class MovieController {
                         }
                         // Exibe as informações do filme encontrado
                         movieView.movieInformation(movie);
+                        reserveListOfMovies.add(movie);
                     }
                 }
             }
@@ -460,6 +462,7 @@ public class MovieController {
      * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
      */
     public boolean searchMovieByDirection(String value) {
+        reserveListOfMovies.clear();
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
 
@@ -482,6 +485,7 @@ public class MovieController {
                         }
                         // Exibe as informações do filme encontrado
                         movieView.movieInformation(movie);
+                        reserveListOfMovies.add(movie);
                     }
                 }
             }
@@ -502,6 +506,7 @@ public class MovieController {
      * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
      */
     public boolean searchMovieByActorInTheCast(String value) {
+        reserveListOfMovies.clear();
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
 
@@ -532,6 +537,7 @@ public class MovieController {
                             movieFound = true;  // Marca que um filme foi encontrado
                         }
                         movieView.movieInformation(movie);  // Exibe as informações do filme
+                        reserveListOfMovies.add(movie);
                     }
                 }
             }
@@ -553,6 +559,7 @@ public class MovieController {
      * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
      */
     public boolean searchMovieByGenre(String value) {
+        reserveListOfMovies.clear();
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
 
@@ -572,6 +579,7 @@ public class MovieController {
                             movieFound = true;  // Marca que um filme foi encontrado
                         }
                         movieView.movieInformation(movie);  // Exibe as informações do filme
+                        reserveListOfMovies.add(movie);
                     }
                 }
             }
@@ -593,6 +601,7 @@ public class MovieController {
      * @return {@code true} if the movie is found or not found; {@code false} if an error occurs.
      */
     public boolean searchMovieByYearOfRelease(String value) {
+        reserveListOfMovies.clear();
         // Remove espaços em branco no início e fim do valor fornecido
         value = value.trim();
 
@@ -623,6 +632,7 @@ public class MovieController {
                         }
 
                         movieView.movieInformation(movie);  // Exibe as informações do filme
+                        reserveListOfMovies.add(movie);
                     }
                 }
 

@@ -284,6 +284,7 @@ public class SeriesController {
      * @return true if the search was performed (even if no series was found); false if an error occurred.
      */
     public boolean searchSeriesByTitle(String value) {
+        reserveListOfSeries.clear();
         value = value.trim(); // Remove espaços em branco nas extremidades
 
         // Valida se a string fornecida é válida (não vazia, por exemplo)
@@ -303,6 +304,7 @@ public class SeriesController {
                         }
 
                         seriesView.seriesInformation(series); // Exibe as informações da série encontrada
+                        reserveListOfSeries.add(series);
                     }
                 }
             }

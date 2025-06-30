@@ -351,6 +351,7 @@ public class BookController {
      * @return {@code true} if the search was successful, {@code false} if an error occurred.
      */
     public boolean searchBookByTitle(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value)) { // Valida a entrada do título
@@ -368,6 +369,7 @@ public class BookController {
                         }
 
                         bookView.bookInformation(book); // Exibe informações do livro
+                        reserveListOfBooks.add(book);
                     }
                 }
 
@@ -386,6 +388,7 @@ public class BookController {
      * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
      */
     public boolean searchBookByAuthor(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value)) { // Valida a entrada do autor
@@ -403,6 +406,7 @@ public class BookController {
                         }
 
                         bookView.bookInformation(book); // Exibe informações do livro
+                        reserveListOfBooks.add(book);
                     }
                 }
             }
@@ -420,6 +424,7 @@ public class BookController {
      * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
      */
     public boolean searchBookByGenre(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value)) { // Valida a entrada do gênero
@@ -437,6 +442,7 @@ public class BookController {
                         }
 
                         bookView.bookInformation(book); // Exibe informações do livro
+                        reserveListOfBooks.add(book);
                     }
                 }
 
@@ -455,6 +461,7 @@ public class BookController {
      * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
      */
     public boolean searchBookByYearOfPublication(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value) && validateNewInputInt(value)) { // Valida a entrada do ano de publicação
@@ -480,6 +487,7 @@ public class BookController {
                         }
 
                         bookView.bookInformation(book); // Exibe informações do livro
+                        reserveListOfBooks.add(book);
                     }
                 }
 
@@ -498,6 +506,7 @@ public class BookController {
      * @return {@code true} if the search was performed successfully, {@code false} if an error occurred.
      */
     public boolean searchBookByIsbn(String value) {
+        reserveListOfBooks.clear();
         value = value.trim(); // Remove espaços no início e no fim da string
 
         if (validateNewInputString(value)) { // Valida a entrada do ISBN
@@ -517,6 +526,7 @@ public class BookController {
                             }
 
                             bookView.bookInformation(book); // Exibe informações do livro
+                            reserveListOfBooks.add(book);
                         }
                     }
 
