@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class SeasonModel {
     private String genre; // Gênero
     private ArrayList<String> cast; // Elenco
+    private String castAsString;
     private int yearSeason; // Ano de lançamento
     private ReviewModel seasonReview; // Avaliação
     private boolean evaluatedSeason; // Temporada avaliada
@@ -37,6 +38,7 @@ public class SeasonModel {
         this.evaluatedSeason = false;
         this.watched = watched;
         this.seasonIndex = seasonIndex;
+        setCastAsString();
     } // Construtor
 
     // Métodos Getters e Setters
@@ -52,8 +54,12 @@ public class SeasonModel {
         return cast;
     }
 
+    public void setCastAsString() {
+        this.castAsString = String.join(", ", this.cast);
+    }
+
     public String getCastAsString() {
-        return String.join(", ", cast);
+        return this.castAsString;
     }
 
     public void setCast(ArrayList<String> cast) {

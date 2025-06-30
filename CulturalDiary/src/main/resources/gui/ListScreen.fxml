@@ -281,5 +281,135 @@
             </AnchorPane>
          </content>
       </Tab>
+      <Tab text="    Série    ">
+         <content>
+            <AnchorPane maxHeight="573.0" maxWidth="1233.0" minHeight="511.0" minWidth="750.0" prefHeight="571.0" prefWidth="1233.0">
+               <children>
+                  <HBox layoutX="37.0" layoutY="44.0" maxHeight="458.0" maxWidth="1177.0" minHeight="421.0" minWidth="677.0" prefHeight="458.0" prefWidth="1177.0">
+                     <children>
+                        <VBox prefHeight="458.0" prefWidth="152.0">
+                           <children>
+                              <Separator prefWidth="200.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <Label text="Filtros">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <Separator prefHeight="3.0" prefWidth="81.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <Label text="Filtrar por">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <CheckBox fx:id="checkBoxGenreSeries" mnemonicParsing="false" text="Gênero">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                              <ComboBox fx:id="comboBoxGenreSeries" disable="true" maxWidth="135.0" minWidth="135.0" prefWidth="135.0" visibleRowCount="5">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <CheckBox fx:id="checkBoxYearOfReleaseSeries" mnemonicParsing="false" text="Ano de lançamento">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                              <TextField fx:id="txtYearOfReleaseSeries" disable="true" maxHeight="32.0" maxWidth="135.0" minHeight="32.0" minWidth="135.0" prefHeight="32.0" prefWidth="135.0">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </TextField>
+                              <Separator prefWidth="200.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="15.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <Label text="Ordenar por">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <CheckBox fx:id="checkBoxTopRatedSeries" mnemonicParsing="false" text="Bem avaliado">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </CheckBox>
+                              <CheckBox fx:id="checkBoxLowRatedSeries" mnemonicParsing="false" text="Mal avaliado" />
+                              <Separator prefWidth="200.0">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Separator>
+                              <Button mnemonicParsing="false" onAction="#onBtnApplyFiltersSeriesAction" prefWidth="88.0" text="Aplicar filtros">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#onBtnResetFiltersSeriesAction" text="Apagar filtros" />
+                              <Separator prefWidth="200.0">
+                                 <VBox.margin>
+                                    <Insets top="15.0" />
+                                 </VBox.margin>
+                              </Separator>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="200.0">
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <TableView fx:id="tvSeries" prefHeight="458.0" prefWidth="1004.0">
+                           <columns>
+                              <TableColumn fx:id="tcTitleSeries" editable="false" prefWidth="408.0" resizable="false" sortable="false" text="Título" />
+                              <TableColumn fx:id="tcStartDateSeries" editable="false" prefWidth="167.0" resizable="false" sortable="false" text="Ano de lançamento" />
+                              <TableColumn fx:id="tcEndDateSeries" editable="false" prefWidth="168.0" resizable="false" sortable="false" text="Ano de conclusão" />
+                              <TableColumn fx:id="tcNumberOfSeasonsSeries" editable="false" minWidth="0.0" prefWidth="161.0" resizable="false" sortable="false" text="Episódios" />
+                              <TableColumn fx:id="tcScoreSeries" editable="false" prefWidth="99.0" resizable="false" sortable="false" text="Nota" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </HBox>
+                  <HBox layoutX="37.0" layoutY="511.0" prefHeight="35.0" prefWidth="221.0" spacing="483.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#onBtnReturnAction" text="    Voltar    " />
+                     </children>
+                  </HBox>
+                  <StackPane fx:id="stackPaneBook11" cacheShape="false" centerShape="false" layoutX="248.0" layoutY="16.0" prefHeight="55.0" prefWidth="264.0" visible="false">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="36.0" stroke="#00000026" strokeType="INSIDE" width="264.0">
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" height="32.24" radius="15.620000000000001" width="32.24">
+                                 <color>
+                                    <Color red="0.6710526347160339" green="0.6182383298873901" blue="0.6182383298873901" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Rectangle>
+                        <Label fx:id="lblBook11" text="Label" />
+                     </children>
+                  </StackPane>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
     </tabs>
 </TabPane>

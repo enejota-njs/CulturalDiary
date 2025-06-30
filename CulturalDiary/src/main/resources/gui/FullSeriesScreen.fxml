@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="600.0" maxWidth="750.0" minHeight="600.0" minWidth="750.0" prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.FullSeriesController">
+    <children>
+        <HBox minHeight="539.0" prefHeight="539.0" prefWidth="750.0">
+            <children>
+                <VBox minHeight="498.0" prefHeight="498.0" prefWidth="497.0">
+                    <HBox.margin>
+                        <Insets bottom="35.0" left="35.0" top="35.0" />
+                    </HBox.margin>
+                    <children>
+                        <Label text="Título" />
+                        <TextField fx:id="title" editable="false" minHeight="32.0" />
+                        <Label text="Título original">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <TextField fx:id="originalTitle" editable="false" minHeight="32.0" />
+                        <Label text="Onde assistir">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Label>
+                        <TextField fx:id="whereToWatch" editable="false" minHeight="32.0" />
+                        <HBox maxWidth="525.0" minWidth="155.0" prefHeight="60.0" prefWidth="525.0">
+                            <children>
+                                <VBox prefHeight="60.0" prefWidth="193.0">
+                                    <children>
+                                        <Label text="Data de lançamento">
+                                            <VBox.margin>
+                                                <Insets top="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <TextField fx:id="yearOfRelease" editable="false" maxWidth="112.0" minHeight="32.0" minWidth="112.0" prefHeight="32.0" prefWidth="112.0" />
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="60.0" prefWidth="196.0">
+                                    <children>
+                                        <Label text="Data de conclusão">
+                                            <VBox.margin>
+                                                <Insets top="5.0" />
+                                            </VBox.margin>
+                                        </Label>
+                                        <TextField fx:id="yearOfConclusion" editable="false" maxWidth="112.0" minHeight="32.0" minWidth="112.0" prefHeight="32.0" prefWidth="112.0" />
+                                    </children>
+                                </VBox>
+                        <VBox layoutX="169.0" layoutY="10.0" prefHeight="60.0" prefWidth="113.0">
+                           <children>
+                              <Label text="Nota média">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="scoreSeries" editable="false" maxWidth="112.0" minHeight="32.0" minWidth="112.0" prefHeight="32.0" prefWidth="112.0" />
+                           </children>
+                        </VBox>
+                            </children>
+                        </HBox>
+                  <Label text="Temporadas" />
+                  <TableView fx:id="tvSeason" maxWidth="497.0" minWidth="497.0" prefHeight="264.0" prefWidth="497.0">
+                    <columns>
+                      <TableColumn fx:id="tcCastSeason" editable="false" prefWidth="204.0" resizable="false" sortable="false" text="Elenco" />
+                      <TableColumn fx:id="tcGenreSeason" editable="false" minWidth="0.0" prefWidth="131.0" resizable="false" sortable="false" text="Gênero" />
+                        <TableColumn fx:id="tcYearSeason" editable="false" minWidth="0.0" resizable="false" sortable="false" text="Ano" />
+                        <TableColumn fx:id="tcScoreSeason" editable="false" resizable="false" sortable="false" text="Nota" />
+                    </columns>
+                  </TableView>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" maxHeight="408.0" prefHeight="338.0" prefWidth="109.0">
+                    <HBox.margin>
+                        <Insets left="45.0" top="65.0" />
+                    </HBox.margin>
+                    <children>
+                        <Label text="S">
+                            <font>
+                                <Font size="60.0" />
+                            </font>
+                        </Label>
+                        <Label text="É">
+                            <font>
+                                <Font size="60.0" />
+                            </font>
+                        </Label>
+                        <Label text="R">
+                            <font>
+                                <Font size="60.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <Label text="I">
+                            <font>
+                                <Font size="60.0" />
+                            </font>
+                        </Label>
+                        <Label text="E">
+                            <font>
+                                <Font size="60.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <effect>
+                        <DropShadow />
+                    </effect>
+                </VBox>
+            </children>
+        </HBox>
+        <HBox layoutX="34.0" layoutY="546.0" prefHeight="53.0" prefWidth="679.0" spacing="525.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#onBtnReturnAction" text="    Voltar    " />
+            </children>
+        </HBox>
+        <StackPane fx:id="stackPane" cacheShape="false" centerShape="false" layoutX="250.0" layoutY="36.0" prefHeight="55.0" prefWidth="264.0" visible="false">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eeeeee" height="36.0" stroke="#00000026" strokeType="INSIDE" width="264.0">
+                    <effect>
+                        <DropShadow blurType="GAUSSIAN" height="32.24" radius="15.620000000000001" width="32.24">
+                            <color>
+                                <Color red="0.6710526347160339" green="0.6182383298873901" blue="0.6182383298873901" />
+                            </color>
+                        </DropShadow>
+                    </effect>
+                </Rectangle>
+                <Label text="O livro está marcado como não lido!" />
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

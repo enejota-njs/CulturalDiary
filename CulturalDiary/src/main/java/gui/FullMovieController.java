@@ -107,7 +107,7 @@ public class FullMovieController {
             stage.centerOnScreen();
             stage.setTitle("Diário Cultural");
         } else {
-            displayRegistrationMessage(stackPane);
+            displayMessage(stackPane);
         }
     }
 
@@ -128,7 +128,7 @@ public class FullMovieController {
         }
     }
 
-    public void displayRegistrationMessage(StackPane stackPane) {
+    public void displayMessage(StackPane stackPane) {
         stackPane.setVisible(true);
 
         PauseTransition pause = new PauseTransition(Duration.seconds(3));

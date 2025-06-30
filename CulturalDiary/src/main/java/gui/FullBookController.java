@@ -96,7 +96,7 @@ public class FullBookController {
             stage.centerOnScreen();
             stage.setTitle("Diário Cultural");
         } else {
-            displayRegistrationMessage(stackPane);
+            displayMessage(stackPane);
         }
     }
 
@@ -117,7 +117,7 @@ public class FullBookController {
         }
     }
 
-    public void displayRegistrationMessage(StackPane stackPane) {
+    public void displayMessage(StackPane stackPane) {
         stackPane.setVisible(true);
 
         PauseTransition pause = new PauseTransition(Duration.seconds(3));

@@ -18,6 +18,8 @@ import movie.MovieController;
 import movie.MovieModel;
 import review.ReviewModel;
 import javafx.scene.control.cell.PropertyValueFactory;
+import series.series.SeriesController;
+import series.series.SeriesModel;
 
 import java.io.IOException;
 
@@ -278,9 +280,130 @@ public class ListController {
 
     // ============================================================================================================================================
 
+    SeriesController seriesController = SeriesController.getInstance();
+
+    @FXML
+    private CheckBox checkBoxGenreSeries;
+
+    @FXML
+    private CheckBox checkBoxYearOfReleaseSeries;
+
+    @FXML
+    private CheckBox checkBoxTopRatedSeries;
+
+    @FXML
+    private CheckBox checkBoxLowRatedSeries;
+
+    @FXML
+    private ComboBox<String> comboBoxGenreSeries;
+
+    @FXML
+    private TextField txtYearOfReleaseSeries;
+
+    @FXML
+    private TableView<SeriesModel> tvSeries;
+
+    @FXML
+    private TableColumn<SeriesModel, String> tcTitleSeries;
+
+    @FXML
+    private TableColumn<SeriesModel, String> tcStartDateSeries;
+
+    @FXML
+    private TableColumn<SeriesModel, String> tcEndDateSeries;
+
+    @FXML
+    private TableColumn<SeriesModel, String> tcNumberOfSeasonsSeries;
+
+    @FXML
+    private TableColumn<SeriesModel, String> tcScoreSeries;
+
+    private ObservableList<SeriesModel> observableListSeries = FXCollections.observableArrayList(seriesController.getListOfSeries());
+
+    @FXML
+    public void onBtnApplyFiltersSeriesAction() {
+        if (checkBoxGenreSeries.isSelected()) {
+            if (comboBoxGenreSeries.getValue() != null) {
+                seriesController.filterListOfSeriesByGenre(comboBoxGenreSeries.getValue());
+                tvSeries.setItems(FXCollections.observableArrayList(seriesController.getReserveListOfSeries()));
+            }
+        } else if (checkBoxYearOfReleaseSeries.isSelected()) {
+            if (!txtYearOfReleaseSeries.getText().trim().isEmpty()) {
+                seriesController.filterListOfSeriesByYearOfRelease(txtYearOfReleaseSeries.getText());
+                tvSeries.setItems(FXCollections.observableArrayList(seriesController.getReserveListOfSeries()));
+            }
+        } else if (checkBoxTopRatedSeries.isSelected()) {
+            seriesController.sortListByTopRated();
+            tvSeries.setItems(FXCollections.observableArrayList(seriesController.getReserveListOfSeries()));
+        } else if (checkBoxLowRatedSeries.isSelected()) {
+            seriesController.sortListByLowRated();
+            tvSeries.setItems(FXCollections.observableArrayList(seriesController.getReserveListOfSeries()));
+        }
+    }
+
+    @FXML
+    public void onBtnResetFiltersSeriesAction() {
+        tvSeries.setItems(observableListSeries);
+    }
+
+    public void onBtnOpenSeriesAction(SeriesModel series) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullSeriesScreen.fxml"));
+        Parent root = loader.load();
+
+        FullSeriesController fullSeriesController = loader.getController();
+        fullSeriesController.openSeries(series, "list screen");
+
+        Stage stage = (Stage) tvSeries.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.centerOnScreen();
+        stage.setTitle("Diário Cultural");
+    }
+
+    public void initializeSettingsSeries() {
+        comboBoxGenreSeries.getItems().addAll("Ação", "Animação", "Aventura", "Comédia", "Dança", "Documentário", "Drama", "Faroeste", "Fantasia",
+                "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror");
+
+        tcTitleSeries.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tcStartDateSeries.setCellValueFactory(new PropertyValueFactory<>("yearOfRelease"));
+        tcEndDateSeries.setCellValueFactory(new PropertyValueFactory<>("yearOfConclusion"));
+        tcNumberOfSeasonsSeries.setCellValueFactory(new PropertyValueFactory<>("numberOfSeasons"));
+        tcScoreSeries.setCellValueFactory(new PropertyValueFactory<>("seriesReview"));
+
+        tvSeries.setItems(observableListSeries);
+
+        checkBoxGenreSeries.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            comboBoxGenreSeries.setDisable(!isNowSelected);
+        });
+
+        checkBoxYearOfReleaseSeries.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+            txtYearOfReleaseSeries.setDisable(!isNowSelected);
+        });
+
+        setupExclusiveCheckBox(checkBoxGenreSeries, checkBoxYearOfReleaseSeries, checkBoxTopRatedSeries, checkBoxLowRatedSeries);
+        setupExclusiveCheckBox(checkBoxYearOfReleaseSeries, checkBoxGenreSeries,checkBoxTopRatedSeries, checkBoxLowRatedSeries);
+        setupExclusiveCheckBox(checkBoxTopRatedSeries, checkBoxGenreSeries, checkBoxYearOfReleaseSeries, checkBoxLowRatedSeries);
+        setupExclusiveCheckBox(checkBoxLowRatedSeries, checkBoxGenreSeries, checkBoxYearOfReleaseSeries, checkBoxTopRatedSeries);
+
+        tvSeries.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                SeriesModel series = tvSeries.getSelectionModel().getSelectedItem();
+                if (series != null) {
+                    try {
+                        onBtnOpenSeriesAction(series);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    // ============================================================================================================================================
+
     public void initialize() {
         initializeSettingsBooks();
         initializeSettingsMovies();
+        initializeSettingsSeries();
     }
 
     @FXML
@@ -301,5 +424,4 @@ public class ListController {
             }
         });
     }
-
 }

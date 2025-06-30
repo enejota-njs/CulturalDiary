@@ -2,6 +2,7 @@ package series.series;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import movie.MovieModel;
 import review.ReviewModel;
 import series.season.SeasonController;
 import series.season.SeasonModel;
@@ -35,6 +36,7 @@ public class SeriesController {
     }
 
     private ArrayList<SeriesModel> listOfSeries = new ArrayList<SeriesModel>();
+    private ArrayList<SeriesModel> reserveListOfSeries = new ArrayList<>();
     SeriesModel seriesModel;
     SeriesView seriesView = new SeriesView();
 
@@ -348,6 +350,7 @@ public class SeriesController {
      * @return true if the filtering was successful; false if an error occurred.
      */
     public boolean filterListOfSeriesByGenre(String value) {
+        reserveListOfSeries.clear();
         value = value.trim(); // Remove espaços em branco do início e fim da entrada
 
         if (validateNewInputString(value)) { // Valida se o valor informado não está vazio ou inválido
@@ -373,6 +376,7 @@ public class SeriesController {
 
                             // Exibe as informações da série que possui uma temporada com o gênero procurado
                             seriesView.seriesInformation(series);
+                            reserveListOfSeries.add(series);
                         }
                     }
                 }
@@ -396,6 +400,7 @@ public class SeriesController {
      * @return true if the filtering was successful; false if an error occurred.
      */
     public boolean filterListOfSeriesByYearOfRelease(String value) {
+        reserveListOfSeries.clear();
         value = value.trim(); // Remove espaços em branco no início e fim da string
 
         // Verifica se a entrada é válida (string não vazia e valor numérico)
@@ -427,6 +432,7 @@ public class SeriesController {
 
                         // Exibe as informações da série encontrada
                         seriesView.seriesInformation(series);
+                        reserveListOfSeries.add(series);
                     }
                 }
             }
@@ -448,6 +454,8 @@ public class SeriesController {
      * @return true if the sorting was successful; false if an error occurred.
      */
     public boolean sortListByTopRated() {
+        reserveListOfSeries.clear();
+
         try {
             // Verifica se a lista de séries não está vazia
             if (!listOfSeries.isEmpty()) {
@@ -470,6 +478,7 @@ public class SeriesController {
                             seriesModel -> seriesModel.getSeriesReview(),
                             Comparator.reverseOrder()
                     ));
+                    setReserveListOfSeries(highlyRatedSeries);
                 } else {
                     // Exibe mensagem caso nenhuma série tenha sido avaliada
                     seriesView.emptyEvaluatedListMessage();
@@ -502,6 +511,8 @@ public class SeriesController {
      * @return true if the sorting was successful; false if an error occurred.
      */
     public boolean sortListByLowRated() {
+        reserveListOfSeries.clear();
+
         try {
             // Verifica se a lista principal de séries não está vazia
             if (!listOfSeries.isEmpty()) {
@@ -521,6 +532,7 @@ public class SeriesController {
                 if (!poorlyRatedSeries.isEmpty()){
                     // Ordena as séries pela menor avaliação (ordem crescente)
                     poorlyRatedSeries.sort(Comparator.comparing(seriesModel -> seriesModel.getSeriesReview()));
+                    setReserveListOfSeries(poorlyRatedSeries);
                 } else {
                     // Exibe mensagem informando que nenhuma série foi avaliada
                     seriesView.emptyEvaluatedListMessage();
@@ -1106,5 +1118,13 @@ public class SeriesController {
 
     public void setListOfSeries(ArrayList<SeriesModel> listOfSeries) {
         this.listOfSeries = listOfSeries;
+    }
+
+    public ArrayList<SeriesModel> getReserveListOfSeries() {
+        return reserveListOfSeries;
+    }
+
+    public void setReserveListOfSeries(ArrayList<SeriesModel> reserveListOfSeries) {
+        this.reserveListOfSeries = reserveListOfSeries;
     }
 }

@@ -21,6 +21,7 @@ public class SeriesModel {
     private ArrayList<SeasonModel> listOfSeasons; // Lista de temporadas
     private float seriesReview; // Nota média
     private int seriesIndex; // Índice da série
+    private int numberOfSeasons;
 
     /**
      * Creates a SeriesModel with title, release and conclusion years, original title,
@@ -41,6 +42,7 @@ public class SeriesModel {
         this.originalTitle = originalTitle;
         this.whereToWatch = whereToWatch;
         this.listOfSeasons = listOfSeasons;
+        this.numberOfSeasons = listOfSeasons.size();
         this.seriesReview = 0;
         this.seriesIndex = seriesIndex;
     } // Construtor
@@ -108,5 +110,13 @@ public class SeriesModel {
 
     public void setSeriesIndex(int seriesIndex) {
         this.seriesIndex = seriesIndex;
+    }
+
+    public int getNumberOfSeasons() {
+        return numberOfSeasons;
+    }
+
+    public void setNumberOfSeasons(int numberOfSeasons) {
+        this.numberOfSeasons = numberOfSeasons;
     }
 }
