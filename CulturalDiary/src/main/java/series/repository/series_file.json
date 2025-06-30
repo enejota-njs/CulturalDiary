@@ -1,0 +1,145 @@
+[
+  {
+    "title": "Guardiões do Tempo",
+    "yearOfRelease": 2000,
+    "yearOfConclusion": 2004,
+    "originalTitle": "Timekeepers",
+    "whereToWatch": "Netflix",
+    "listOfSeasons": [
+      {
+        "genre": "Mistério",
+        "cast": ["Lúcio Barreto", "Helena Cruz", "Victor Maia", "Diana Monteiro"],
+        "castAsString": "Lúcio Barreto, Helena Cruz, Victor Maia, Diana Monteiro",
+        "yearSeason": 2000,
+        "evaluatedSeason": false,
+        "watched": false,
+        "seasonIndex": 1
+      },
+      {
+        "genre": "Drama",
+        "cast": ["Lúcio Barreto", "Helena Cruz", "Estela Ramos", "Caio Vidal"],
+        "castAsString": "Lúcio Barreto, Helena Cruz, Estela Ramos, Caio Vidal",
+        "yearSeason": 2002,
+        "seasonReview": {
+          "score": 4.8,
+          "consumptionDate": "14/09/2003",
+          "comment": "Excelente!"
+        },
+        "evaluatedSeason": true,
+        "watched": true,
+        "seasonIndex": 2
+      }
+    ],
+    "seriesReview": 4.8,
+    "seriesIndex": 1,
+    "numberOfSeasons": 2
+  },
+  {
+    "title": "Códigos do Submundo",
+    "yearOfRelease": 2012,
+    "yearOfConclusion": 2015,
+    "originalTitle": "Underground Codes",
+    "whereToWatch": "HBO",
+    "listOfSeasons": [
+      {
+        "genre": "Animação",
+        "cast": ["Yuri Tavares", "Camila Prado", "Dante Lemos", "Milena Duarte"],
+        "castAsString": "Yuri Tavares, Camila Prado, Dante Lemos, Milena Duarte",
+        "yearSeason": 2012,
+        "seasonReview": {
+          "score": 4.5,
+          "consumptionDate": "01/03/2013",
+          "comment": "Muito bom."
+        },
+        "evaluatedSeason": true,
+        "watched": true,
+        "seasonIndex": 1
+      }
+    ],
+    "seriesReview": 4.5,
+    "seriesIndex": 2,
+    "numberOfSeasons": 1
+  },
+  {
+    "title": "Ecos do Amanhã",
+    "yearOfRelease": 1998,
+    "yearOfConclusion": 2001,
+    "originalTitle": "Echoes of Tomorrow",
+    "whereToWatch": "Disney+",
+    "listOfSeasons": [
+      {
+        "genre": "Romance",
+        "cast": ["Eduardo Linhares", "Sofia Klein", "Breno Castro", "Maya Félix"],
+        "castAsString": "Eduardo Linhares, Sofia Klein, Breno Castro, Maya Félix",
+        "yearSeason": 1999,
+        "evaluatedSeason": false,
+        "watched": false,
+        "seasonIndex": 1
+      },
+      {
+        "genre": "Comédia",
+        "cast": ["Joana Ribeiro", "Felipe Dorneles", "Igor Pinto", "Lara Martins"],
+        "castAsString": "Joana Ribeiro, Felipe Dorneles, Igor Pinto, Lara Martins",
+        "yearSeason": 2000,
+        "seasonReview": {
+          "score": 4.2,
+          "consumptionDate": "12/12/2001",
+          "comment": "Interessante."
+        },
+        "evaluatedSeason": true,
+        "watched": true,
+        "seasonIndex": 2
+      }
+    ],
+    "seriesReview": 4.2,
+    "seriesIndex": 3,
+    "numberOfSeasons": 2
+  },
+  {
+    "title": "Zona de Impacto",
+    "yearOfRelease": 2016,
+    "yearOfConclusion": 2019,
+    "originalTitle": "Impact Zone",
+    "whereToWatch": "Prime Video",
+    "listOfSeasons": [
+      {
+        "genre": "Suspense",
+        "cast": ["Rafael Peçanha", "Letícia Vargas", "Bruno Teixeira", "Isis Galvão"],
+        "castAsString": "Rafael Peçanha, Letícia Vargas, Bruno Teixeira, Isis Galvão",
+        "yearSeason": 2017,
+        "evaluatedSeason": false,
+        "watched": true,
+        "seasonIndex": 1
+      }
+    ],
+    "seriesReview": 3.9,
+    "seriesIndex": 4,
+    "numberOfSeasons": 1
+  },
+  {
+    "title": "Poeira das Estrelas",
+    "yearOfRelease": 2005,
+    "yearOfConclusion": 2010,
+    "originalTitle": "Stardust Trails",
+    "whereToWatch": "Apple TV+",
+    "listOfSeasons": [
+      {
+        "genre": "Faroeste",
+        "cast": ["Henrique Salgado", "Valentina Paz", "Rodrigo Salles", "Clarissa Figueira"],
+        "castAsString": "Henrique Salgado, Valentina Paz, Rodrigo Salles, Clarissa Figueira",
+        "yearSeason": 2007,
+        "seasonReview": {
+          "score": 3.7,
+          "consumptionDate": "01/01/2008",
+          "comment": "Ótima temporada."
+        },
+        "evaluatedSeason": true,
+        "watched": true,
+        "seasonIndex": 1
+      }
+    ],
+    "seriesReview": 3.7,
+    "seriesIndex": 5,
+    "numberOfSeasons": 1
+  }
+]

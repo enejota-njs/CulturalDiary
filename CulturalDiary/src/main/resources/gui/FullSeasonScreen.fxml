@@ -148,7 +148,7 @@
                         </DropShadow>
                     </effect>
                 </Rectangle>
-                <Label text="O livro está marcado como não lido!" />
+                <Label text="A temporada está marcada como não assistida!" />
             </children>
         </StackPane>
     </children>
