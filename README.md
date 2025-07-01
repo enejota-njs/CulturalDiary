@@ -19,10 +19,6 @@ In addition to all these features, the project includes a user-friendly **graphi
 
 - Java
 
-## Programming Language
-
-The project is entirely developed in **Java**, taking advantage of its object-oriented features and portability.
-
 ## Technologies Used
 
 - **JavaFX**: Used to build the graphical user interface (GUI), enabling dynamic and responsive screen transitions and layouts.
