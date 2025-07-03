@@ -26,125 +26,126 @@ import java.io.IOException;
 public class ListController {
     // =================================================================================================================
 
-    BookController bookController = BookController.getInstance();
+    BookController bookController = BookController.getInstance(); // Controlador singleton de livros
 
     @FXML
-    private CheckBox checkBoxGenreBook;
+    private CheckBox checkBoxGenreBook; // Filtro por gênero
 
     @FXML
-    private CheckBox checkBoxYearOfPublicationBook;
+    private CheckBox checkBoxYearOfPublicationBook; // Filtro por ano de publicação
 
     @FXML
-    private CheckBox checkBoxTopRatedBook;
+    private CheckBox checkBoxTopRatedBook; // Filtro para livros melhor avaliados
 
     @FXML
-    private CheckBox checkBoxLowRatedBook;
+    private CheckBox checkBoxLowRatedBook; // Filtro para livros pior avaliados
 
     @FXML
-    private ComboBox<String> comboBoxGenreBook;
+    private ComboBox<String> comboBoxGenreBook; // ComboBox para seleção de gênero
 
     @FXML
-    private TextField txtYearOfPublicationBook;
+    private TextField txtYearOfPublicationBook; // Campo para digitar ano de publicação
 
     @FXML
-    private TableView<BookModel> tvBook;
+    private TableView<BookModel> tvBook; // Tabela de livros
 
     @FXML
-    private TableColumn<BookModel, String> tcTitleBook;
+    private TableColumn<BookModel, String> tcTitleBook; // Coluna título do livro
 
     @FXML
-    private TableColumn<BookModel, String> tcAuthorBook;
+    private TableColumn<BookModel, String> tcAuthorBook; // Coluna autor
 
     @FXML
-    private TableColumn<BookModel, String> tcGenreBook;
+    private TableColumn<BookModel, String> tcGenreBook; // Coluna gênero
 
     @FXML
-    private TableColumn<BookModel, String> tcYearOfPublicationBook;
+    private TableColumn<BookModel, String> tcYearOfPublicationBook; // Coluna ano de publicação
 
     @FXML
-    private TableColumn<BookModel, String> tcScoreBook;
+    private TableColumn<BookModel, String> tcScoreBook; // Coluna nota
 
-    private ObservableList<BookModel> observableListBook = FXCollections.observableArrayList(bookController.getListOfBooks());
+    private ObservableList<BookModel> observableListBook = FXCollections.observableArrayList(bookController.getListOfBooks()); // Lista observável dos livros
 
     @FXML
     public void onBtnApplyFiltersBookAction() {
-        if (checkBoxGenreBook.isSelected()) {
-            if (comboBoxGenreBook.getValue() != null) {
-                bookController.filterListOfBooksByGenre(comboBoxGenreBook.getValue());
-                tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks()));
+        if (checkBoxGenreBook.isSelected()) { // Se filtro por gênero ativo
+            if (comboBoxGenreBook.getValue() != null) { // Se gênero selecionado
+                bookController.filterListOfBooksByGenre(comboBoxGenreBook.getValue()); // Filtra por gênero
+                tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks())); // Atualiza tabela
             }
-        } else if (checkBoxYearOfPublicationBook.isSelected()) {
-            if (!txtYearOfPublicationBook.getText().trim().isEmpty()) {
-                bookController.filterListOfBooksByYearOfPublication(txtYearOfPublicationBook.getText());
-                tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks()));
+        } else if (checkBoxYearOfPublicationBook.isSelected()) { // Se filtro por ano ativo
+            if (!txtYearOfPublicationBook.getText().trim().isEmpty()) { // Se texto não vazio
+                bookController.filterListOfBooksByYearOfPublication(txtYearOfPublicationBook.getText()); // Filtra por ano
+                tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks())); // Atualiza tabela
             }
-        } else if (checkBoxTopRatedBook.isSelected()) {
-            bookController.sortListByTopRated();
-            tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks()));
-        } else if (checkBoxLowRatedBook.isSelected()) {
-            bookController.sortListByLowRated();
-            tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks()));
+        } else if (checkBoxTopRatedBook.isSelected()) { // Se filtro por melhor nota ativo
+            bookController.sortListByTopRated(); // Ordena pela melhor nota
+            tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks())); // Atualiza tabela
+        } else if (checkBoxLowRatedBook.isSelected()) { // Se filtro por pior nota ativo
+            bookController.sortListByLowRated(); // Ordena pela pior nota
+            tvBook.setItems(FXCollections.observableArrayList(bookController.getReserveListOfBooks())); // Atualiza tabela
         }
     }
 
     @FXML
     public void onBtnResetFiltersBookAction() {
-        tvBook.setItems(observableListBook);
+        tvBook.setItems(observableListBook); // Atualiza tabela
     }
 
     public void onBtnOpenBookAction(BookModel book) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullBookScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullBookScreen.fxml")); // Carrega tela completa do livro
         Parent root = loader.load();
 
-        FullBookController fullBookController = loader.getController();
-        fullBookController.openBook(book, "list screen");
+        FullBookController fullBookController = loader.getController(); // Pega controlador da tela
+        fullBookController.openBook(book, "list screen"); // Abre livro, informando tela anterior
 
-        Stage stage = (Stage) tvBook.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.centerOnScreen();
-        stage.setTitle("Diário Cultural");
+        Stage stage = (Stage) tvBook.getScene().getWindow(); // Pega janela atual
+        stage.setScene(new Scene(root)); // Define nova cena
+        stage.centerOnScreen(); // Centraliza janela
+        stage.setTitle("Diário Cultural"); // Define título
     }
 
     public void initializeSettingsBooks() {
         comboBoxGenreBook.getItems().addAll("Ação", "Animação", "Aventura", "Comédia", "Dança", "Documentário", "Drama", "Faroeste", "Fantasia",
-                "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror");
+                "Ficção Científica", "Guerra", "Mistério", "Musical", "Suspense", "Romance", "Terror"); // Adiciona gêneros no ComboBox
 
-        tcTitleBook.setCellValueFactory(new PropertyValueFactory<>("title"));
-        tcAuthorBook.setCellValueFactory(new PropertyValueFactory<>("author"));
-        tcGenreBook.setCellValueFactory(new PropertyValueFactory<>("genre"));
-        tcYearOfPublicationBook.setCellValueFactory(new PropertyValueFactory<>("yearOfPublication"));
-        tcScoreBook.setCellValueFactory(cellData -> {
+        tcTitleBook.setCellValueFactory(new PropertyValueFactory<>("title")); // Configura coluna título
+        tcAuthorBook.setCellValueFactory(new PropertyValueFactory<>("author")); // Configura coluna autor
+        tcGenreBook.setCellValueFactory(new PropertyValueFactory<>("genre")); // Configura coluna gênero
+        tcYearOfPublicationBook.setCellValueFactory(new PropertyValueFactory<>("yearOfPublication")); // Configura coluna ano
+        tcScoreBook.setCellValueFactory(cellData -> { // Configura coluna nota
             ReviewModel review = cellData.getValue().getBookReview();
             if (review != null) {
-                return new SimpleStringProperty(review.getScoreString());
+                return new SimpleStringProperty(review.getScoreString()); // Nota da avaliação
             } else {
-                return new SimpleStringProperty("Vazio");
+                return new SimpleStringProperty("Vazio"); // Texto padrão se sem avaliação
             }
         });
 
-        tvBook.setItems(observableListBook);
+        tvBook.setItems(observableListBook); // Define itens da tabela
 
         checkBoxGenreBook.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-            comboBoxGenreBook.setDisable(!isNowSelected);
+            comboBoxGenreBook.setDisable(!isNowSelected); // Habilita/desabilita ComboBox gênero conforme checkbox
         });
 
         checkBoxYearOfPublicationBook.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-            txtYearOfPublicationBook.setDisable(!isNowSelected);
+            txtYearOfPublicationBook.setDisable(!isNowSelected); // Habilita/desabilita campo ano conforme checkbox
         });
 
+        // Configura exclusividade entre checkboxes para que só um fique selecionado
         setupExclusiveCheckBox(checkBoxGenreBook, checkBoxYearOfPublicationBook, checkBoxTopRatedBook, checkBoxLowRatedBook);
         setupExclusiveCheckBox(checkBoxYearOfPublicationBook, checkBoxGenreBook, checkBoxTopRatedBook, checkBoxLowRatedBook);
         setupExclusiveCheckBox(checkBoxTopRatedBook, checkBoxGenreBook, checkBoxYearOfPublicationBook, checkBoxLowRatedBook);
         setupExclusiveCheckBox(checkBoxLowRatedBook, checkBoxGenreBook, checkBoxYearOfPublicationBook, checkBoxTopRatedBook);
 
         tvBook.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                BookModel book = tvBook.getSelectionModel().getSelectedItem();
+            if (event.getClickCount() == 2) { // Duplo clique na tabela
+                BookModel book = tvBook.getSelectionModel().getSelectedItem(); // Pega livro selecionado
                 if (book != null) {
                     try {
-                        onBtnOpenBookAction(book);
+                        onBtnOpenBookAction(book); // Abre tela do livro
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw new RuntimeException(e); // Trata exceção
                     }
                 }
             }

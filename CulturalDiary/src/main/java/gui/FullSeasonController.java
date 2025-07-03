@@ -20,98 +20,99 @@ import java.io.IOException;
 
 public class FullSeasonController {
     @FXML
-    private TextField genre;
+    private TextField genre; // Campo para gênero
 
     @FXML
-    private TextField cast;
+    private TextField cast; // Campo para elenco
 
     @FXML
-    private TextField yearOfRelease;
+    private TextField yearOfRelease; // Campo para ano de lançamento
 
     @FXML
-    private TextField score;
+    private TextField score; // Campo para nota
 
     @FXML
-    private TextField consumptionDate;
+    private TextField consumptionDate; // Campo para data de consumo
 
     @FXML
-    private TextArea comment;
+    private TextArea comment; // Área para comentário
 
     @FXML
-    private CheckBox watched;
+    private CheckBox watched; // Checkbox para indicar se assistido
 
     @FXML
-    private Button btnReview;
+    private Button btnReview; // Botão para avaliar
 
-    private SeasonModel currentSeason;
+    private SeasonModel currentSeason; // Temporada atual
 
-    private SeriesModel currentSeries;
+    private SeriesModel currentSeries; // Série atual
 
-    private String previousScreen;
+    private String previousScreen; // Tela anterior
 
     @FXML
-    private StackPane stackPane;
+    private StackPane stackPane; // Container para mensagens ou sobreposição
 
     public void openSeason(SeasonModel season, SeriesModel series, String previousScreen) {
-        genre.setText(season.getGenre());
-        cast.setText(season.getCastAsString());
-        yearOfRelease.setText(String.valueOf(season.getYearSeason()));
-        if (season.getSeasonReview() != null) {
-            score.setText(String.valueOf(season.getSeasonReview().getScore()));
-            consumptionDate.setText(season.getSeasonReview().getConsumptionDate());
-            comment.setText(season.getSeasonReview().getComment());
+        genre.setText(season.getGenre()); // Preenche gênero
+        cast.setText(season.getCastAsString()); // Preenche elenco
+        yearOfRelease.setText(String.valueOf(season.getYearSeason())); // Preenche ano da temporada
+
+        if (season.getSeasonReview() != null) { // Se houver avaliação
+            score.setText(String.valueOf(season.getSeasonReview().getScore())); // Preenche nota
+            consumptionDate.setText(season.getSeasonReview().getConsumptionDate()); // Preenche data
+            comment.setText(season.getSeasonReview().getComment()); // Preenche comentário
         } else {
-            score.setText("Temporada não avaliada");
+            score.setText("Temporada não avaliada"); // Padrão se não avaliado
             consumptionDate.setText("Temporada não avaliada");
             comment.setText("Temporada não avaliada");
         }
-        watched.setSelected(season.isWatched());
 
-        setCurrentSeries(series);
-        setCurrentSeason(season);
-        setPreviousScreen(previousScreen);
+        watched.setSelected(season.isWatched()); // Marca se assistido
+
+        setCurrentSeries(series); // Atualiza série atual
+        setCurrentSeason(season); // Atualiza temporada atual
+        setPreviousScreen(previousScreen); // Atualiza tela anterior
     }
 
     @FXML
     public void onBtnReviewSeasonAction() throws IOException {
-        if (currentSeason.isWatched()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SeasonReviewScreen.fxml"));
+        if (currentSeason.isWatched()) { // Verifica se a temporada foi assistida
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/SeasonReviewScreen.fxml")); // Carrega tela de avaliação da temporada
             Parent root = loader.load();
 
-            SeasonReviewController seasonReviewController = loader.getController();
-            seasonReviewController.setSeasonAndSeriesAndPreviousScreen(currentSeason, currentSeries, previousScreen);
+            SeasonReviewController seasonReviewController = loader.getController(); // Pega controlador
+            seasonReviewController.setSeasonAndSeriesAndPreviousScreen(currentSeason, currentSeries, previousScreen); // Passa temporada, série e tela anterior
 
-            Stage stage = (Stage) btnReview.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.centerOnScreen();
-            stage.setTitle("Diário Cultural");
+            Stage stage = (Stage) btnReview.getScene().getWindow(); // Pega janela atual
+            stage.setScene(new Scene(root)); // Define nova cena
+            stage.centerOnScreen(); // Centraliza janela
+            stage.setTitle("Diário Cultural"); // Define título
         } else {
-            displayMessage(stackPane);
+            displayMessage(stackPane); // Mostra mensagem se não assistida
         }
     }
 
     @FXML
     public void onBtnReturnAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullSeriesScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/FullSeriesScreen.fxml")); // Carrega tela completa da série
         Parent root = loader.load();
 
-        FullSeriesController fullSeriesController = loader.getController();
-        fullSeriesController.openSeries(currentSeries, previousScreen);
+        FullSeriesController fullSeriesController = loader.getController(); // Pega controlador da tela
+        fullSeriesController.openSeries(currentSeries, previousScreen); // Abre série na nova tela, passando a tela anterior
 
-        Stage stage = (Stage) btnReview.getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.centerOnScreen();
-        stage.setTitle("Diário Cultural");
+        Stage stage = (Stage) btnReview.getScene().getWindow(); // Pega janela atual
+        stage.setScene(new Scene(root)); // Define nova cena
+        stage.centerOnScreen(); // Centraliza janela
+        stage.setTitle("Diário Cultural"); // Define título da janela
     }
 
     public void displayMessage(StackPane stackPane) {
-        stackPane.setVisible(true);
+        stackPane.setVisible(true); // Mostra a mensagem
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(event -> stackPane.setVisible(false));
-        pause.play();
+        PauseTransition pause = new PauseTransition(Duration.seconds(3)); // Pausa de 3 segundos
+        pause.setOnFinished(event -> stackPane.setVisible(false)); // Esconde a mensagem após pausa
+        pause.play(); // Inicia a pausa
     }
-
 
     public String getPreviousScreen() {
         return previousScreen;

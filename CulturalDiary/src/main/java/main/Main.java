@@ -10,14 +10,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScreen.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/gui/MenuScreen.fxml")); // Carrega o FXML da interface
             stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.centerOnScreen();
+            stage.setResizable(false); // Desativa redimensionamento
+            stage.centerOnScreen(); // Centraliza a janela
             stage.setTitle("Diário Cultural");
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Mostra erro no console
         }
     }
 

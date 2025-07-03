@@ -20,107 +20,109 @@ import java.io.IOException;
 
 public class FullMovieController {
     @FXML
-    private TextField title;
+    private TextField title; // Campo para título
 
     @FXML
-    private TextField genre;
+    private TextField genre; // Campo para gênero
 
     @FXML
-    private TextField yearOfRelease;
+    private TextField yearOfRelease; // Campo para ano de lançamento
 
     @FXML
-    private TextField durationTime;
+    private TextField durationTime; // Campo para duração
 
     @FXML
-    private TextField direction;
+    private TextField direction; // Campo para direção
 
     @FXML
-    private TextArea screenplay;
+    private TextArea screenplay; // Área para roteiro
 
     @FXML
-    private TextField cast;
+    private TextField cast; // Campo para elenco
 
     @FXML
-    private TextField originalTitle;
+    private TextField originalTitle; // Campo para título original
 
     @FXML
-    private TextField whereToWatch;
+    private TextField whereToWatch; // Campo para onde assistir
 
     @FXML
-    private TextField score;
+    private TextField score; // Campo para nota
 
     @FXML
-    private TextField consumptionDate;
+    private TextField consumptionDate; // Campo para data de consumo
 
     @FXML
-    private TextArea comment;
+    private TextArea comment; // Área para comentário
 
     @FXML
-    private CheckBox watched;
+    private CheckBox watched; // Checkbox se foi assistido
 
     @FXML
-    private Button btnReview;
+    private Button btnReview; // Botão para avaliar
 
-    private MovieModel currentMovie;
+    private MovieModel currentMovie; // Filme atual
 
-    private String previousScreen;
+    private String previousScreen; // Tela anterior
 
     @FXML
-    private StackPane stackPane;
+    private StackPane stackPane; // Container para mensagens ou sobreposição
 
     public void openMovie(MovieModel movie, String screen) {
-        title.setText(movie.getTitle());
-        genre.setText(movie.getGenre());
-        yearOfRelease.setText(String.valueOf(movie.getYearOfRelease()));
-        durationTime.setText(movie.getDurationTime());
-        direction.setText(movie.getDirection());
-        screenplay.setText(movie.getScreenplay());
-        cast.setText(movie.getCastAsString());
-        originalTitle.setText(movie.getOriginalTitle());
-        whereToWatch.setText(movie.getWhereToWatch());
-        if (movie.getMovieReview() != null) {
-            score.setText(String.valueOf(movie.getMovieReview().getScore()));
-            consumptionDate.setText(movie.getMovieReview().getConsumptionDate());
-            comment.setText(movie.getMovieReview().getComment());
+        title.setText(movie.getTitle()); // Preenche título
+        genre.setText(movie.getGenre()); // Preenche gênero
+        yearOfRelease.setText(String.valueOf(movie.getYearOfRelease())); // Preenche ano de lançamento
+        durationTime.setText(movie.getDurationTime()); // Preenche duração
+        direction.setText(movie.getDirection()); // Preenche direção
+        screenplay.setText(movie.getScreenplay()); // Preenche roteiro
+        cast.setText(movie.getCastAsString()); // Preenche elenco
+        originalTitle.setText(movie.getOriginalTitle()); // Preenche título original
+        whereToWatch.setText(movie.getWhereToWatch()); // Preenche onde assistir
+
+        if (movie.getMovieReview() != null) { // Se houver avaliação
+            score.setText(String.valueOf(movie.getMovieReview().getScore())); // Preenche nota
+            consumptionDate.setText(movie.getMovieReview().getConsumptionDate()); // Preenche data
+            comment.setText(movie.getMovieReview().getComment()); // Preenche comentário
         } else {
-            score.setText("Filme não avaliado");
+            score.setText("Filme não avaliado"); // Padrão se não avaliado
             consumptionDate.setText("Filme não avaliado");
             comment.setText("Filme não avaliado");
         }
-        watched.setSelected(movie.isWatched());
 
-        setCurrentMovie(movie);
-        setPreviousScreen(screen);
+        watched.setSelected(movie.isWatched()); // Marca se foi assistido
+
+        setCurrentMovie(movie); // Atualiza filme atual
+        setPreviousScreen(screen); // Atualiza tela anterior
     }
 
     @FXML
     public void onBtnReviewMovieAction() throws IOException {
-        if (currentMovie.isWatched()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MovieReviewScreen.fxml"));
+        if (currentMovie.isWatched()) { // Verifica se o filme foi assistido
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MovieReviewScreen.fxml")); // Carrega tela de avaliação
             Parent root = loader.load();
 
-            MovieReviewController movieReviewController = loader.getController();
-            movieReviewController.setMovie(currentMovie, previousScreen);
+            MovieReviewController movieReviewController = loader.getController(); // Pega o controlador
+            movieReviewController.setMovie(currentMovie, previousScreen); // Passa o filme e a tela anterior
 
-            Stage stage = (Stage) btnReview.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.centerOnScreen();
-            stage.setTitle("Diário Cultural");
+            Stage stage = (Stage) btnReview.getScene().getWindow(); // Pega a janela atual
+            stage.setScene(new Scene(root)); // Define nova cena
+            stage.centerOnScreen(); // Centraliza a janela
+            stage.setTitle("Diário Cultural"); // Define título
         } else {
-            displayMessage(stackPane);
+            displayMessage(stackPane); // Mostra mensagem se o filme não foi assistido
         }
     }
 
     @FXML
     public void onBtnReturnAction(ActionEvent event) throws IOException {
-        if (previousScreen.equals("search screen"))  {
-            Parent root = FXMLLoader.load(getClass().getResource("/gui/SearchScreen.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.centerOnScreen();
-            stage.setTitle("Diário Cultural");
-        } else if (previousScreen.equals("list screen")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/gui/ListScreen.fxml"));
+        if (previousScreen.equals("search screen"))  { // Verifica se veio da tela de busca
+            Parent root = FXMLLoader.load(getClass().getResource("/gui/SearchScreen.fxml")); // Carrega tela de busca
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // Pega a janela atual
+            stage.setScene(new Scene(root)); // Define nova cena
+            stage.centerOnScreen(); // Centraliza a janela
+            stage.setTitle("Diário Cultural"); // Define título
+        } else if (previousScreen.equals("list screen")) { // Verifica se veio da tela de lista
+            Parent root = FXMLLoader.load(getClass().getResource("/gui/ListScreen.fxml")); // Carrega tela de lista
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.centerOnScreen();
@@ -129,13 +131,12 @@ public class FullMovieController {
     }
 
     public void displayMessage(StackPane stackPane) {
-        stackPane.setVisible(true);
+        stackPane.setVisible(true); // Exibe a mensagem
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-        pause.setOnFinished(event -> stackPane.setVisible(false));
-        pause.play();
+        PauseTransition pause = new PauseTransition(Duration.seconds(3)); // Espera 3 segundos
+        pause.setOnFinished(event -> stackPane.setVisible(false)); // Oculta após o tempo
+        pause.play(); // Inicia a contagem
     }
-
 
     public String getPreviousScreen() {
         return previousScreen;
