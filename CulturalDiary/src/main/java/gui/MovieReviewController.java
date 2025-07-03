@@ -43,6 +43,8 @@ public class MovieReviewController {
 
     private MovieModel movie;
 
+    private String previousScreen;
+
     @FXML
     public void onBtnEvaluateMovieAction() throws IOException {
         String score = txtScore.getText();
@@ -71,7 +73,7 @@ public class MovieReviewController {
         Parent root = loader.load();
 
         FullMovieController fullMovieController = loader.getController();
-        fullMovieController.openMovie(movie, "list screen");
+        fullMovieController.openMovie(movie, previousScreen);
 
         Stage stage = (Stage) btnReview.getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -83,7 +85,16 @@ public class MovieReviewController {
         return movie;
     }
 
-    public void setMovie(MovieModel movie) {
+    public void setMovie(MovieModel movie, String screen) {
         this.movie = movie;
+        setPreviousScreen(screen);
+    }
+
+    public String getPreviousScreen() {
+        return previousScreen;
+    }
+
+    public void setPreviousScreen(String previousScreen) {
+        this.previousScreen = previousScreen;
     }
 }

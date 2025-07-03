@@ -44,6 +44,8 @@ public class BookReviewController {
 
     private BookModel book;
 
+    private String previousScreen;
+
     @FXML
     public void onBtnEvaluateBookAction() throws IOException {
         String score = txtScore.getText();
@@ -72,7 +74,7 @@ public class BookReviewController {
         Parent root = loader.load();
 
         FullBookController fullBookController = loader.getController();
-        fullBookController.openBook(book, "list screen");
+        fullBookController.openBook(book, previousScreen);
 
         Stage stage = (Stage) btnReview.getScene().getWindow();
         stage.setScene(new Scene(root));
@@ -84,7 +86,16 @@ public class BookReviewController {
         return book;
     }
 
-    public void setBook(BookModel book) {
+    public void setBook(BookModel book, String screen) {
         this.book = book;
+        setPreviousScreen(screen);
+    }
+
+    public String getPreviousScreen() {
+        return previousScreen;
+    }
+
+    public void setPreviousScreen(String previousScreen) {
+        this.previousScreen = previousScreen;
     }
 }

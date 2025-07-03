@@ -100,7 +100,7 @@ public class FullMovieController {
             Parent root = loader.load();
 
             MovieReviewController movieReviewController = loader.getController();
-            movieReviewController.setMovie(currentMovie);
+            movieReviewController.setMovie(currentMovie, previousScreen);
 
             Stage stage = (Stage) btnReview.getScene().getWindow();
             stage.setScene(new Scene(root));

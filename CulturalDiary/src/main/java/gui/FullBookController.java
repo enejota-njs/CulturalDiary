@@ -89,7 +89,7 @@ public class FullBookController {
             Parent root = loader.load();
 
             BookReviewController bookReviewController = loader.getController();
-            bookReviewController.setBook(currentBook);
+            bookReviewController.setBook(currentBook, previousScreen);
 
             Stage stage = (Stage) btnReview.getScene().getWindow();
             stage.setScene(new Scene(root));
